@@ -434,7 +434,7 @@
   body.light .pub-links a:hover { background: #b3261e; color: #f7f5f0; box-shadow: none; }
   body.light .btn.primary, body.light .btn.primary:hover { box-shadow: none; }
   body.light .hero::after {
-    background: radial-gradient(ellipse 75% 70% at 28% 42%, rgba(247, 245, 240, 0.94) 0%, rgba(247, 245, 240, 0.55) 46%, rgba(247, 245, 240, 0) 72%);
+    background: linear-gradient(100deg, rgba(247, 245, 240, 0.97) 0%, rgba(247, 245, 240, 0.9) 34%, rgba(247, 245, 240, 0.4) 58%, rgba(247, 245, 240, 0) 76%);
   }
   body.light .pub-card p { color: #55534c; }
   body.light footer { border-top-color: rgba(26, 27, 32, 0.08); }
@@ -751,15 +751,17 @@
     var hotC = { r: 1.0, g: 0.72, b: 0.30 };
     window.syncWaveTheme = function () {
       if (isLight()) {
-        dimC = { r: 0.75, g: 0.30, b: 0.28 };
-        hotC = { r: 0.70, g: 0.15, b: 0.12 };
+        dimC = { r: 0.62, g: 0.20, b: 0.18 };
+        hotC = { r: 0.45, g: 0.04, b: 0.04 };
         mat.blending = THREE.NormalBlending;
-        mat.opacity = 0.55;
+        mat.opacity = 0.8;
+        mat.size = 0.08;
       } else {
         dimC = { r: 0.30, g: 0.16, b: 0.04 };
         hotC = { r: 1.0, g: 0.72, b: 0.30 };
         mat.blending = THREE.AdditiveBlending;
         mat.opacity = 0.9;
+        mat.size = 0.055;
       }
       mat.needsUpdate = true;
     };
@@ -930,6 +932,7 @@
     var bgUniforms = {
       uMap: { value: makeBubbleTexture() },
       uOpacity: { value: 1.0 },
+      uAlphaLift: { value: 1.0 },
       uScale: { value: window.innerHeight * 0.5 }
     };
     var bgMat = new THREE.ShaderMaterial({
@@ -949,10 +952,12 @@
       fragmentShader: [
         "uniform sampler2D uMap;",
         "uniform float uOpacity;",
+        "uniform float uAlphaLift;",
         "varying vec3 vColor;",
         "void main() {",
         "  vec4 tex = texture2D(uMap, gl_PointCoord);",
-        "  gl_FragColor = vec4(vColor, tex.a * uOpacity);",
+        "  float a = min(1.0, tex.a * uOpacity * uAlphaLift);",
+        "  gl_FragColor = vec4(vColor, a);",
         "}"
       ].join("\n"),
       transparent: true,
@@ -966,15 +971,17 @@
     var bubbleBase = { r: 0, g: 0, b: 0 };
     window.syncAmbientTheme = function () {
       if (isLight()) {
-        bubbleGlow = { r: 0.70, g: 0.15, b: 0.12 };
+        bubbleGlow = { r: 0.52, g: 0.06, b: 0.05 };
         bubbleBase = { r: 0.97, g: 0.96, b: 0.94 };
         bgMat.blending = THREE.NormalBlending;
-        bgUniforms.uOpacity.value = 0.7;
+        bgUniforms.uOpacity.value = 1.0;
+        bgUniforms.uAlphaLift.value = 1.9;
       } else {
         bubbleGlow = { r: 1.0, g: 0.78, b: 0.35 };
         bubbleBase = { r: 0, g: 0, b: 0 };
         bgMat.blending = THREE.AdditiveBlending;
         bgUniforms.uOpacity.value = 1.0;
+        bgUniforms.uAlphaLift.value = 1.0;
       }
       bgMat.needsUpdate = true;
     };
