@@ -1,0 +1,29 @@
+# GitHub Pages builds this with Jekyll automatically — no Actions or Gemfile needed.
+title: Akhil Pothanapalli
+tagline: Speech & Audio AI
+description: Akhil Pothanapalli, Associate Software Engineer on Centific's Applied AI Research team, working on audio reasoning, long-form and multilingual speech, and full-duplex voice.
+url: https://akhil-pothanapalli.github.io
+baseurl: ""
+email: akhil.pothanapalli@gmail.com
+location: Hyderabad, India · open to remote
+role: Associate Software Engineer, Audio & Speech
+org: Centific · Applied AI Research
+
+# Replace the Scholar URL with your profile link (https://scholar.google.com/citations?user=XXXX)
+social:
+  - label: Email
+    handle: akhil.pothanapalli@gmail.com
+    url: mailto:akhil.pothanapalli@gmail.com
+  - label: Google Scholar
+    handle: Papers & citations
+    url: https://scholar.google.com/citations?view_op=search_authors&mauthors=Akhil+Pothanapalli
+  - label: LinkedIn
+    handle: in/akhil-pothanapalli
+    url: https://www.linkedin.com/in/akhil-pothanapalli
+  - label: GitHub
+    handle: Akhil-Pothanapalli
+    url: https://github.com/Akhil-Pothanapalli
+
+exclude:
+  - README.md
+  - _preview.html

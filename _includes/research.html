@@ -1,0 +1,19 @@
+<section id="research" class="block">
+  <img class="decor d-whale washed" src="{{ '/assets/img/collage/whale.jpg' | relative_url }}" alt="" aria-hidden="true">
+  {% include section-head.html num="02" title="Research" note="Benchmarks, datasets and systems for machines that listen — built on Centific's Applied AI Research team." %}
+  <div class="projects">
+    {% for p in site.data.projects %}<article class="proj">
+      <span class="proj-burst" aria-hidden="true">{{ p.facts.first.n }}</span>
+      <span class="display proj-idx">{{ forloop.index | prepend: '0' }}</span>
+      <div class="proj-head">
+        <span class="label proj-kicker">{{ p.kicker }}</span>
+        <h3 class="display proj-title">{{ p.title }}</h3>
+      </div>
+      <div class="proj-body">
+        <p>{{ p.summary }}</p>
+        <div class="proj-tags">{% for t in p.tags %}<span class="tag tag-accent">{{ t }}</span>{% endfor %}</div>
+      </div>
+      <dl class="proj-facts">{% for f in p.facts %}<div><dt class="display">{{ f.n }}</dt><dd>{{ f.l }}</dd></div>{% endfor %}</dl>
+    </article>{% endfor %}
+  </div>
+</section>

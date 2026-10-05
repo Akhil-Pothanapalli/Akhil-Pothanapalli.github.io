@@ -1,0 +1,47 @@
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="stage">
+    <div class="art" aria-hidden="true">
+      <div class="dots"></div>
+      <div class="sun" data-depth="0.15"></div>
+      <figure class="pc wave" data-depth="0.3"><img src="{{ '/assets/img/collage/wave.jpg' | relative_url }}" alt=""></figure>
+      <figure class="pc bike" data-depth="0.7"><img src="{{ '/assets/img/collage/bike.png' | relative_url }}" alt=""></figure>
+      <figure class="pc manga" data-depth="0.5"><span class="tape"></span><img class="washed" src="{{ '/assets/img/collage/manga.jpg' | relative_url }}" alt=""><figcaption>Hokusai Manga · 1814</figcaption></figure>
+      <figure class="pc books" data-depth="0.45"><img class="washed" src="{{ '/assets/img/collage/books.jpg' | relative_url }}" alt=""><span class="sticker">Books</span></figure>
+      <div class="pc comics" data-depth="0.8">
+        <img class="c3 washed" src="{{ '/assets/img/collage/comic3.jpg' | relative_url }}" alt="">
+        <img class="c2 washed" src="{{ '/assets/img/collage/comic2.jpg' | relative_url }}" alt="">
+        <img class="c1 washed" src="{{ '/assets/img/collage/comic1.jpg' | relative_url }}" alt="">
+      </div>
+      <div class="halo"></div>
+      <figure class="pc portrait" data-depth="0.25"><div class="washed"><img src="{{ '/assets/img/portrait.jpg' | relative_url }}" alt=""></div></figure>
+      <div class="pc burst" data-depth="0.9">
+        <svg viewBox="0 0 100 100"><polygon points="50,2 60,30 90,12 72,40 98,50 72,60 90,88 60,70 50,98 40,70 10,88 28,60 2,50 28,40 10,12 40,30"/></svg>
+        <span>Listen!</span>
+      </div>
+      <div class="pc ticket" data-depth="0.6">
+        <span class="t-k">Admit one</span>
+        <span class="t-t">Full-duplex voice</span>
+        <span class="t-n">Nº 001 · Talk &amp; listen at once</span>
+      </div>
+      <div class="pc stamps" data-depth="0.55">
+        <span class="stamp"><b>ICML</b>2026</span>
+        <span class="stamp s2"><b>NeurIPS</b>2026 ×2</span>
+        <span class="stamp s3"><b>VLDB</b>2025</span>
+      </div>
+      <span class="jp" lang="ja">聴く</span>
+    </div>
+
+    <div class="title-block">
+      <p class="kicker"><span class="tag tag-accent-2">{{ site.tagline }}</span><span class="tag tag-accent">{{ site.location }}</span></p>
+      <h1 id="heroTitle" class="title"><span class="t1">I teach</span> <span class="t2">machines</span> <span class="t3">to listen.</span></h1>
+    </div>
+    <div class="wavebar"><canvas id="wave" aria-hidden="true"></canvas></div>
+    <div class="bubble">
+      <p>I'm <strong>Akhil Pothanapalli</strong>, Associate Software Engineer at <a href="https://www.centific.com" target="_blank" rel="noopener">Centific</a>, working on audio AI.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:{{ site.email }}">Get in touch {% include arrow.html %}</a>
+        {% for s in site.social %}{% if s.label == "Google Scholar" %}<a class="btn btn-secondary" href="{{ s.url }}" target="_blank" rel="noopener">Google Scholar</a>{% endif %}{% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

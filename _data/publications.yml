@@ -1,0 +1,57 @@
+# kind: conference | workshop | preprint   — drives the filter on the page
+- title: "AudioLoop: Program-Guided Iterative Reasoning Over Long-Form Speech"
+  venue: NeurIPS 2026 Workshop on Long Context Foundation Models (LCFM)
+  short: NeurIPS 2026 · LCFM
+  year: 2026
+  kind: workshop
+  role: Co-first author
+  summary: An LLM writes code to segment hour-long recordings and query audio sub-models. Outperforms single-pass full-context inference on prosody and contradiction tasks. Released the IQ2-QA dataset on Hugging Face.
+  links: []
+
+- title: "DuplexWorld: Can Voice Agents Help You Get Through the Day?"
+  venue: NeurIPS 2026 Workshop on Real-Time Conversational Agents (RTCA)
+  short: NeurIPS 2026 · RTCA
+  year: 2026
+  kind: workshop
+  role: Co-first author
+  summary: Five enterprise call-center worlds, 135 scenarios across nine conversation types, and 5 commercial speech-to-speech agents over 3,375 conversations. Strong turn-taking does not predict task success.
+  links:
+    - label: arXiv:2608.10716
+      url: https://arxiv.org/abs/2608.10716
+
+- title: "MedMosaic: A Challenging Large-Scale Benchmark of Diverse Medical Audio"
+  venue: International Conference on Machine Learning (ICML)
+  short: ICML 2026
+  year: 2026
+  kind: conference
+  role: Co-author
+  summary: A large-scale benchmark evaluating how well today's audio and multimodal reasoning models understand diverse medical audio. 13 audio and multimodal models benchmarked.
+  links:
+    - label: Paper
+      url: https://arxiv.org/abs/2605.00969
+    - label: Dataset
+      url: https://huggingface.co/datasets/CentificAIResearch/MedMosaic
+    - label: Demo
+      url: https://huggingface.co/spaces/CentificAIResearch/MedMosaic_app_env
+
+- title: "CaReCoS: A Spectrogram-Based Visual Benchmark for Cardiac, Respiratory and Cough Sounds"
+  venue: Under review
+  short: Preprint
+  year: 2026
+  kind: preprint
+  role: Co-author
+  summary: Medical sounds rendered as spectrograms and posed to 9 vision and omni models.
+  links:
+    - label: arXiv:2607.03356
+      url: https://arxiv.org/abs/2607.03356
+
+- title: "Human+AI: Large-Scale Data Curation for Multilingual Guardrails"
+  venue: DaSH 2025 · VLDB 2025 Workshops
+  short: VLDB 2025 · DaSH
+  year: 2025
+  kind: workshop
+  role: Acknowledged contributor
+  summary: Human and AI collaboration for curating multilingual guardrail data at scale.
+  links:
+    - label: Paper
+      url: https://www.vldb.org/2025/Workshops/VLDB-Workshops-2025/DaSH/DaSH25_5.pdf

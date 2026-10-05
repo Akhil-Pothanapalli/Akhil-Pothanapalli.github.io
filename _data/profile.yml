@@ -1,0 +1,47 @@
+ticker:
+  - Audio reasoning
+  - Long-form audio
+  - Multilingual speech
+  - Full-duplex voice
+  - ICML 2026
+  - NeurIPS 2026
+  - VLDB 2025
+
+skills:
+  - group: Speech & audio
+    items: [Speech recognition, Speaker diarization, Speech enhancement, Text-to-speech, Emotion recognition, Sound event detection, Voice agent evaluation, Long-form audio reasoning]
+  - group: LLMs & evaluation
+    items: [Benchmark design, LLM agents & tool use, RAG, LLM-as-judge, Preference ranking, Prompt engineering]
+  - group: Data & quality
+    items: [Annotation pipelines, Schema design, Multimodal alignment, Quality checks, PII detection, Content safety filtering]
+  - group: Languages & tools
+    items: [Python, Java, JavaScript, SQL, PyTorch, Hugging Face, LangChain, FastAPI, Docker, Azure, CI/CD, Claude Code]
+
+experience:
+  - role: Associate Software Engineer, Audio & Speech
+    org: Centific
+    team: Applied AI Research · via Tinlas.Cloud
+    url: https://www.centific.com
+    period: Aug 2024 — Present
+    note: Full-time since Feb 2025, contract Aug 2024 – Feb 2025
+    points:
+      - Lead the full-duplex conversational data initiative, from dataset specification to validation pipeline.
+      - Audio solutions for client teams across Centific — speaker age and gender detection (wav2vec2), language identification, open-vocabulary sound event detection (DASM) and music detection.
+      - Client speech pipelines with Whisper, Pyannote, Presidio and Hume AI for transcription, diarization, emotion recognition and PII detection.
+      - 17 multimodal quality and alignment services on Azure Container Apps, including video NSFW filtering.
+      - RAG and SQL agents with LangChain and GPT-4o to automate database queries.
+  - role: Associate · Programmer Analyst Trainee
+    org: Cognizant
+    team: Aug 2023 – Feb 2024 · Aug 2021 – Aug 2023
+    url: https://www.cognizant.com
+    period: Aug 2021 — Feb 2024
+    note: ""
+    points:
+      - Validated LLM responses and preference-ranked model outputs against client quality criteria.
+      - Python, Java and JavaScript automation for data management on the STIBO MDM platform.
+
+education:
+  degree: B.Tech, Electronics and Communication Engineering
+  school: GVP College of Engineering
+  period: 2017 — 2021
+  detail: CGPA 8.61 / 10

@@ -1,0 +1,39 @@
+- title: DuplexWorld
+  kicker: Co-led · NeurIPS 2026 RTCA
+  summary: Built five enterprise call-center worlds from scratch (banking, insurance, travel, healthcare, logistics) and benchmarked commercial speech-to-speech agents on whether they finish the job, not only whether they take turns well.
+  facts:
+    - n: "3,375"
+      l: conversations
+    - n: "135"
+      l: scenarios
+    - n: "5"
+      l: S2S agents
+  tags: [Voice agents, Benchmarks, Turn-taking]
+
+- title: AudioLoop
+  kicker: Co-first author · NeurIPS 2026 LCFM
+  summary: Program-guided reasoning over hour-long speech. An LLM writes code that segments the recording and queries audio sub-models, then iterates until it can answer.
+  facts:
+    - n: "1 hr+"
+      l: recordings
+    - n: IQ2-QA
+      l: dataset released
+  tags: [Long-form audio, LLM agents, Reasoning]
+
+- title: CaReCoS
+  kicker: Co-author · Under review
+  summary: A spectrogram-based visual benchmark for cardiac, respiratory and cough sounds. Built the benchmarking suite that poses medical spectrograms to vision and omni models.
+  facts:
+    - n: "9"
+      l: vision & omni models
+    - n: "3"
+      l: sound families
+  tags: [Medical audio, Spectrograms, Under review]
+
+- title: MedMosaic
+  kicker: Co-author · ICML 2026
+  summary: Built the benchmarking suite for a large-scale benchmark of diverse medical audio, testing how well today's audio and multimodal reasoning models understand it. Dataset and demo are public on Hugging Face.
+  facts:
+    - n: "13"
+      l: models benchmarked
+  tags: [Medical audio, Evaluation, Multimodal]

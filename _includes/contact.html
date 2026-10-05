@@ -1,0 +1,13 @@
+<section id="contact" class="block poster">
+  <img class="decor d-rabbit" src="{{ '/assets/img/collage/bike.png' | relative_url }}" alt="" aria-hidden="true">
+  <span class="label poster-kicker">06 / Contact</span>
+  <h2 class="display poster-title">Let's talk speech AI.</h2>
+  <p class="poster-sub">Open to research collaborations, interesting audio problems, and conversations about where voice AI is heading.</p>
+  <div class="links">
+    {% for s in site.social %}<a class="link-cell" href="{{ s.url }}"{% unless s.url contains 'mailto' %} target="_blank" rel="noopener"{% endunless %}>
+      <span class="label">{{ s.label }}</span>
+      <strong>{{ s.handle }}</strong>
+      {% include arrow.html %}
+    </a>{% endfor %}
+  </div>
+</section>

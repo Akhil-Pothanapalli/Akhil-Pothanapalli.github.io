@@ -1,0 +1,5 @@
+<div class="ticker{% if include.reverse %} rev{% endif %}" role="marquee" aria-label="{{ site.data.profile.ticker | join: ', ' }}">
+  <div class="ticker-track">
+    {% for pass in (1..2) %}<div class="ticker-run"{% if pass == 2 %} aria-hidden="true"{% endif %}>{% for t in site.data.profile.ticker %}<span>{{ t }}</span><span class="dot" aria-hidden="true"></span>{% endfor %}</div>{% endfor %}
+  </div>
+</div>

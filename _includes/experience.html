@@ -1,0 +1,24 @@
+<section id="work" class="block">
+  {% include section-head.html num="05" title="Work" %}
+  <div class="jobs">
+    {% for j in site.data.profile.experience %}<article class="job">
+      <span class="label job-period">{{ j.period }}</span>
+      <div class="job-head">
+        <h3 class="display job-org"><a href="{{ j.url }}" target="_blank" rel="noopener">{{ j.org }}</a></h3>
+        <p class="job-role">{{ j.role }}</p>
+        <p class="job-team">{{ j.team }}</p>
+        {% if j.note != "" %}<p class="job-team">{{ j.note }}</p>{% endif %}
+      </div>
+      <ul class="job-points">{% for pt in j.points %}<li>{{ pt }}</li>{% endfor %}</ul>
+    </article>{% endfor %}
+    {% assign e = site.data.profile.education %}<article class="job">
+      <span class="label job-period">{{ e.period }}</span>
+      <div class="job-head">
+        <h3 class="display job-org">Education</h3>
+        <p class="job-role">{{ e.degree }}</p>
+        <p class="job-team">{{ e.school }} · {{ e.detail }}</p>
+      </div>
+      <div></div>
+    </article>
+  </div>
+</section>

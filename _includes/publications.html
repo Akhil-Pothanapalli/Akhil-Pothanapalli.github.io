@@ -1,0 +1,28 @@
+<section id="papers" class="block ink">
+  <img class="decor d-wave" src="{{ '/assets/img/collage/wave.jpg' | relative_url }}" alt="" aria-hidden="true">
+  {% include section-head.html num="03" title="Papers" note="ICML 2026 · two NeurIPS 2026 workshops as co-first author · VLDB 2025 workshop contributor." %}
+  <div class="pub-bar">
+    <div class="seg" role="radiogroup" aria-label="Filter papers">
+      <label class="seg-opt"><input type="radio" name="pubf" value="all" checked>All</label>
+      <label class="seg-opt"><input type="radio" name="pubf" value="conference">Conference</label>
+      <label class="seg-opt"><input type="radio" name="pubf" value="workshop">Workshop</label>
+      <label class="seg-opt"><input type="radio" name="pubf" value="preprint">Preprint</label>
+    </div>
+    {% for s in site.social %}{% if s.label == "Google Scholar" %}<a class="btn btn-primary" href="{{ s.url }}" target="_blank" rel="noopener">All on Google Scholar {% include arrow.html %}</a>{% endif %}{% endfor %}
+  </div>
+  <ol class="pubs">
+    {% for p in site.data.publications %}<li class="pub" data-kind="{{ p.kind }}">
+      <span class="display pub-year">{{ p.year }}</span>
+      <div class="pub-venue">
+        <span class="pub-short">{{ p.short }}</span>
+        <span class="pub-role{% if p.role contains 'first' %} is-first{% endif %}">{{ p.role }}</span>
+      </div>
+      <div class="pub-main">
+        <h3 class="pub-title">{{ p.title }}</h3>
+        <p class="pub-full">{{ p.venue }}</p>
+        <p class="pub-sum">{{ p.summary }}</p>
+      </div>
+      <div class="pub-links">{% for l in p.links %}<a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }} {% include arrow.html %}</a>{% endfor %}</div>
+    </li>{% endfor %}
+  </ol>
+</section>
