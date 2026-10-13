@@ -1,0 +1,34 @@
+/* Aurora: near-black sky with slow, blurred bands of colour light behind crisp text. */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@400;500;700&display=swap');
+:root[data-style="aurora"] {
+  --bg: #05060f; --surface: rgba(255, 255, 255, .04); --surface-2: rgba(255, 255, 255, .08); --text: #eef0ff; --muted: #9aa0c0;
+  --accent: #3ae0c4; --on-accent: #05060f; --accent-2: #8f7bff; --on-accent-2: #05060f; --t3: #ff7eb3; --line: rgba(255, 255, 255, .12);
+  --card-bg: rgba(12, 14, 30, .6); --card-border: 1px solid rgba(255, 255, 255, .1); --radius: 20px; --radius-lg2: 28px;
+  --portrait-border: 1px solid rgba(255, 255, 255, .25); --portrait-shadow: 0 0 80px rgba(58, 224, 196, .35);
+  --hero-bg: rgba(12, 14, 30, .35); --hero-border: 1px solid rgba(255, 255, 255, .08); --chip-bg: rgba(255, 255, 255, .06); --chip-text: #eef0ff;
+  --band-bg: rgba(12, 14, 30, .65); --band-text: #eef0ff; --band-muted: #9aa0c0; --band-surface: rgba(255, 255, 255, .04); --band-accent: #3ae0c4; --on-band-accent: #05060f;
+  --cta-bg: linear-gradient(120deg, rgba(58, 224, 196, .25), rgba(143, 123, 255, .25), rgba(255, 126, 179, .25)); --cta-text: #eef0ff; --cta-card-bg: rgba(5, 6, 15, .7); --cta-card-text: #eef0ff;
+  --ticker-bg: rgba(255, 255, 255, .04); --ticker-text: #eef0ff; --ticker2-bg: rgba(255, 255, 255, .04); --ticker2-text: #3ae0c4; --ticker-border: 1px solid rgba(255, 255, 255, .1);
+  --wave-bg: rgba(255, 255, 255, .04); --wave-hi: #3ae0c4; --wave-lo: #8f7bff;
+  --font-display: "Sora", system-ui, sans-serif; --font-body: "Manrope", system-ui, sans-serif; --display-weight: 600; --display-tracking: -0.035em;
+  --link: #3ae0c4;
+}
+:root[data-style="aurora"] body::before {
+  content: ""; position: fixed; inset: -30%; z-index: -1; pointer-events: none; opacity: .5; filter: blur(80px);
+  background: conic-gradient(from 0deg at 50% 50%, #3ae0c4, #6f5bff, #ff5fa2, #ffb35c, #3ae0c4);
+  animation: auroraSpin 40s linear infinite;
+}
+:root[data-style="aurora"] body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 50% 0%, transparent 0, rgba(5, 6, 15, .55) 70%); }
+:root[data-style="aurora"] :is(.t2, .sec-title, .poster-title, .about-statement) { background: linear-gradient(90deg, #3ae0c4, #8f7bff 50%, #ff7eb3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:root[data-style="aurora"] .sec-title { padding-bottom: .08em; }
+:root[data-style="aurora"] .sec-num { background: rgba(255, 255, 255, .06); color: #eef0ff; border: 1px solid rgba(255, 255, 255, .2); }
+:root[data-style="aurora"] :is(.stage, .proj, .skill, .job, .now, .bubble, .ink, .poster, .link-cell, .site-nav) { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+:root[data-style="aurora"] .site-nav { background: rgba(5, 6, 15, .5); }
+:root[data-style="aurora"] .ink, :root[data-style="aurora"] .poster { border: 1px solid rgba(255, 255, 255, .1); }
+:root[data-style="aurora"] .ticker { margin-inline: var(--space-3); }
+:root[data-style="aurora"] .nav-links { background: rgba(5, 6, 15, .9); }
+@keyframes auroraSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="aurora"] body::before { animation: none; } }
+
+/* waveform */
+:root[data-style="aurora"] { --wave-mode: area; --wave-colors: #3ae0c4, #8f7bff, #ff7eb3; }

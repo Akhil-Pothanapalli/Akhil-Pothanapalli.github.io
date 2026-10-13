@@ -1,0 +1,35 @@
+/* Claymorphism: puffy pastel cards with soft outer shadows and inner highlights, like modelling clay. */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap');
+:root[data-style="clay"] {
+  --clay: 10px 14px 24px rgba(70, 50, 120, .22), inset -8px -10px 16px rgba(0, 0, 0, .08), inset 8px 10px 16px rgba(255, 255, 255, .75);
+  --clay-sm: 4px 6px 12px rgba(70, 50, 120, .2), inset -3px -4px 6px rgba(0, 0, 0, .08), inset 3px 4px 6px rgba(255, 255, 255, .7);
+  --bg: #e4f3ff; --surface: #ffffff; --surface-2: #ffffff; --text: #3b2a4a; --muted: #7d6a8f;
+  --accent: #ff6fa8; --on-accent: #ffffff; --accent-2: #6c8cff; --on-accent-2: #ffffff; --t3: #6c8cff; --line: rgba(59, 42, 74, .15);
+  --card-bg: #ffd0e6; --card-shadow: var(--clay); --radius: 36px; --radius-lg2: 44px; --portrait-border: 10px solid #fff1b8; --portrait-shadow: var(--clay);
+  --hero-bg: #d6ccff; --hero-shadow: var(--clay); --chip-bg: rgba(255, 255, 255, .7); --chip-text: #3b2a4a;
+  --band-bg: #6c8cff; --band-text: #ffffff; --band-muted: #e2e8ff; --band-surface: #8aa3ff; --band-accent: #fff1b8; --on-band-accent: #3b2a4a;
+  --cta-bg: #ff6fa8; --cta-text: #ffffff; --cta-card-bg: #ffffff; --cta-card-text: #3b2a4a;
+  --ticker-bg: #fff1b8; --ticker-text: #3b2a4a; --ticker2-bg: #c9f2dc; --ticker2-text: #3b2a4a;
+  --btn-shadow: var(--clay-sm); --wave-bg: #3b2a4a; --wave-hi: #ff6fa8; --wave-lo: #fff1b8;
+  --font-display: "Fredoka", system-ui, sans-serif; --font-body: "Nunito", system-ui, sans-serif; --display-weight: 600; --display-tracking: -0.01em;
+}
+:root[data-style="clay"] :is(.stage, .ink, .poster, .ticker, .pub, .sec-num, .proj-idx, .skill li, .proj-facts > div) { box-shadow: var(--clay); }
+:root[data-style="clay"] :is(.skill li, .proj-facts > div, .pub-links a, .pub-role) { box-shadow: var(--clay-sm); }
+:root[data-style="clay"] .bubble { background: #ffffff; }
+:root[data-style="clay"] .t2 { color: #ff6fa8; } :root[data-style="clay"] .t1 { color: #3b2a4a; }
+:root[data-style="clay"] .proj:nth-child(4n+2), :root[data-style="clay"] .skill:nth-child(2), :root[data-style="clay"] .job:nth-child(2) { background: #c9f2dc; }
+:root[data-style="clay"] .proj:nth-child(4n+3), :root[data-style="clay"] .skill:nth-child(3), :root[data-style="clay"] .job:nth-child(3) { background: #fff1b8; }
+:root[data-style="clay"] .proj:nth-child(4n+4), :root[data-style="clay"] .skill:nth-child(4) { background: #e3d9ff; }
+:root[data-style="clay"] .now { background: #c9f2dc; }
+:root[data-style="clay"] .sec-num { background: #ff6fa8; color: #ffffff; width: 64px; height: 64px; }
+:root[data-style="clay"] .about-statement { color: #6c8cff; }
+:root[data-style="clay"] .pub-year { border: 0; background: #fff1b8; color: #3b2a4a; box-shadow: var(--clay-sm); }
+:root[data-style="clay"] .pub-short { color: #fff1b8; }
+:root[data-style="clay"] .ink .sec-title { color: #ffffff; }
+:root[data-style="clay"] .ticker { margin-inline: var(--space-4); }
+:root[data-style="clay"] .link-cell:nth-child(2) { background: #c9f2dc; }
+:root[data-style="clay"] .link-cell:nth-child(3) { background: #fff1b8; }
+:root[data-style="clay"] .link-cell:nth-child(4) { background: #e3d9ff; }
+
+/* waveform */
+:root[data-style="clay"] { --wave-mode: bars; --wave-colors: #ff6fa8, #6c8cff, #ffd36a, #5ccf9a; --wave-bar: 12; --wave-gap: 6; }

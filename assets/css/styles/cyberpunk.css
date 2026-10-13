@@ -1,0 +1,100 @@
+/* Cyberpunk: hazard yellow on black, cyan and red glitch offsets, clipped corners. */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Chakra+Petch:wght@400;500;700&display=swap');
+:root[data-style="cyberpunk"] {
+  --cut: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+  --bg: #0b0b0d; --surface: #141417; --surface-2: #1e1e23; --text: #e8e8ec; --muted: #8c8c99;
+  --accent: #fcee0a; --on-accent: #0b0b0d; --accent-2: #00f0ff; --on-accent-2: #0b0b0d; --t3: #00f0ff; --line: rgba(252, 238, 10, .35);
+  --card-bg: #141417; --card-border: 0 solid transparent; --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0;
+  --portrait-radius: 0; --portrait-border: 2px solid #00f0ff;
+  --hero-bg: #0b0b0d linear-gradient(rgba(0, 240, 255, .06) 1px, transparent 1px) 0 0 / 100% 4px; --chip-bg: #1e1e23; --chip-text: #00f0ff; --chip-border: 1px solid rgba(0, 240, 255, .35);
+  --band-bg: #fcee0a; --band-text: #0b0b0d; --band-muted: #3a3a10; --band-surface: rgba(0, 0, 0, .08); --band-accent: #0b0b0d; --on-band-accent: #fcee0a;
+  --cta-bg: #ff003c; --cta-text: #0b0b0d; --cta-card-bg: #0b0b0d; --cta-card-text: #fcee0a;
+  --ticker-bg: #fcee0a; --ticker-text: #0b0b0d; --ticker2-bg: #00f0ff; --ticker2-text: #0b0b0d;
+  --btn-radius: 0; --btn-weight: 700; --wave-bg: #0b0b0d; --wave-hi: #ff003c; --wave-lo: #00f0ff; --wave-radius: 0;
+  --font-display: "Orbitron", system-ui, sans-serif; --font-body: "Chakra Petch", system-ui, sans-serif; --display-weight: 900; --display-case: uppercase; --display-tracking: .01em;
+  --heading-shadow: 3px 0 #ff003c, -3px 0 #00f0ff; --heading: #fcee0a; --link: #00f0ff;
+}
+:root[data-style="cyberpunk"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .btn, .ink, .poster) { clip-path: var(--cut); }
+:root[data-style="cyberpunk"] .btn { clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); font-family: "Orbitron", sans-serif; text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
+:root[data-style="cyberpunk"] :is(.proj, .skill, .job, .now, .bubble) { border-left: 4px solid #fcee0a; }
+:root[data-style="cyberpunk"] :is(.proj, .job):nth-child(even) { border-left-color: #00f0ff; }
+:root[data-style="cyberpunk"] .stage { border-left: 4px solid #ff003c; }
+:root[data-style="cyberpunk"] .title { font-size: clamp(36px, 5.6vw, 84px); }
+:root[data-style="cyberpunk"] .title span { text-shadow: 3px 0 #ff003c, -3px 0 #00f0ff; }
+:root[data-style="cyberpunk"] .t1 { color: #e8e8ec; } :root[data-style="cyberpunk"] .t2 { color: #fcee0a; animation: cpGlitch 3.5s steps(1) infinite; }
+:root[data-style="cyberpunk"] .kicker::before { content: "// NEURAL AUDIO LINK ESTABLISHED"; width: 100%; font: 500 12px/1 "Chakra Petch", sans-serif; color: #ff003c; letter-spacing: .2em; margin-bottom: 8px; }
+:root[data-style="cyberpunk"] .portrait .washed { filter: grayscale(.4) contrast(1.2); }
+:root[data-style="cyberpunk"] .sec-num { background: #ff003c; color: #0b0b0d; clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); font-size: 18px; }
+:root[data-style="cyberpunk"] .sec-title { font-size: clamp(34px, 5.2vw, 72px); }
+:root[data-style="cyberpunk"] .ink .sec-title { color: #0b0b0d; --heading-shadow: 3px 0 #ff003c, -3px 0 #00f0ff; }
+:root[data-style="cyberpunk"] .ink .sec-num { background: #0b0b0d; color: #fcee0a; }
+:root[data-style="cyberpunk"] .pub:nth-child(n) { background: #0b0b0d; color: #e8e8ec; }
+:root[data-style="cyberpunk"] .ink .pub a { color: #e8e8ec; }
+:root[data-style="cyberpunk"] .pub-full { color: #8c8c99; }
+:root[data-style="cyberpunk"] .pub-short { color: #fcee0a; }
+:root[data-style="cyberpunk"] .pub-year { color: #fcee0a; border-color: #fcee0a; }
+:root[data-style="cyberpunk"] .pub-role.is-first, :root[data-style="cyberpunk"] .ink .pub-links a:hover { background: #fcee0a; color: #0b0b0d; }
+:root[data-style="cyberpunk"] .proj-idx, :root[data-style="cyberpunk"] .proj:nth-child(even) .proj-idx { clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); }
+:root[data-style="cyberpunk"] .proj-kicker, :root[data-style="cyberpunk"] .job-period { color: #ff003c; }
+:root[data-style="cyberpunk"] .about-statement { color: #e8e8ec; }
+:root[data-style="cyberpunk"] .poster-title { color: #0b0b0d; --heading-shadow: 4px 0 #fcee0a; }
+:root[data-style="cyberpunk"] .poster .poster-sub, :root[data-style="cyberpunk"] .poster .poster-kicker { color: #0b0b0d; }
+:root[data-style="cyberpunk"] .link-cell .label { color: #00f0ff; }
+:root[data-style="cyberpunk"] .ticker { margin-inline: 0; }
+:root[data-style="cyberpunk"] .ticker-run span:not(.dot) { font-size: clamp(18px, 2.2vw, 30px); }
+@keyframes cpGlitch { 0%, 92%, 100% { translate: 0 0; } 93% { translate: -4px 1px; } 95% { translate: 3px -2px; } 97% { translate: -2px 0; } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="cyberpunk"] .t2 { animation: none; } }
+
+/* waveform: RGB-split oscilloscope */
+:root[data-style="cyberpunk"] { --wave-mode: scope; --wave-colors: #ff003c, #00f0ff, #fcee0a; --wave-lo: #00f0ff; }
+:root[data-style="cyberpunk"] .wavebar { border: 1px solid rgba(0, 240, 255, .4); }
+
+/* the portrait glitches: two colour-split copies tear across it, with scanlines and a HUD frame */
+:root[data-style="cyberpunk"] .art .portrait { position: relative; padding: 14px; }
+:root[data-style="cyberpunk"] .portrait .washed { position: relative; overflow: hidden; border: 0; box-shadow: 0 0 0 1px rgba(0, 240, 255, .5), 0 0 40px rgba(255, 0, 60, .25); clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 26px 100%, 0 calc(100% - 26px)); }
+:root[data-style="cyberpunk"] .portrait .washed img { filter: grayscale(.35) contrast(1.25) saturate(1.3); animation: cpShake 4s steps(1) infinite; }
+:root[data-style="cyberpunk"] .portrait .washed::before, :root[data-style="cyberpunk"] .portrait .washed::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("../../img/portrait.jpg") center / cover; mix-blend-mode: screen; opacity: .85;
+}
+:root[data-style="cyberpunk"] .portrait .washed::before { background-color: #ff003c; background-blend-mode: multiply; animation: cpTearA 2.8s steps(1) infinite; }
+:root[data-style="cyberpunk"] .portrait .washed::after { background-color: #00f0ff; background-blend-mode: multiply; animation: cpTearB 3.3s steps(1) infinite; }
+/* scanlines + HUD brackets + ID tag */
+:root[data-style="cyberpunk"] .art .portrait::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(#fcee0a, #fcee0a) 0 0 / 34px 3px no-repeat, linear-gradient(#fcee0a, #fcee0a) 0 0 / 3px 34px no-repeat,
+    linear-gradient(#fcee0a, #fcee0a) 100% 100% / 34px 3px no-repeat, linear-gradient(#fcee0a, #fcee0a) 100% 100% / 3px 34px no-repeat,
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .28) 0 1px, transparent 1px 3px) 14px 14px / calc(100% - 28px) calc(100% - 28px) no-repeat;
+}
+:root[data-style="cyberpunk"] .art .portrait::after { content: "ID://AKHIL_P  ·  CLASS: NETRUNNER  ·  STATUS: LISTENING"; position: absolute; left: 14px; right: 14px; bottom: -12px; z-index: 3; padding: 4px 8px; background: #fcee0a; color: #0b0b0d; font: 700 10px/1.2 "Chakra Petch", monospace; letter-spacing: .12em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+:root[data-style="cyberpunk"] .art .portrait:hover .washed::before, :root[data-style="cyberpunk"] .art .portrait:hover .washed::after { animation-duration: .5s; }
+
+@keyframes cpTearA {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: none; }
+  8% { clip-path: inset(12% 0 70% 0); transform: translateX(-10px); }
+  10% { clip-path: inset(55% 0 30% 0); transform: translateX(8px); }
+  12% { clip-path: inset(0 0 100% 0); }
+  46% { clip-path: inset(30% 0 52% 0); transform: translateX(-6px); }
+  48% { clip-path: inset(78% 0 8% 0); transform: translateX(12px); }
+  50% { clip-path: inset(0 0 100% 0); }
+  80% { clip-path: inset(0 0 0 0); transform: translateX(-4px); }
+  81% { clip-path: inset(0 0 100% 0); }
+}
+@keyframes cpTearB {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: none; }
+  20% { clip-path: inset(40% 0 44% 0); transform: translateX(10px); }
+  22% { clip-path: inset(6% 0 80% 0); transform: translateX(-8px); }
+  24% { clip-path: inset(0 0 100% 0); }
+  64% { clip-path: inset(66% 0 20% 0); transform: translateX(-12px); }
+  66% { clip-path: inset(20% 0 64% 0); transform: translateX(6px); }
+  68% { clip-path: inset(0 0 100% 0); }
+  80% { clip-path: inset(0 0 0 0); transform: translateX(4px); }
+  81% { clip-path: inset(0 0 100% 0); }
+}
+@keyframes cpShake { 0%, 100% { transform: none; } 79% { transform: none; } 80% { transform: translate(-3px, 1px) skewX(4deg); } 81% { transform: translate(2px, -1px); } 82% { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  :root[data-style="cyberpunk"] .portrait .washed img, :root[data-style="cyberpunk"] .portrait .washed::before, :root[data-style="cyberpunk"] .portrait .washed::after { animation: none; }
+  :root[data-style="cyberpunk"] .portrait .washed::before { clip-path: inset(20% 0 74% 0); transform: translateX(-6px); }
+  :root[data-style="cyberpunk"] .portrait .washed::after { clip-path: inset(62% 0 30% 0); transform: translateX(6px); }
+}

@@ -1,0 +1,42 @@
+/* Pixel / 8-bit: a 16-colour game palette, pixel fonts, hard square shadows. */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+:root[data-style="pixel"] {
+  --bg: #1d2b53; --surface: #29366f; --surface-2: #000000; --text: #fff1e8; --muted: #c2c3c7;
+  --accent: #ff004d; --on-accent: #fff1e8; --accent-2: #ffec27; --on-accent-2: #000000; --t3: #29adff; --line: #fff1e8;
+  --card-bg: #29366f; --card-border: 4px solid #fff1e8; --card-shadow: 8px 8px 0 #000000; --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0;
+  --portrait-radius: 0; --portrait-border: 6px solid #fff1e8; --portrait-shadow: 10px 10px 0 #000000;
+  --hero-bg: #000000; --hero-border: 4px solid #fff1e8; --chip-bg: #000000; --chip-text: #fff1e8;
+  --band-bg: #7e2553; --band-text: #fff1e8; --band-muted: #ffccaa; --band-surface: rgba(0, 0, 0, .3); --band-accent: #ffec27; --on-band-accent: #000000;
+  --cta-bg: #008751; --cta-text: #fff1e8; --cta-card-bg: #000000; --cta-card-text: #fff1e8;
+  --ticker-bg: #ffec27; --ticker-text: #000000; --ticker2-bg: #29adff; --ticker2-text: #000000; --ticker-border: 4px solid #000000;
+  --btn-radius: 0; --btn-shadow: 4px 4px 0 #000000; --btn-border: 3px solid #000000;
+  --wave-bg: #000000; --wave-hi: #00e436; --wave-lo: #29adff; --wave-radius: 0;
+  --font-display: "Press Start 2P", ui-monospace, monospace; --font-body: "VT323", ui-monospace, monospace; --display-weight: 400; --display-tracking: 0;
+  --heading-shadow: 4px 4px 0 #000000;
+}
+:root[data-style="pixel"] body { font-size: 21px; line-height: 1.3; image-rendering: pixelated; }
+:root[data-style="pixel"] .portrait img { image-rendering: pixelated; }
+:root[data-style="pixel"] .title { font-size: clamp(26px, 4vw, 56px); line-height: 1.25; }
+:root[data-style="pixel"] .t2 { color: #ffec27; }
+:root[data-style="pixel"] .sec-title { font-size: clamp(24px, 4vw, 48px); line-height: 1.3; }
+:root[data-style="pixel"] .about-statement { font-size: clamp(18px, 2.6vw, 34px); line-height: 1.4; color: #ffec27; }
+:root[data-style="pixel"] .poster-title { font-size: clamp(26px, 5vw, 64px); line-height: 1.25; }
+:root[data-style="pixel"] :is(.proj-title, .job-org) { font-size: clamp(16px, 1.8vw, 22px); line-height: 1.4; }
+:root[data-style="pixel"] :is(.skill-h, .pub-title) { font-size: 14px; line-height: 1.5; }
+:root[data-style="pixel"] .now li { font-size: 13px; line-height: 1.5; }
+:root[data-style="pixel"] .ticker-run span:not(.dot) { font-size: clamp(14px, 1.8vw, 22px); }
+:root[data-style="pixel"] :is(.bubble p, .about-body, .proj-body p, .pub-sum, .job-points li) { font-size: 21px; line-height: 1.3; }
+:root[data-style="pixel"] .btn { font-family: "Press Start 2P", monospace; font-size: 11px; }
+:root[data-style="pixel"] .btn:active { translate: 4px 4px; box-shadow: none; }
+:root[data-style="pixel"] .kicker::after { content: "▶ PRESS START"; width: 100%; margin-top: 10px; font: 12px/1 "Press Start 2P", monospace; color: #ff77a8; animation: pxBlink 1s steps(1) infinite; }
+:root[data-style="pixel"] .sec-num { background: #ff004d; color: #fff1e8; font-size: 14px; box-shadow: 4px 4px 0 #000000; }
+:root[data-style="pixel"] .sec-title::before { content: "▸ "; color: #ff004d; }
+:root[data-style="pixel"] .proj-idx { font-size: 14px; }
+:root[data-style="pixel"] .pub-year { font-size: 12px; }
+:root[data-style="pixel"] .link-cell strong { font-size: 13px; line-height: 1.5; }
+:root[data-style="pixel"] .ticker { margin-inline: 0; }
+@keyframes pxBlink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="pixel"] .kicker::after { animation: none; } }
+
+/* waveform */
+:root[data-style="pixel"] { --wave-mode: blocks; --wave-colors: #00e436, #ffec27, #ff004d; --wave-bar: 12; --wave-gap: 4; }

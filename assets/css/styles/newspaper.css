@@ -1,0 +1,54 @@
+/* Newspaper: a broadsheet front page, black ink on newsprint, ruled columns. */
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
+:root[data-style="newspaper"] {
+  --bg: #f4f0e6; --surface: #f4f0e6; --surface-2: #e8e2d2; --text: #141414; --muted: #555048;
+  --accent: #141414; --on-accent: #f4f0e6; --accent-2: #8b1a1a; --on-accent-2: #f4f0e6; --t3: #141414; --line: #141414;
+  --card-bg: transparent; --radius: 0; --radius-lg2: 0; --num-radius: 0; --portrait-radius: 0; --portrait-border: 1px solid #141414;
+  --hero-bg: transparent; --band-bg: #f4f0e6; --band-text: #141414; --band-muted: #555048; --band-surface: transparent; --band-accent: #141414; --on-band-accent: #f4f0e6;
+  --cta-bg: #141414; --cta-text: #f4f0e6; --cta-card-bg: #f4f0e6; --cta-card-text: #141414;
+  --ticker-bg: #141414; --ticker-text: #f4f0e6; --ticker2-bg: #8b1a1a; --ticker2-text: #f4f0e6;
+  --btn-radius: 0; --btn-border: 1px solid #141414; --wave-bg: #141414; --wave-hi: #f4f0e6; --wave-lo: #8a8478; --wave-radius: 0;
+  --font-display: "Playfair Display", Georgia, serif; --font-body: "Source Serif 4", Georgia, serif; --display-weight: 900; --display-tracking: -0.01em;
+}
+:root[data-style="newspaper"] body { background-image: radial-gradient(rgba(20, 20, 20, .05) 1px, transparent 1px); background-size: 3px 3px; }
+:root[data-style="newspaper"] .site-nav { border-bottom: 3px double #141414; }
+:root[data-style="newspaper"] .nav-brand { font-family: "UnifrakturMaguntia", serif; font-size: 28px; }
+:root[data-style="newspaper"] .nav-brand .accent { color: #141414; }
+:root[data-style="newspaper"] .nav-links a.is-active { background: none; color: #141414; text-decoration: underline; text-underline-offset: 6px; }
+:root[data-style="newspaper"] .stage { border-block: 3px double #141414; border-radius: 0; padding-inline: 0; position: relative; padding-top: 64px; }
+:root[data-style="newspaper"] .stage::before { content: "THE LISTENING TIMES  ·  HYDERABAD EDITION  ·  SPEECH & AUDIO AI  ·  PRICE: ONE CONVERSATION"; position: absolute; top: 16px; left: 0; right: 0; text-align: center; font: 600 11px/1 "Source Serif 4", serif; letter-spacing: .16em; border-bottom: 1px solid #141414; padding-bottom: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+:root[data-style="newspaper"] .title { font-size: clamp(48px, 7vw, 108px); line-height: .9; }
+:root[data-style="newspaper"] .t2 { font-style: italic; }
+:root[data-style="newspaper"] .kicker .tag { background: none; color: #141414; border: 1px solid #141414; }
+:root[data-style="newspaper"] .portrait .washed { filter: grayscale(1) contrast(1.2); }
+:root[data-style="newspaper"] .portrait::after { content: "Akhil Pothanapalli, photographed for this edition."; display: block; font: italic 12px/1.3 "Source Serif 4", serif; margin-top: 6px; color: #555048; }
+:root[data-style="newspaper"] .bubble { padding: 0; }
+:root[data-style="newspaper"] .bubble p::first-letter { font-family: "Playfair Display", serif; font-weight: 900; float: left; font-size: 3.4em; line-height: .8; padding: 4px 6px 0 0; }
+:root[data-style="newspaper"] .sec-head { grid-template-columns: 1fr; justify-items: center; text-align: center; border-top: 4px solid #141414; border-bottom: 1px solid #141414; padding-block: var(--space-3); max-width: none; }
+:root[data-style="newspaper"] .sec-num { background: none; color: #141414; width: auto; height: auto; font-family: var(--font-body); font-size: 12px; letter-spacing: .2em; }
+:root[data-style="newspaper"] .sec-num::before { content: "SECTION "; }
+:root[data-style="newspaper"] .sec-note { grid-column: 1; font-style: italic; }
+:root[data-style="newspaper"] .about-statement { color: #141414; font-style: italic; }
+:root[data-style="newspaper"] .about-body { columns: 2; column-gap: 32px; column-rule: 1px solid #141414; }
+:root[data-style="newspaper"] .about-body p:first-child::first-letter { font-family: "Playfair Display", serif; font-weight: 900; float: left; font-size: 3.6em; line-height: .8; padding: 6px 8px 0 0; }
+:root[data-style="newspaper"] :is(.proj, .skill, .job, .now) { border-top: 1px solid #141414; padding-inline: 0; }
+:root[data-style="newspaper"] .projects { column-gap: 48px; }
+:root[data-style="newspaper"] .proj-idx, :root[data-style="newspaper"] .proj:nth-child(even) .proj-idx { background: none; color: #141414; border: 1px solid #141414; }
+:root[data-style="newspaper"] .proj-facts > div { border: 1px solid #141414; }
+:root[data-style="newspaper"] .ink { margin-inline: 0; border-block: 4px double #141414; }
+:root[data-style="newspaper"] .pub:nth-child(n) { border-top: 1px solid #141414; padding-inline: 0; }
+:root[data-style="newspaper"] .pub-year { border: 1px solid #141414; background: none; }
+:root[data-style="newspaper"] .pub-short { color: #8b1a1a; }
+:root[data-style="newspaper"] .pub-links a { border: 1px solid #141414; background: none; }
+:root[data-style="newspaper"] .skill li { background: none; border: 1px solid #141414; }
+:root[data-style="newspaper"] .ticker { margin-inline: 0; }
+:root[data-style="newspaper"] .ticker:not(.rev) .ticker-run::before { content: "BREAKING"; background: #8b1a1a; padding: 4px 10px; font: 700 13px/1 "Source Serif 4", serif; letter-spacing: .15em; margin-left: var(--space-6); }
+:root[data-style="newspaper"] .poster { margin-inline: 0; }
+:root[data-style="newspaper"] .poster-kicker::after { content: "  ·  Classifieds"; }
+:root[data-style="newspaper"] .link-cell { border: 1px solid #f4f0e6; outline: 1px solid #141414; outline-offset: -5px; box-shadow: none; }
+@media (max-width: 700px) { :root[data-style="newspaper"] .about-body { columns: 1; } }
+
+/* waveform */
+:root[data-style="newspaper"] { --wave-mode: line; --wave-hi: #141414; --wave-lo: #b9b2a2; }
+:root[data-style="newspaper"] .wavebar { background: #fbf8f0; border: 1px solid #141414; }
+:root[data-style="newspaper"] .wavebar::after { content: "SEISMOGRAPH · VOICE ACTIVITY, HYDERABAD STATION"; position: absolute; left: 10px; bottom: 4px; font: 600 9px/1 "Source Serif 4", serif; letter-spacing: .14em; color: #555048; }

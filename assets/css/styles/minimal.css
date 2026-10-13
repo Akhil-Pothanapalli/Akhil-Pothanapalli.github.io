@@ -1,0 +1,35 @@
+/* Minimalism: white space, one ink colour, hairlines instead of boxes. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
+:root[data-style="minimal"] {
+  --bg: #ffffff; --surface: #ffffff; --surface-2: #f3f3f3; --text: #111111; --muted: #8a8a8a;
+  --accent: #111111; --on-accent: #ffffff; --accent-2: #f3f3f3; --on-accent-2: #111111; --t3: #8a8a8a; --line: #e6e6e6;
+  --card-bg: transparent; --card-border: 0 solid transparent; --radius: 0; --radius-lg2: 0; --num-radius: 0; --portrait-radius: 0;
+  --hero-bg: #ffffff; --band-bg: #fafafa; --band-text: #111111; --band-muted: #8a8a8a; --band-surface: #ffffff; --band-accent: #111111; --on-band-accent: #ffffff;
+  --cta-bg: #ffffff; --cta-text: #111111; --cta-card-bg: #fafafa;
+  --ticker-bg: transparent; --ticker-text: #8a8a8a; --ticker2-bg: transparent; --ticker2-text: #8a8a8a; --ticker-border: 0 solid transparent;
+  --btn-radius: 0; --btn-weight: 500; --wave-bg: #fafafa; --wave-hi: #111111; --wave-lo: #c4c4c4; --wave-radius: 0;
+  --font-display: "DM Sans", system-ui, sans-serif; --font-body: "DM Sans", system-ui, sans-serif; --display-weight: 500; --display-tracking: -0.035em;
+}
+:root[data-style="minimal"] .stage { padding-inline: 0; }
+:root[data-style="minimal"] .title { font-size: clamp(44px, 5.6vw, 84px); }
+:root[data-style="minimal"] .bubble { padding: 0; }
+:root[data-style="minimal"] :is(.proj, .skill, .job, .now) { border-top: 1px solid #111111; padding-inline: 0; }
+:root[data-style="minimal"] .now { padding-top: var(--space-4); }
+:root[data-style="minimal"] .sec-num { background: none; color: #8a8a8a; width: auto; height: auto; font-size: 14px; font-family: var(--font-body); }
+:root[data-style="minimal"] .sec-title { font-size: clamp(36px, 4.6vw, 60px); }
+:root[data-style="minimal"] .proj-idx, :root[data-style="minimal"] .proj:nth-child(even) .proj-idx { background: none; color: #8a8a8a; width: auto; height: auto; font-size: 14px; }
+:root[data-style="minimal"] .skill li { background: none; padding: 0; font-weight: 400; }
+:root[data-style="minimal"] .skill li:not(:last-child)::after { content: " ·"; color: #c4c4c4; }
+:root[data-style="minimal"] .skill li:hover { background: none; color: #111111; }
+:root[data-style="minimal"] .skill-h .accent { background: none; color: #8a8a8a; width: auto; }
+:root[data-style="minimal"] .ink { margin-inline: 0; border-block: 1px solid #e6e6e6; }
+:root[data-style="minimal"] .pub:nth-child(n) { background: none; border-top: 1px solid #e6e6e6; padding-inline: 0; }
+:root[data-style="minimal"] .pub-year { border: 0; background: none; width: auto; height: auto; justify-content: start; }
+:root[data-style="minimal"] .ticker { border-block: 1px solid #e6e6e6; margin-inline: 0; }
+:root[data-style="minimal"] .poster { margin-inline: 0; border-top: 1px solid #111111; }
+:root[data-style="minimal"] .link-cell { box-shadow: none; }
+:root[data-style="minimal"] .btn-primary:hover { filter: none; background: #444444; }
+
+/* waveform */
+:root[data-style="minimal"] { --wave-mode: none; }
+:root[data-style="minimal"] .wavebar { display: none; }

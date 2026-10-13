@@ -1,0 +1,42 @@
+/* Neumorphism: one soft grey surface; elements are pressed out of it or into it with paired shadows. */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap');
+:root[data-style="neumorphism"] {
+  --out: 8px 8px 16px #bec5d1, -8px -8px 16px #ffffff;
+  --out-sm: 4px 4px 8px #bec5d1, -4px -4px 8px #ffffff;
+  --in: inset 5px 5px 10px #bec5d1, inset -5px -5px 10px #ffffff;
+  --bg: #e3e7ee; --surface: #e3e7ee; --surface-2: #e3e7ee; --text: #3a4556; --muted: #7a8599;
+  --accent: #5b6cff; --on-accent: #ffffff; --accent-2: #2bb3a3; --on-accent-2: #ffffff; --t3: #7a8599; --line: transparent;
+  --card-bg: #e3e7ee; --card-shadow: var(--out); --radius: 28px; --radius-lg2: 36px; --portrait-border: 10px solid #e3e7ee; --portrait-shadow: var(--out);
+  --hero-bg: #e3e7ee; --hero-shadow: var(--out); --chip-bg: #e3e7ee; --chip-text: #3a4556;
+  --band-bg: #e3e7ee; --band-text: #3a4556; --band-muted: #7a8599; --band-surface: #e3e7ee; --band-accent: #5b6cff; --on-band-accent: #ffffff;
+  --cta-bg: #e3e7ee; --cta-text: #3a4556; --cta-card-bg: #e3e7ee; --cta-card-text: #3a4556;
+  --ticker-bg: #e3e7ee; --ticker-text: #7a8599; --ticker2-bg: #e3e7ee; --ticker2-text: #5b6cff;
+  --btn-shadow: var(--out-sm); --wave-bg: #e3e7ee; --wave-hi: #5b6cff; --wave-lo: #9aa5b8;
+  --font-display: "Nunito", system-ui, sans-serif; --font-body: "Nunito", system-ui, sans-serif; --display-weight: 900; --display-tracking: -0.02em;
+}
+:root[data-style="neumorphism"] .site-nav { border: 0; box-shadow: 0 6px 14px #cfd5df; background: #e3e7ee; }
+:root[data-style="neumorphism"] .nav-links a.is-active { background: #e3e7ee; color: #5b6cff; box-shadow: var(--in); }
+:root[data-style="neumorphism"] .nav-links a:hover { background: #e3e7ee; box-shadow: var(--out-sm); }
+:root[data-style="neumorphism"] .btn-secondary { background: #e3e7ee; border-color: transparent; }
+:root[data-style="neumorphism"] .btn:active, :root[data-style="neumorphism"] .btn-secondary:hover { box-shadow: var(--in); background: #e3e7ee; }
+:root[data-style="neumorphism"] .kicker .tag { background: #e3e7ee; color: #5b6cff; box-shadow: var(--in); }
+:root[data-style="neumorphism"] .wavebar, :root[data-style="neumorphism"] .bubble { box-shadow: var(--in); }
+:root[data-style="neumorphism"] .t2 { color: #5b6cff; text-shadow: 3px 3px 6px #bec5d1, -3px -3px 6px #ffffff; }
+:root[data-style="neumorphism"] .sec-num { background: #e3e7ee; color: #5b6cff; box-shadow: var(--out); width: 64px; height: 64px; }
+:root[data-style="neumorphism"] .sec-title, :root[data-style="neumorphism"] .poster-title { text-shadow: 4px 4px 8px #bec5d1, -4px -4px 8px #ffffff; }
+:root[data-style="neumorphism"] .about-statement { color: #3a4556; }
+:root[data-style="neumorphism"] .ink, :root[data-style="neumorphism"] .poster { box-shadow: var(--in); }
+:root[data-style="neumorphism"] .pub:nth-child(n), :root[data-style="neumorphism"] .link-cell { box-shadow: var(--out); }
+:root[data-style="neumorphism"] .pub-year { border: 0; box-shadow: var(--in); color: #5b6cff; }
+:root[data-style="neumorphism"] .pub-short { color: #5b6cff; }
+:root[data-style="neumorphism"] .pub-role, :root[data-style="neumorphism"] .pub-links a { box-shadow: var(--out-sm); }
+:root[data-style="neumorphism"] .seg { border: 0; box-shadow: var(--in); }
+:root[data-style="neumorphism"] .proj-idx, :root[data-style="neumorphism"] .proj:nth-child(even) .proj-idx, :root[data-style="neumorphism"] .skill-h .accent { background: #e3e7ee; color: #5b6cff; box-shadow: var(--in); }
+:root[data-style="neumorphism"] .proj-facts > div, :root[data-style="neumorphism"] .skill li { box-shadow: var(--in); }
+:root[data-style="neumorphism"] .skill li:hover { background: #e3e7ee; color: #5b6cff; box-shadow: var(--out-sm); }
+:root[data-style="neumorphism"] .now li::before, :root[data-style="neumorphism"] .job-points li::before { box-shadow: var(--out-sm); }
+:root[data-style="neumorphism"] .ticker { box-shadow: var(--in); }
+:root[data-style="neumorphism"] .ticker .dot { box-shadow: var(--out-sm); opacity: 1; background: #e3e7ee; }
+
+/* waveform */
+:root[data-style="neumorphism"] { --wave-mode: bars; --wave-bar: 8; --wave-gap: 6; }

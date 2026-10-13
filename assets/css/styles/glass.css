@@ -1,0 +1,104 @@
+/* Glassmorphism, all the way: thick frosted panes over moving colour, bevelled light-catching edges,
+   a specular highlight that follows the pointer, panes that tilt, and floating glass orbs. */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;700&display=swap');
+:root[data-style="glass"] {
+  --pane: linear-gradient(135deg, rgba(255, 255, 255, .26) 0%, rgba(255, 255, 255, .08) 45%, rgba(255, 255, 255, .14) 100%);
+  --edge: inset 0 1.5px 0 rgba(255, 255, 255, .75), inset 1.5px 0 0 rgba(255, 255, 255, .35), inset 0 -1px 0 rgba(255, 255, 255, .12), inset -1px 0 0 rgba(255, 255, 255, .12);
+  --depth: 0 30px 60px -20px rgba(8, 4, 40, .55), 0 10px 20px -10px rgba(8, 4, 40, .35);
+  --frost: blur(26px) saturate(1.8) brightness(1.08);
+  --bg: #120c34; --surface: rgba(255, 255, 255, .12); --surface-2: rgba(255, 255, 255, .18); --text: #ffffff; --muted: rgba(255, 255, 255, .72);
+  --accent: #ffffff; --on-accent: #2a1f6e; --accent-2: rgba(255, 255, 255, .22); --on-accent-2: #ffffff; --t3: #ffe28a; --line: rgba(255, 255, 255, .3);
+  --card-bg: var(--pane); --card-border: 1px solid rgba(255, 255, 255, .28); --card-shadow: var(--edge), var(--depth);
+  --radius: 28px; --radius-lg2: 36px; --portrait-border: 0 solid transparent; --portrait-shadow: none;
+  --hero-bg: var(--pane); --hero-border: 1px solid rgba(255, 255, 255, .3); --hero-shadow: var(--edge), var(--depth);
+  --chip-bg: rgba(255, 255, 255, .14); --chip-text: #ffffff; --chip-border: 1px solid rgba(255, 255, 255, .3);
+  --band-bg: var(--pane); --band-text: #ffffff; --band-muted: rgba(255, 255, 255, .75); --band-surface: rgba(255, 255, 255, .1); --band-accent: #ffffff; --on-band-accent: #2a1f6e;
+  --cta-bg: var(--pane); --cta-text: #ffffff; --cta-card-bg: rgba(255, 255, 255, .14); --cta-card-text: #ffffff;
+  --ticker-bg: rgba(255, 255, 255, .1); --ticker-text: #ffffff; --ticker2-bg: rgba(255, 255, 255, .1); --ticker2-text: #ffe28a; --ticker-border: 1px solid rgba(255, 255, 255, .3);
+  --btn-border: 1px solid rgba(255, 255, 255, .55); --btn-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 8px 20px -6px rgba(8, 4, 40, .5);
+  --wave-bg: rgba(255, 255, 255, .08); --wave-mode: area; --wave-colors: #ffffff, #ffd0ec, #b9d3ff;
+  --font-display: "Outfit", system-ui, sans-serif; --font-body: "Outfit", system-ui, sans-serif; --display-weight: 600; --display-tracking: -0.03em; --link: #ffffff;
+}
+
+/* the colour field the glass sits on: big blurred blobs that slowly drift */
+:root[data-style="glass"] body { background: #120c34; }
+:root[data-style="glass"] body::before, :root[data-style="glass"] body::after { content: ""; position: fixed; z-index: -2; pointer-events: none; border-radius: 50%; filter: blur(60px); }
+:root[data-style="glass"] body::before { width: 70vmax; height: 70vmax; left: -20vmax; top: -25vmax; background: radial-gradient(circle, #ff4fa3 0%, #ff7a59 45%, transparent 70%); animation: glassDriftA 26s ease-in-out infinite alternate; }
+:root[data-style="glass"] body::after { width: 75vmax; height: 75vmax; right: -25vmax; bottom: -30vmax; background: radial-gradient(circle, #3f7bff 0%, #7a3cff 45%, transparent 70%); animation: glassDriftB 30s ease-in-out infinite alternate; }
+.glass-orbs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.glass-orbs i { position: absolute; border-radius: 50%; display: block; }
+/* two of the orbs are colour, three are glass marbles that refract it */
+.glass-orbs i:nth-child(1) { width: 46vmax; height: 46vmax; left: 45%; top: 20%; background: radial-gradient(circle, #2de1c2 0%, transparent 65%); filter: blur(50px); animation: glassDriftB 22s ease-in-out infinite alternate; }
+.glass-orbs i:nth-child(2) { width: 34vmax; height: 34vmax; left: 5%; top: 55%; background: radial-gradient(circle, #ffd23f 0%, transparent 65%); filter: blur(50px); opacity: .8; animation: glassDriftA 19s ease-in-out infinite alternate; }
+.glass-orbs i:nth-child(n+3) {
+  background: radial-gradient(circle at 30% 28%, rgba(255, 255, 255, .9) 0 6%, rgba(255, 255, 255, .25) 14%, rgba(255, 255, 255, .06) 45%, rgba(255, 255, 255, .18) 70%, rgba(255, 255, 255, .45) 100%);
+  box-shadow: inset -10px -14px 30px rgba(255, 255, 255, .25), inset 6px 8px 20px rgba(255, 255, 255, .35), 0 30px 60px -10px rgba(8, 4, 40, .5);
+  backdrop-filter: blur(6px) saturate(1.6); -webkit-backdrop-filter: blur(6px) saturate(1.6);
+}
+.glass-orbs i:nth-child(3) { width: 180px; height: 180px; right: 6%; top: 16%; animation: glassBob 9s ease-in-out infinite; }
+.glass-orbs i:nth-child(4) { width: 110px; height: 110px; left: 3%; top: 40%; animation: glassBob 7s ease-in-out infinite reverse; }
+.glass-orbs i:nth-child(5) { width: 70px; height: 70px; right: 30%; bottom: 8%; animation: glassBob 11s ease-in-out infinite; }
+
+/* every pane: frosted, bevelled, a moving sheen and a pointer-following hotspot */
+:root[data-style="glass"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster, .ticker, .site-nav, .wavebar, .nav-links) { backdrop-filter: var(--frost); -webkit-backdrop-filter: var(--frost); }
+:root[data-style="glass"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .ink, .poster) { position: relative; isolation: isolate; }
+:root[data-style="glass"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .ink, .poster)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; display: block;
+  background: radial-gradient(420px circle at var(--gx, 20%) var(--gy, 0%), rgba(255, 255, 255, .28), transparent 45%),
+              linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .14) 42%, transparent 52%);
+}
+/* a thin prism edge on the big panes */
+:root[data-style="glass"] :is(.stage, .ink, .poster)::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 1; display: block;
+  right: 0; top: 0; width: auto; aspect-ratio: auto;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .9), rgba(255, 160, 220, .5) 25%, rgba(140, 200, 255, .5) 50%, rgba(255, 240, 160, .5) 75%, rgba(255, 255, 255, .7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+/* tilt on hover (angles set by style-fx.js) */
+:root[data-style="glass"] :is(.proj, .skill, .link-cell) { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .25s ease-out, box-shadow .25s; }
+:root[data-style="glass"] :is(.proj, .skill, .link-cell):hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px); }
+:root[data-style="glass"] .proj:hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px); }
+
+/* nav floats as a glass pill */
+:root[data-style="glass"] .site-nav { position: sticky; top: 12px; margin: 12px var(--space-3) 0; border-radius: 999px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .3); box-shadow: var(--edge), 0 10px 30px -10px rgba(8, 4, 40, .5); }
+:root[data-style="glass"] .nav-links a.is-active { background: rgba(255, 255, 255, .25); color: #ffffff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); }
+:root[data-style="glass"] .nav-links a:hover { background: rgba(255, 255, 255, .15); color: #ffffff; }
+:root[data-style="glass"] .nav-links a span { color: rgba(255, 255, 255, .6); }
+:root[data-style="glass"] .nav-links { background: rgba(30, 20, 80, .45); border-color: rgba(255, 255, 255, .3); }
+:root[data-style="glass"] .hero { padding-top: var(--space-4); }
+
+/* hero: portrait behind a lens */
+:root[data-style="glass"] .t1 { color: rgba(255, 255, 255, .8); font-weight: 200; }
+:root[data-style="glass"] .t2 { color: #ffffff; text-shadow: 0 0 40px rgba(255, 255, 255, .45); }
+:root[data-style="glass"] .t3 { font-weight: 300; }
+:root[data-style="glass"] .art .portrait { position: relative; }
+:root[data-style="glass"] .portrait .washed { position: relative; border-radius: 50%; padding: 14px; background: var(--pane); box-shadow: var(--edge), var(--depth); backdrop-filter: var(--frost); -webkit-backdrop-filter: var(--frost); }
+:root[data-style="glass"] .portrait .washed img { border-radius: 50%; }
+:root[data-style="glass"] .portrait .washed::after { content: ""; position: absolute; inset: 14px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 30% 22%, rgba(255, 255, 255, .55), transparent 32%), linear-gradient(160deg, transparent 55%, rgba(255, 255, 255, .18)); }
+:root[data-style="glass"] .kicker .tag { background: rgba(255, 255, 255, .18); color: #ffffff; border: 1px solid rgba(255, 255, 255, .4); backdrop-filter: blur(10px); }
+:root[data-style="glass"] .btn-primary { background: rgba(255, 255, 255, .85); color: #2a1f6e; }
+:root[data-style="glass"] .btn-secondary { background: rgba(255, 255, 255, .12); color: #ffffff; }
+:root[data-style="glass"] .wavebar { border: 1px solid rgba(255, 255, 255, .3); box-shadow: var(--edge); }
+
+/* the rest */
+:root[data-style="glass"] .sec-num { background: var(--pane); color: #ffffff; border: 1px solid rgba(255, 255, 255, .4); box-shadow: var(--edge), 0 10px 20px -8px rgba(8, 4, 40, .5); backdrop-filter: var(--frost); }
+:root[data-style="glass"] .sec-title { color: #ffffff; text-shadow: 0 2px 30px rgba(255, 255, 255, .35); }
+:root[data-style="glass"] .about-statement { color: #ffffff; font-weight: 300; }
+:root[data-style="glass"] .proj-idx, :root[data-style="glass"] .proj:nth-child(even) .proj-idx, :root[data-style="glass"] .skill-h .accent { background: rgba(255, 255, 255, .22); color: #ffffff; border: 1px solid rgba(255, 255, 255, .45); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); }
+:root[data-style="glass"] .now li::before, :root[data-style="glass"] .job-points li::before { background: rgba(255, 255, 255, .85); color: #2a1f6e; }
+:root[data-style="glass"] .tag-accent { background: rgba(255, 255, 255, .85); color: #2a1f6e; }
+:root[data-style="glass"] .skill li:hover { background: rgba(255, 255, 255, .85); color: #2a1f6e; }
+:root[data-style="glass"] .pub:nth-child(n) { border: 1px solid rgba(255, 255, 255, .2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35); }
+:root[data-style="glass"] .pub-year { background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6); }
+:root[data-style="glass"] .pub-short { color: #ffe28a; }
+:root[data-style="glass"] .ink, :root[data-style="glass"] .poster { box-shadow: var(--edge), var(--depth); }
+:root[data-style="glass"] .ticker { margin-inline: var(--space-3); box-shadow: var(--edge); }
+:root[data-style="glass"] .foot-row a { color: #ffffff; }
+
+@keyframes glassDriftA { to { transform: translate(18vw, 22vh) scale(1.15); } }
+@keyframes glassDriftB { to { transform: translate(-20vw, -16vh) scale(.9); } }
+@keyframes glassBob { 50% { transform: translateY(-26px) translateX(10px); } }
+@media (prefers-reduced-motion: reduce) {
+  :root[data-style="glass"] body::before, :root[data-style="glass"] body::after, .glass-orbs i { animation: none !important; }
+  :root[data-style="glass"] :is(.proj, .skill, .link-cell) { transform: none; }
+}

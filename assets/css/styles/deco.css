@@ -1,0 +1,42 @@
+/* Art Deco: gold linework on black lacquer, sunburst fans, tall spaced capitals. */
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&family=Josefin+Sans:wght@300;400;600&display=swap');
+:root[data-style="deco"] {
+  --bg: #0f0f12; --surface: #15151a; --surface-2: #1d1d24; --text: #eadfc4; --muted: #a8977a;
+  --accent: #d8b56a; --on-accent: #0f0f12; --accent-2: #2e6b5e; --on-accent-2: #eadfc4; --t3: #eadfc4; --line: rgba(216, 181, 106, .45);
+  --card-bg: #15151a; --card-border: 1px solid #d8b56a; --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0;
+  --portrait-radius: 50% 50% 0 0; --portrait-border: 2px solid #d8b56a; --portrait-shadow: 0 0 0 8px #0f0f12, 0 0 0 9px #d8b56a;
+  --hero-bg: #0f0f12 repeating-conic-gradient(from -45deg at 50% 115%, rgba(216, 181, 106, .14) 0 3deg, transparent 3deg 9deg); --hero-border: 1px solid #d8b56a;
+  --chip-bg: transparent; --chip-text: #eadfc4; --chip-border: 1px solid rgba(216, 181, 106, .5);
+  --band-bg: #0b1f1b repeating-conic-gradient(from -60deg at 100% 0%, rgba(216, 181, 106, .1) 0 2deg, transparent 2deg 7deg); --band-text: #eadfc4; --band-muted: #b9ab8c; --band-surface: rgba(216, 181, 106, .05); --band-accent: #d8b56a; --on-band-accent: #0f0f12;
+  --cta-bg: #d8b56a; --cta-text: #0f0f12; --cta-card-bg: #0f0f12; --cta-card-text: #eadfc4;
+  --ticker-bg: #0f0f12; --ticker-text: #d8b56a; --ticker2-bg: #d8b56a; --ticker2-text: #0f0f12; --ticker-border: 1px solid #d8b56a;
+  --btn-radius: 0; --btn-weight: 600; --wave-bg: #0f0f12; --wave-hi: #d8b56a; --wave-lo: #6d6046; --wave-radius: 0;
+  --font-display: "Poiret One", "Didot", serif; --font-body: "Josefin Sans", system-ui, sans-serif; --display-weight: 400; --display-case: uppercase; --display-tracking: .1em;
+  --heading: #d8b56a;
+}
+:root[data-style="deco"] body { font-weight: 300; }
+:root[data-style="deco"] :is(.btn, .label, .kicker .tag, .nav-links a) { text-transform: uppercase; letter-spacing: .16em; font-size: 12px; }
+:root[data-style="deco"] .stage { outline: 1px solid #d8b56a; outline-offset: -10px; text-align: center; grid-template-columns: 1fr; grid-template-areas: "art" "title" "wave" "bubble"; justify-items: center; }
+:root[data-style="deco"] .kicker { justify-content: center; }
+:root[data-style="deco"] .title { font-size: clamp(40px, 6vw, 92px); line-height: 1.05; }
+:root[data-style="deco"] .t2 { font-weight: 400; }
+:root[data-style="deco"] .wavebar { width: min(100%, 640px); border: 1px solid #d8b56a; }
+:root[data-style="deco"] .bubble { max-width: 640px; outline: 1px solid #d8b56a; outline-offset: -6px; }
+:root[data-style="deco"] .actions { justify-content: center; }
+:root[data-style="deco"] .art .portrait { width: min(100%, 240px); }
+:root[data-style="deco"] .sec-head { grid-template-columns: 1fr; justify-items: center; text-align: center; max-width: none; position: relative; padding-top: 40px; }
+:root[data-style="deco"] .sec-head::before { content: ""; position: absolute; top: 0; left: 50%; translate: -50% 0; width: 120px; height: 30px; background: repeating-conic-gradient(from -90deg at 50% 100%, #d8b56a 0 4deg, transparent 4deg 12deg); -webkit-mask: radial-gradient(circle at 50% 100%, #000 0 70%, transparent 71%); mask: radial-gradient(circle at 50% 100%, #000 0 70%, transparent 71%); }
+:root[data-style="deco"] .sec-num { background: none; color: #d8b56a; border: 1px solid #d8b56a; width: 48px; height: 48px; font-size: 16px; }
+:root[data-style="deco"] .sec-note { grid-column: 1; }
+:root[data-style="deco"] .about-statement { color: #d8b56a; }
+:root[data-style="deco"] :is(.proj, .skill, .job, .now, .link-cell) { outline: 1px solid rgba(216, 181, 106, .45); outline-offset: -7px; }
+:root[data-style="deco"] .proj-idx, :root[data-style="deco"] .proj:nth-child(even) .proj-idx { background: none; color: #d8b56a; border: 1px solid #d8b56a; }
+:root[data-style="deco"] .pub:nth-child(n) { border: 1px solid rgba(216, 181, 106, .35); }
+:root[data-style="deco"] .pub-year { border-color: #d8b56a; }
+:root[data-style="deco"] .poster .label, :root[data-style="deco"] .poster-sub { color: #0f0f12; }
+:root[data-style="deco"] .poster-title { color: #0f0f12; }
+:root[data-style="deco"] .poster .link-cell .label { color: #a8977a; }
+:root[data-style="deco"] .ticker { margin-inline: 0; border-inline: 0; }
+
+/* waveform */
+:root[data-style="deco"] { --wave-mode: bars; --wave-bar: 2; --wave-gap: 5; }

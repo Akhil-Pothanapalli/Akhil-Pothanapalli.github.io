@@ -1,0 +1,36 @@
+/* Swiss / International Typographic: strict grid, heavy grotesk, red as the only colour. */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&display=swap');
+:root[data-style="swiss"] {
+  --bg: #f2f0ea; --surface: #f2f0ea; --surface-2: #e4e1d8; --text: #111111; --muted: #555555;
+  --accent: #b3261e; --on-accent: #ffffff; --accent-2: #111111; --on-accent-2: #f2f0ea; --t3: #111111; --line: #111111;
+  --card-bg: transparent; --card-border: 0 solid transparent; --radius: 0; --radius-lg2: 0; --num-radius: 0; --portrait-radius: 0; --pill: 0;
+  --hero-bg: #f2f0ea; --band-bg: #b3261e; --band-text: #ffffff; --band-muted: #f2cfcb; --band-surface: rgba(0, 0, 0, .1); --band-accent: #111111; --on-band-accent: #ffffff;
+  --cta-bg: #111111; --cta-text: #f2f0ea; --cta-card-bg: #f2f0ea; --cta-card-text: #111111;
+  --ticker-bg: #111111; --ticker-text: #f2f0ea; --ticker2-bg: #b3261e; --ticker2-text: #ffffff;
+  --btn-radius: 0; --btn-weight: 800; --wave-bg: #111111; --wave-hi: #b3261e; --wave-lo: #f2f0ea; --wave-radius: 0;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif; --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif; --display-weight: 900; --display-tracking: -0.045em;
+}
+:root[data-style="swiss"] body { background-image: repeating-linear-gradient(90deg, rgba(17, 17, 17, .05) 0 1px, transparent 1px calc(100% / 12)); }
+:root[data-style="swiss"] .stage { position: relative; padding-top: clamp(80px, 9vw, 120px); }
+:root[data-style="swiss"] .stage::before { content: ""; position: absolute; left: clamp(28px, 5vw, 72px); top: 28px; width: clamp(40px, 5vw, 64px); aspect-ratio: 1; background: #b3261e; }
+:root[data-style="swiss"] .title { font-size: clamp(52px, 8vw, 128px); line-height: .85; }
+:root[data-style="swiss"] .t2 { color: #111111; } :root[data-style="swiss"] .t3 { color: #b3261e; }
+:root[data-style="swiss"] .portrait .washed { filter: grayscale(1) contrast(1.15); }
+:root[data-style="swiss"] :is(.proj, .skill, .job, .now, .bubble) { border-top: 6px solid #111111; padding-inline: 0; }
+:root[data-style="swiss"] .bubble { padding-top: var(--space-4); }
+:root[data-style="swiss"] .sec-head { grid-template-columns: 1fr; border-top: 2px solid #111111; padding-top: var(--space-3); }
+:root[data-style="swiss"] .sec-num { background: none; color: #b3261e; width: auto; height: auto; justify-content: start; font-size: 18px; }
+:root[data-style="swiss"] .sec-note { grid-column: 1; }
+:root[data-style="swiss"] .sec-title { font-size: clamp(56px, 9vw, 140px); line-height: .85; }
+:root[data-style="swiss"] .ink .sec-head { border-color: #ffffff; }
+:root[data-style="swiss"] .ink .sec-num { background: none; color: #ffffff; }
+:root[data-style="swiss"] .ink, :root[data-style="swiss"] .poster { margin-inline: 0; }
+:root[data-style="swiss"] .pub:nth-child(n) { background: none; border-top: 2px solid #ffffff; border-radius: 0; }
+:root[data-style="swiss"] .pub-year { border: 0; background: none; font-size: 32px; }
+:root[data-style="swiss"] .pub-links a { background: none; border: 2px solid #ffffff; }
+:root[data-style="swiss"] .skill li { background: none; border: 2px solid #111111; }
+:root[data-style="swiss"] .ticker { margin-inline: 0; }
+:root[data-style="swiss"] .link-cell { border-top: 6px solid #b3261e; }
+
+/* waveform */
+:root[data-style="swiss"] { --wave-mode: bars; --wave-bar: 10; --wave-gap: 4; }

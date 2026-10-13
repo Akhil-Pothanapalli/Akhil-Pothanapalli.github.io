@@ -1,0 +1,74 @@
+/* Windows 95: teal desktop, grey bevelled windows with blue title bars. */
+:root[data-style="win95"] {
+  --bevel: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --sunken: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  --bg: #008080; --surface: #c0c0c0; --surface-2: #ffffff; --text: #000000; --muted: #404040;
+  --accent: #000080; --on-accent: #ffffff; --accent-2: #808080; --on-accent-2: #ffffff; --t3: #000080; --line: #808080;
+  --card-bg: #c0c0c0; --card-shadow: var(--bevel); --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0; --portrait-radius: 0; --portrait-shadow: var(--sunken);
+  --hero-bg: #c0c0c0; --hero-shadow: var(--bevel); --chip-bg: #ffffff; --chip-border: 0 solid transparent;
+  --band-bg: #c0c0c0; --band-text: #000000; --band-muted: #404040; --band-surface: #ffffff; --band-accent: #000080; --on-band-accent: #ffffff;
+  --cta-bg: #c0c0c0; --cta-text: #000000; --cta-card-bg: #c0c0c0; --cta-card-text: #000000;
+  --ticker-bg: #c0c0c0; --ticker-text: #000000; --ticker2-bg: #c0c0c0; --ticker2-text: #000080;
+  --btn-radius: 0; --btn-shadow: var(--bevel); --btn-border: 0 solid transparent; --btn-weight: 400;
+  --wave-bg: #000000; --wave-hi: #00ff00; --wave-lo: #008000; --wave-radius: 0;
+  --font-display: Tahoma, Verdana, "Segoe UI", sans-serif; --font-body: Tahoma, Verdana, "Segoe UI", sans-serif; --display-weight: 700; --display-tracking: 0;
+  --heading: #000000;
+}
+:root[data-style="win95"] body { font-size: 14px; }
+:root[data-style="win95"] :is(.sec-title, .about-statement) { color: #ffffff; text-shadow: 1px 1px 0 #000000; }
+:root[data-style="win95"] .sec-note { color: #e0ffff; }
+:root[data-style="win95"] .about-body { background: #ffffff; color: #000000; padding: 16px 18px; box-shadow: var(--sunken); }
+/* every card becomes a window: title bar painted on top, a label and close box laid over it */
+:root[data-style="win95"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .ink, .poster) {
+  position: relative; padding-top: calc(var(--space-6) + 24px);
+  background: linear-gradient(90deg, #000080, #1084d0) 3px 3px / calc(100% - 6px) 20px no-repeat, #c0c0c0;
+}
+:root[data-style="win95"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .ink, .poster)::after {
+  position: absolute; left: 8px; top: 5px; color: #ffffff; font: 700 12px/16px Tahoma, Verdana, sans-serif; letter-spacing: 0; text-transform: none; content: "Window";
+}
+:root[data-style="win95"] .stage::after { content: "akhil.exe"; }
+:root[data-style="win95"] .proj::after { content: "Research Project"; }
+:root[data-style="win95"] .skill::after { content: "Skills.txt"; }
+:root[data-style="win95"] .job::after { content: "Work History"; }
+:root[data-style="win95"] .now::after { content: "Now Playing"; }
+:root[data-style="win95"] .bubble::after { content: "Hello.txt - Notepad"; display: block; border: 0; right: auto; }
+:root[data-style="win95"] .link-cell::after { content: "Shortcut"; }
+:root[data-style="win95"] .ink::after { content: "C:\\Papers"; }
+:root[data-style="win95"] .poster::after { content: "Send Message"; display: block; }
+:root[data-style="win95"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .ink, .poster)::before {
+  content: "×"; position: absolute; right: 6px; top: 5px; width: 16px; height: 14px; display: grid; place-items: center;
+  background: #c0c0c0; box-shadow: var(--bevel); color: #000000; font: 700 12px/1 Tahoma, sans-serif;
+}
+:root[data-style="win95"] .poster::before { width: 16px; aspect-ratio: auto; right: 6px; top: 5px; border-radius: 0; }
+:root[data-style="win95"] .ink, :root[data-style="win95"] .poster { box-shadow: var(--bevel); }
+:root[data-style="win95"] .bubble { background: linear-gradient(90deg, #000080, #1084d0) 3px 3px / calc(100% - 6px) 20px no-repeat, #ffffff; }
+:root[data-style="win95"] .stage .title { font-size: clamp(36px, 5vw, 72px); }
+:root[data-style="win95"] .wavebar { box-shadow: var(--sunken); border: 2px solid #c0c0c0; }
+:root[data-style="win95"] .kicker .tag { background: #ffffff; color: #000000; box-shadow: var(--sunken); }
+:root[data-style="win95"] .btn { background: #c0c0c0; color: #000000; padding: 8px 18px; }
+:root[data-style="win95"] .btn:active { box-shadow: var(--sunken); }
+:root[data-style="win95"] .btn-primary { outline: 1px solid #000000; outline-offset: -5px; }
+:root[data-style="win95"] .btn-primary:hover { background: #c0c0c0; color: #000000; filter: none; }
+:root[data-style="win95"] .site-nav { background: #c0c0c0; box-shadow: inset 0 1px #ffffff, 0 2px 0 #808080; border: 0; backdrop-filter: none; }
+:root[data-style="win95"] .nav-brand { padding: 4px 10px 4px 8px; box-shadow: var(--bevel); font-weight: 700; font-size: 15px; }
+:root[data-style="win95"] .nav-brand::before { content: "⊞ "; color: #000080; }
+:root[data-style="win95"] .nav-brand .accent { color: #000000; }
+:root[data-style="win95"] .nav-links a.is-active { box-shadow: var(--sunken); background: #dfdfdf; color: #000000; }
+:root[data-style="win95"] .nav-links a:hover { background: #000080; color: #ffffff; }
+:root[data-style="win95"] .sec-num { background: #c0c0c0; color: #000000; box-shadow: var(--bevel); }
+:root[data-style="win95"] .ink .sec-title, :root[data-style="win95"] .poster-title { color: #000080; text-shadow: none; }
+:root[data-style="win95"] .ink .sec-note { color: #404040; }
+:root[data-style="win95"] .pub:nth-child(n) { box-shadow: var(--sunken); }
+:root[data-style="win95"] .pub-short { color: #000080; }
+:root[data-style="win95"] .pub-year { background: #c0c0c0; box-shadow: var(--bevel); border: 0; }
+:root[data-style="win95"] .pub-links a { background: #c0c0c0; box-shadow: var(--bevel); }
+:root[data-style="win95"] .pub-links a:hover { background: #000080; color: #ffffff; }
+:root[data-style="win95"] .seg { box-shadow: var(--sunken); border: 0; }
+:root[data-style="win95"] .skill li:hover, :root[data-style="win95"] .ink .seg-opt:has(input:checked) { background: #000080; color: #ffffff; }
+:root[data-style="win95"] .proj-facts > div, :root[data-style="win95"] .skill li { box-shadow: var(--sunken); }
+:root[data-style="win95"] .ticker { box-shadow: var(--sunken); margin-inline: 0; }
+:root[data-style="win95"] .ticker-run span:not(.dot) { font-size: clamp(18px, 2vw, 26px); }
+:root[data-style="win95"] .foot-row { background: #c0c0c0; padding: 6px 10px; box-shadow: var(--bevel); }
+
+/* waveform */
+:root[data-style="win95"] { --wave-mode: blocks; --wave-colors: #00d800, #e8e800, #ff2020; --wave-bar: 7; --wave-gap: 2; }

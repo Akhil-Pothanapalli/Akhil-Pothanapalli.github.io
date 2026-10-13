@@ -1,0 +1,36 @@
+/* Vaporwave: sunset gradients, neon grid floor, wide-spaced 90s type. */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Righteous&family=Space+Mono:wght@400;700&display=swap');
+:root[data-style="vaporwave"] {
+  --bg: #1a0b3a; --surface: rgba(255, 255, 255, .06); --surface-2: rgba(0, 229, 255, .12); --text: #fdf0ff; --muted: #c9a7ff;
+  --accent: #ff6ec7; --on-accent: #1a0b3a; --accent-2: #00e5ff; --on-accent-2: #1a0b3a; --t3: #00e5ff; --line: rgba(0, 229, 255, .35);
+  --card-bg: rgba(43, 15, 84, .75); --card-border: 1px solid #00e5ff; --card-shadow: 6px 6px 0 #ff6ec7; --radius: 0; --radius-lg2: 0; --num-radius: 0; --portrait-radius: 50%;
+  --portrait-border: 4px solid #00e5ff; --portrait-shadow: 0 0 40px #ff6ec7;
+  --hero-bg: linear-gradient(180deg, #2b0f54 0%, #7a1f7a 50%, #ff6ec7 85%, #ffc86e 100%); --hero-text: #ffffff;
+  --band-bg: linear-gradient(180deg, #2b0f54, #1a0b3a); --band-text: #fdf0ff; --band-muted: #c9a7ff; --band-surface: rgba(0, 229, 255, .08); --band-accent: #00e5ff; --on-band-accent: #1a0b3a;
+  --cta-bg: linear-gradient(180deg, #ff6ec7, #ffc86e); --cta-text: #1a0b3a; --cta-card-bg: #1a0b3a; --cta-card-text: #fdf0ff;
+  --ticker-bg: #00e5ff; --ticker-text: #1a0b3a; --ticker2-bg: #ff6ec7; --ticker2-text: #1a0b3a;
+  --btn-radius: 0; --wave-bg: #1a0b3a; --wave-hi: #00e5ff; --wave-lo: #ff6ec7; --wave-radius: 0;
+  --font-display: "Righteous", system-ui, sans-serif; --font-body: "Space Mono", ui-monospace, monospace; --display-weight: 400; --display-tracking: .02em;
+  --heading-shadow: 3px 3px 0 #ff6ec7;
+}
+:root[data-style="vaporwave"] body { background: linear-gradient(180deg, #1a0b3a, #2b0f54) fixed; }
+:root[data-style="vaporwave"] body::before { content: ""; position: fixed; left: -50%; right: -50%; bottom: 0; height: 40vh; z-index: -1; pointer-events: none; opacity: .35; background: repeating-linear-gradient(90deg, #00e5ff 0 1px, transparent 1px 60px), repeating-linear-gradient(0deg, #00e5ff 0 1px, transparent 1px 40px); transform: perspective(300px) rotateX(60deg); transform-origin: bottom; }
+:root[data-style="vaporwave"] .stage { position: relative; overflow: hidden; }
+:root[data-style="vaporwave"] .stage::after { content: ""; position: absolute; left: -30%; right: -30%; bottom: 0; height: 30%; pointer-events: none; background: repeating-linear-gradient(90deg, rgba(0, 229, 255, .7) 0 2px, transparent 2px 50px), repeating-linear-gradient(0deg, rgba(0, 229, 255, .7) 0 2px, transparent 2px 26px); transform: perspective(200px) rotateX(55deg); transform-origin: bottom; }
+:root[data-style="vaporwave"] .stage > * { position: relative; z-index: 1; }
+:root[data-style="vaporwave"] :is(.title, .sec-title, .poster-title) { font-family: "Monoton", system-ui, sans-serif; font-weight: 400; letter-spacing: .02em; }
+:root[data-style="vaporwave"] .t2 { text-shadow: 4px 4px 0 #00e5ff; color: #ffffff; }
+:root[data-style="vaporwave"] .t3 { color: #ffc86e; }
+:root[data-style="vaporwave"] .kicker::after { content: "Ａ Ｅ Ｓ Ｔ Ｈ Ｅ Ｔ Ｉ Ｃ"; display: block; width: 100%; margin-top: 8px; letter-spacing: .3em; color: #00e5ff; font-size: 13px; }
+:root[data-style="vaporwave"] .bubble { color: #fdf0ff; }
+:root[data-style="vaporwave"] .bubble a { color: #00e5ff; }
+:root[data-style="vaporwave"] .sec-num { background: #00e5ff; color: #1a0b3a; }
+:root[data-style="vaporwave"] .sec-title { text-shadow: 3px 3px 0 #ff6ec7, 6px 6px 0 #00e5ff; }
+:root[data-style="vaporwave"] .about-statement { color: #ff6ec7; }
+:root[data-style="vaporwave"] .link-cell .label, :root[data-style="vaporwave"] .now .label { color: #00e5ff; }
+:root[data-style="vaporwave"] .poster-title { text-shadow: 3px 3px 0 #ffffff; }
+:root[data-style="vaporwave"] .poster .link-cell .label { color: #ff6ec7; }
+:root[data-style="vaporwave"] .poster .poster-sub { color: #2b0f54; }
+
+/* waveform */
+:root[data-style="vaporwave"] { --wave-mode: area; --wave-colors: #ff6ec7, #b28cff, #00e5ff; }

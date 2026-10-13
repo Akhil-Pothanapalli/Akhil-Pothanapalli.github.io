@@ -1,0 +1,83 @@
+/* Terminal / Hacker: phosphor green monospace on black, scanlines and a blinking cursor. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=VT323&display=swap');
+:root[data-style="terminal"] {
+  --bg: #050a05; --surface: #050a05; --surface-2: #0d1f0d; --text: #33ff66; --muted: #1f9e40;
+  --accent: #33ff66; --on-accent: #050a05; --accent-2: #ffb000; --on-accent-2: #050a05; --t3: #ffb000; --line: #1f9e40;
+  --card-bg: transparent; --card-border: 1px dashed #1f9e40; --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0;
+  --portrait-radius: 0; --portrait-border: 1px solid #33ff66;
+  --hero-bg: #050a05; --hero-border: 1px solid #33ff66; --chip-bg: transparent; --chip-text: #33ff66; --chip-border: 1px solid #1f9e40;
+  --band-bg: #050a05; --band-text: #33ff66; --band-muted: #1f9e40; --band-surface: transparent; --band-accent: #33ff66; --on-band-accent: #050a05;
+  --cta-bg: #050a05; --cta-text: #33ff66; --cta-card-bg: transparent; --cta-card-text: #33ff66;
+  --ticker-bg: transparent; --ticker-text: #1f9e40; --ticker2-bg: transparent; --ticker2-text: #ffb000; --ticker-border: 1px solid #1f9e40;
+  --btn-radius: 0; --btn-border: 1px solid #33ff66; --btn-weight: 600;
+  --wave-bg: #050a05; --wave-hi: #ffb000; --wave-lo: #33ff66; --wave-radius: 0;
+  --font-display: "IBM Plex Mono", ui-monospace, Menlo, monospace; --font-body: "IBM Plex Mono", ui-monospace, Menlo, monospace; --display-weight: 700; --display-tracking: -0.02em;
+  --heading-shadow: 0 0 8px rgba(51, 255, 102, .55); --link: #33ff66;
+}
+:root[data-style="terminal"] body { font-size: 15px; text-shadow: 0 0 2px rgba(51, 255, 102, .4); }
+:root[data-style="terminal"] body::after { content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .25) 0 1px, transparent 1px 3px); }
+:root[data-style="terminal"] .portrait img { filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(3) brightness(.85) contrast(1.2); }
+:root[data-style="terminal"] .stage { position: relative; padding-top: calc(clamp(28px, 5vw, 72px) + 20px); }
+:root[data-style="terminal"] .stage::before { content: "akhil@lab: ~ — zsh — 120×40"; position: absolute; left: 0; right: 0; top: 0; padding: 6px 14px; border-bottom: 1px solid #1f9e40; font-size: 12px; color: #1f9e40; }
+:root[data-style="terminal"] .title { font-size: clamp(36px, 5.4vw, 80px); }
+:root[data-style="terminal"] .title::before { content: "$ echo \"$MISSION\""; display: block; font-size: 15px; color: #1f9e40; margin-bottom: 12px; font-weight: 400; letter-spacing: 0; }
+:root[data-style="terminal"] .t3::after { content: "█"; color: #33ff66; animation: termBlink 1s steps(1) infinite; margin-left: .1em; }
+:root[data-style="terminal"] .kicker .tag { background: transparent; color: #ffb000; border: 1px solid #ffb000; }
+:root[data-style="terminal"] .bubble p::before { content: "> "; color: #ffb000; }
+:root[data-style="terminal"] .btn::before { content: "["; } :root[data-style="terminal"] .btn::after { content: "]"; }
+:root[data-style="terminal"] .btn-primary:hover { background: #ffb000; color: #050a05; border-color: #ffb000; filter: none; }
+:root[data-style="terminal"] .sec-num { background: transparent; color: #1f9e40; width: auto; height: auto; font-size: 15px; font-family: var(--font-body); }
+:root[data-style="terminal"] .sec-num::before { content: "["; } :root[data-style="terminal"] .sec-num::after { content: "]"; }
+:root[data-style="terminal"] .sec-title { font-size: clamp(32px, 4.6vw, 60px); }
+:root[data-style="terminal"] .sec-title::before { content: "~/"; color: #1f9e40; }
+:root[data-style="terminal"] .sec-note::before { content: "# "; }
+:root[data-style="terminal"] .about-statement { color: #ffb000; text-shadow: 0 0 8px rgba(255, 176, 0, .5); }
+:root[data-style="terminal"] .proj-idx, :root[data-style="terminal"] .proj:nth-child(even) .proj-idx { background: transparent; color: #ffb000; border: 1px solid #ffb000; }
+:root[data-style="terminal"] .ink .sec-num { background: transparent; color: #1f9e40; }
+:root[data-style="terminal"] .ink, :root[data-style="terminal"] .poster { border: 1px solid #1f9e40; }
+:root[data-style="terminal"] .pub:nth-child(n) { border: 1px dashed #1f9e40; }
+:root[data-style="terminal"] .pub-year { border-color: #1f9e40; }
+:root[data-style="terminal"] .pub-short { color: #ffb000; }
+:root[data-style="terminal"] .job-points li::before, :root[data-style="terminal"] .now li::before { background: none; color: #ffb000; width: auto; height: auto; }
+:root[data-style="terminal"] .job-points li::before { content: "-"; top: 0; }
+:root[data-style="terminal"] .poster-title::before { content: "$ "; color: #1f9e40; }
+:root[data-style="terminal"] .ticker { margin-inline: 0; border-inline: 0; }
+@keyframes termBlink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="terminal"] .t3::after { animation: none; } }
+:root[data-style="terminal"] { --wave-mode: scope; --wave-colors: #33ff66; --wave-lo: #33ff66; }
+
+/* banners type instead of scrolling */
+:root[data-style="terminal"] .ticker:has(.typer) .ticker-track { display: none; }
+:root[data-style="terminal"] .typer { padding: 14px var(--pad); font-size: clamp(16px, 1.8vw, 22px); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+:root[data-style="terminal"] .typer-prompt { color: #1f9e40; }
+:root[data-style="terminal"] .ticker.rev .typer-text { color: #ffb000; }
+:root[data-style="terminal"] .typer-cur, :root[data-style="terminal"] .sec-title.is-typing::after { animation: termBlink 1s steps(1) infinite; }
+:root[data-style="terminal"] .sec-title.is-typing::after { content: "█"; }
+
+/* boot screen */
+.term-boot { position: fixed; inset: 0; z-index: 200; background: #050a05; color: #33ff66; padding: clamp(20px, 5vw, 60px); cursor: pointer; transition: opacity .35s; }
+.term-boot pre { margin: 0; font: 15px/1.6 "IBM Plex Mono", ui-monospace, monospace; text-shadow: 0 0 6px rgba(51, 255, 102, .6); white-space: pre-wrap; }
+.term-boot pre::after { content: "█"; animation: termBlink 1s steps(1) infinite; }
+.term-boot.is-done { opacity: 0; pointer-events: none; }
+
+/* little shell habits everywhere */
+:root[data-style="terminal"] .nav-links a span::before { content: "./"; }
+:root[data-style="terminal"] .nav-brand::before { content: "~ "; color: #1f9e40; }
+:root[data-style="terminal"] a:not(.btn):hover { background: #33ff66; color: #050a05; opacity: 1; text-shadow: none; }
+:root[data-style="terminal"] ::selection { background: #33ff66; color: #050a05; }
+:root[data-style="terminal"] .proj-tags .tag { background: transparent; color: #33ff66; border: 0; padding-inline: 0 8px; }
+:root[data-style="terminal"] .proj-tags .tag::before { content: "--"; color: #1f9e40; }
+:root[data-style="terminal"] .proj-kicker::before { content: "// "; }
+:root[data-style="terminal"] .proj-facts > div { border-style: dashed; }
+:root[data-style="terminal"] .skill-h .accent { background: transparent; color: #ffb000; border: 1px solid #ffb000; }
+:root[data-style="terminal"] .skill li { border: 0; padding: 2px 6px; }
+:root[data-style="terminal"] .skill li::before { content: "$ "; color: #1f9e40; }
+:root[data-style="terminal"] .skill li:hover { background: #33ff66; color: #050a05; }
+:root[data-style="terminal"] .job-period::before { content: "["; } :root[data-style="terminal"] .job-period::after { content: "]"; }
+:root[data-style="terminal"] .job-period { color: #ffb000; }
+:root[data-style="terminal"] .now li::before { content: "[" counter(n) "]"; }
+:root[data-style="terminal"] .pub-role::before { content: "#"; }
+:root[data-style="terminal"] .link-cell strong::before { content: "> "; color: #1f9e40; }
+:root[data-style="terminal"] .foot-row::after { content: "[process exited with code 0]"; color: #1f9e40; font-weight: 400; }
+:root[data-style="terminal"] .wavebar { border: 1px solid #1f9e40; }
+:root[data-style="terminal"] .wavebar::before { content: "CH1  200mV/div  1ms/div"; position: absolute; right: 10px; top: 6px; z-index: 1; font-size: 10px; color: #1f9e40; }

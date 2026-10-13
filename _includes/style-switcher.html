@@ -1,0 +1,59 @@
+<div class="sp" id="stylePicker">
+  <div class="sp-panel" id="stylePanel" role="dialog" aria-label="Pick a style" hidden>
+    <h2>Pick a style</h2>
+    <p>Same page, different look. Your pick is remembered.</p>
+    {% assign groups = site.data.styles | group_by: "group" %}{% for g in groups %}<div class="sp-group">{{ g.name }}</div>
+    <div class="sp-list">{% for s in g.items %}<button type="button" class="sp-opt" data-style-id="{{ s.id }}" aria-pressed="false">{{ s.name }}</button>{% endfor %}</div>
+    {% endfor %}
+  </div>
+  <button type="button" class="sp-toggle" id="styleToggle" aria-expanded="false" aria-controls="stylePanel"><span class="sp-swatch" aria-hidden="true"></span>Style: <span id="styleName">Maximalism</span></button>
+</div>
+<script>
+  /* Style picker: kept inline so it works even if main.js is cached or fails */
+  (function () {
+  var cfg = window.siteStyles, toggle = document.getElementById("styleToggle"), panel = document.getElementById("stylePanel");
+  if (cfg && toggle && panel) {
+    var opts = panel.querySelectorAll(".sp-opt"), nameEl = document.getElementById("styleName");
+    var mark = function (id) {
+      opts.forEach(function (o) {
+        var on = o.getAttribute("data-style-id") === id;
+        o.setAttribute("aria-pressed", on ? "true" : "false");
+        if (on) nameEl.textContent = o.textContent;
+      });
+    };
+    var openPanel = function (open) {
+      panel.hidden = !open;
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    var apply = function (id) {
+      var h = document.documentElement, old = document.getElementById("styleSheet");
+      var done = function () {
+        h.setAttribute("data-style", id);
+        h.classList.toggle("calm", id !== "maximal");
+        if (old) old.remove();
+        mark(id);
+        document.dispatchEvent(new Event("stylechange"));
+      };
+      try { localStorage.setItem("style", id); } catch (e) {}
+      try {
+        var u = new URL(location.href);
+        if (id === "maximal") u.searchParams.delete("style"); else u.searchParams.set("style", id);
+        history.replaceState(null, "", u);
+      } catch (e) {}
+      if (id === "maximal") return done();
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = cfg.base + id + ".css?v=" + cfg.v;
+      link.onload = link.onerror = function () { if (old) old.id = ""; link.id = "styleSheet"; done(); };
+      document.head.appendChild(link);
+    };
+    mark(document.documentElement.getAttribute("data-style"));
+    toggle.addEventListener("click", function () { openPanel(panel.hidden); });
+    opts.forEach(function (o) {
+      o.addEventListener("click", function () { apply(o.getAttribute("data-style-id")); });
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) { openPanel(false); toggle.focus(); } });
+    document.addEventListener("click", function (e) { if (!panel.hidden && !e.target.closest("#stylePicker")) openPanel(false); });
+  }
+  })();
+</script>

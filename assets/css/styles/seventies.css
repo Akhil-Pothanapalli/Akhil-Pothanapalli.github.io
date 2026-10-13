@@ -1,0 +1,28 @@
+/* Retro 70s: warm burnt oranges and browns, groovy rounded type, rainbow stripes. */
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&family=Karla:wght@400;600;800&display=swap');
+:root[data-style="seventies"] {
+  --bg: #f4e2c4; --surface: #fbeedb; --surface-2: #f0d4a8; --text: #4a2410; --muted: #7d4a2a;
+  --accent: #c2491d; --on-accent: #fbeedb; --accent-2: #e8a33d; --on-accent-2: #4a2410; --t3: #6b3a1e; --line: rgba(74, 36, 16, .25);
+  --card-bg: #fbeedb; --card-border: 3px solid #4a2410; --radius: 32px; --radius-lg2: 40px; --portrait-border: 6px solid #fbeedb;
+  --portrait-shadow: 0 0 0 10px #e8a33d, 0 0 0 20px #d9662a, 0 0 0 30px #a8381d;
+  --hero-bg: #f9dfb3; --hero-border: 3px solid #4a2410;
+  --band-bg: #6b3a1e; --band-text: #f4e2c4; --band-muted: #e8c49a; --band-surface: rgba(244, 226, 196, .08); --band-accent: #e8a33d; --on-band-accent: #4a2410;
+  --cta-bg: #c2491d; --cta-text: #fbeedb; --cta-card-bg: #f4e2c4;
+  --ticker-bg: #e8a33d; --ticker-text: #4a2410; --ticker2-bg: #a8381d; --ticker2-text: #fbeedb; --ticker-border: 3px solid #4a2410;
+  --btn-border: 3px solid #4a2410; --wave-bg: #4a2410; --wave-hi: #e8a33d; --wave-lo: #f4e2c4;
+  --font-display: "Shrikhand", Georgia, serif; --font-body: "Karla", system-ui, sans-serif; --display-weight: 400; --display-tracking: 0;
+  --heading-shadow: 3px 3px 0 #e8a33d, 6px 6px 0 #d9662a; --heading: #4a2410;
+}
+:root[data-style="seventies"] .site-nav { border-bottom: 0; box-shadow: 0 4px 0 #e8a33d, 0 8px 0 #d9662a, 0 12px 0 #a8381d; }
+:root[data-style="seventies"] .stage { position: relative; overflow: hidden; }
+:root[data-style="seventies"] .stage::before { content: ""; position: absolute; right: -10%; bottom: -40%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, transparent 0 30%, #e8a33d 30% 42%, #d9662a 42% 54%, #a8381d 54% 66%, #6b3a1e 66% 78%, transparent 78%); }
+:root[data-style="seventies"] .stage > * { position: relative; }
+:root[data-style="seventies"] .t2 { text-shadow: 4px 4px 0 #e8a33d, 8px 8px 0 #6b3a1e; }
+:root[data-style="seventies"] .about-statement { color: #c2491d; }
+:root[data-style="seventies"] .ink .sec-title, :root[data-style="seventies"] .poster-title { --heading-shadow: 3px 3px 0 #e8a33d, 6px 6px 0 #a8381d; }
+:root[data-style="seventies"] .proj:nth-child(even) { background: #f9dfb3; }
+:root[data-style="seventies"] .ticker { margin-inline: 0; border-inline: 0; border-radius: 0; }
+:root[data-style="seventies"] .sec-num { background: #c2491d; color: #fbeedb; }
+
+/* waveform */
+:root[data-style="seventies"] { --wave-mode: bars; --wave-colors: #e8a33d, #d9662a, #a8381d, #f4e2c4; --wave-bar: 10; --wave-gap: 4; }

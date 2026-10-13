@@ -1,0 +1,21 @@
+# Looks offered by the style picker. `id` matches assets/css/styles/<id>.css (maximal = the original site.css look).
+- { id: maximal, name: Maximalism, group: Original }
+- { id: minimal, name: Minimalism, group: Clean }
+- { id: swiss, name: Swiss, group: Clean }
+- { id: flat, name: Flat, group: Clean }
+- { id: newspaper, name: Newspaper, group: Clean }
+- { id: y2k, name: Y2K, group: Retro }
+- { id: seventies, name: Retro 70s, group: Retro }
+- { id: vaporwave, name: Vaporwave, group: Retro }
+- { id: pixel, name: Pixel / 8-bit, group: Retro }
+- { id: win95, name: Windows 95, group: Retro }
+- { id: terminal, name: Terminal, group: Retro }
+- { id: psychedelic, name: Psychedelic, group: Retro }
+- { id: glass, name: Glassmorphism, group: Soft }
+- { id: neumorphism, name: Neumorphism, group: Soft }
+- { id: clay, name: Claymorphism, group: Soft }
+- { id: aurora, name: Aurora, group: Soft }
+- { id: organic, name: Organic, group: Themed }
+- { id: skeuo, name: Skeuomorphism, group: Themed }
+- { id: deco, name: Art Deco, group: Themed }
+- { id: cyberpunk, name: Cyberpunk, group: Themed }

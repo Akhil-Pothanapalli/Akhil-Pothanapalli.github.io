@@ -1,0 +1,30 @@
+/* Flat design: solid saturated fills, no shadows, no gradients. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+:root[data-style="flat"] {
+  --bg: #ffffff; --surface: #eef1ff; --surface-2: #dfe4ff; --text: #1a237e; --muted: #5c6299;
+  --accent: #3d5afe; --on-accent: #ffffff; --accent-2: #ff4081; --on-accent-2: #ffffff; --t3: #ff4081; --line: #dfe4ff;
+  --card-bg: #eef1ff; --radius: 10px; --radius-lg2: 16px; --num-radius: 8px; --portrait-radius: 50%; --portrait-border: 12px solid #ffca28;
+  --hero-bg: #3d5afe; --hero-text: #ffffff; --chip-bg: #ffffff;
+  --band-bg: #1a237e; --band-text: #ffffff; --band-muted: #b8c0ff; --band-surface: #283593; --band-accent: #ffca28; --on-band-accent: #1a237e;
+  --cta-bg: #ff4081; --cta-text: #ffffff; --cta-card-bg: #ffffff; --cta-card-text: #1a237e;
+  --ticker-bg: #ffca28; --ticker-text: #1a237e; --ticker2-bg: #00bfa5; --ticker2-text: #ffffff;
+  --btn-radius: 6px; --wave-bg: #1a237e; --wave-hi: #ffca28; --wave-lo: #ffffff; --wave-radius: 0;
+  --font-display: "Poppins", system-ui, sans-serif; --font-body: "Poppins", system-ui, sans-serif; --display-weight: 800;
+}
+:root[data-style="flat"] .t2 { color: #ffca28; } :root[data-style="flat"] .t3 { color: #ffffff; }
+:root[data-style="flat"] .stage .btn-primary { background: #ffca28; color: #1a237e; }
+:root[data-style="flat"] .stage .tag-accent { background: #ffffff; color: #3d5afe; }
+:root[data-style="flat"] .proj:nth-child(4n+2) { background: #fff0f5; }
+:root[data-style="flat"] .proj:nth-child(4n+3) { background: #e0f7f4; }
+:root[data-style="flat"] .proj:nth-child(4n+4) { background: #fff8e1; }
+:root[data-style="flat"] .skill:nth-child(1) { background: #3d5afe; color: #ffffff; }
+:root[data-style="flat"] .skill:nth-child(2) { background: #ff4081; color: #ffffff; }
+:root[data-style="flat"] .skill:nth-child(3) { background: #00bfa5; color: #ffffff; }
+:root[data-style="flat"] .skill:nth-child(4) { background: #ffca28; color: #1a237e; }
+:root[data-style="flat"] .skill-h { color: inherit; }
+:root[data-style="flat"] .skill-h .accent { background: #ffffff; color: #1a237e; }
+:root[data-style="flat"] .skill li { background: rgba(255, 255, 255, .22); color: inherit; }
+:root[data-style="flat"] .sec-num { background: #3d5afe; color: #ffffff; }
+
+/* waveform */
+:root[data-style="flat"] { --wave-mode: bars; --wave-colors: #ffca28, #ff4081, #00bfa5, #ffffff; --wave-bar: 8; --wave-gap: 4; }

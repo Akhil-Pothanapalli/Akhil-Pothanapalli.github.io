@@ -9,6 +9,8 @@
 {{ content }}
 </main>
 {% include footer.html %}
+{% include style-switcher.html %}
 <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<script src="{{ '/assets/js/style-fx.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>

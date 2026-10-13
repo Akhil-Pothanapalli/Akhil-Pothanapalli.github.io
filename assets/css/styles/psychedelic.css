@@ -1,0 +1,38 @@
+/* Psychedelic: swirling hot colour rings, outlined wavy type, loud alternating cards. */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Outfit:wght@400;600;800&display=swap');
+:root[data-style="psychedelic"] {
+  --bg: #fff1d0; --surface: #ffd000; --surface-2: #ffffff; --text: #3b0060; --muted: #7a2c9a;
+  --accent: #ff2fa0; --on-accent: #ffffff; --accent-2: #7a2cff; --on-accent-2: #ffffff; --t3: #ff5e00; --line: #3b0060;
+  --card-bg: #ffd000; --card-text: #3b0060; --card-border: 4px solid #3b0060; --card-shadow: 8px 8px 0 #3b0060; --radius: 40px 12px 40px 12px; --radius-lg2: 48px;
+  --portrait-border: 6px solid #3b0060; --portrait-shadow: 0 0 0 12px #ffd000, 0 0 0 18px #3b0060, 0 0 0 30px #ff2fa0, 0 0 0 36px #3b0060;
+  --hero-bg: repeating-radial-gradient(circle at 20% 120%, #ff5e00 0 26px, #ffd000 26px 52px, #ff2fa0 52px 78px, #7a2cff 78px 104px); --hero-text: #ffffff; --hero-border: 4px solid #3b0060;
+  --chip-bg: #ffffff; --chip-border: 2px solid #3b0060;
+  --band-bg: repeating-conic-gradient(from 0deg at 80% 0%, #3b0060 0 6deg, #52008a 6deg 12deg); --band-text: #ffffff; --band-muted: #ffc6f0; --band-surface: rgba(255, 255, 255, .1); --band-accent: #ffd000; --on-band-accent: #3b0060;
+  --cta-bg: repeating-radial-gradient(circle at 100% 0%, #7a2cff 0 30px, #ff2fa0 30px 60px, #ff5e00 60px 90px, #ffd000 90px 120px); --cta-text: #ffffff; --cta-card-bg: #ffffff; --cta-card-text: #3b0060;
+  --ticker-bg: #ff2fa0; --ticker-text: #ffffff; --ticker2-bg: #7a2cff; --ticker2-text: #ffd000; --ticker-border: 4px solid #3b0060;
+  --btn-border: 3px solid #3b0060; --btn-shadow: 4px 4px 0 #3b0060;
+  --wave-bg: #3b0060; --wave-hi: #ffd000; --wave-lo: #ff2fa0;
+  --font-display: "Righteous", system-ui, sans-serif; --font-body: "Outfit", system-ui, sans-serif; --display-weight: 400; --display-tracking: 0;
+  --heading: #3b0060;
+}
+:root[data-style="psychedelic"] :is(.title span, .sec-title, .poster-title) { color: #ffffff; -webkit-text-stroke: 3px #3b0060; paint-order: stroke fill; text-shadow: 5px 5px 0 #3b0060; }
+:root[data-style="psychedelic"] .t2 { color: #ffd000; display: inline-block; transform: skewY(-5deg) rotate(-2deg); }
+:root[data-style="psychedelic"] .sec-title { color: #ff2fa0; display: inline-block; transform: skewY(-3deg); }
+:root[data-style="psychedelic"] .about-statement { color: #7a2cff; }
+:root[data-style="psychedelic"] .proj:nth-child(4n+2), :root[data-style="psychedelic"] .skill:nth-child(2) { background: #ff2fa0; color: #ffffff; }
+:root[data-style="psychedelic"] .proj:nth-child(4n+3), :root[data-style="psychedelic"] .skill:nth-child(3) { background: #7a2cff; color: #ffffff; }
+:root[data-style="psychedelic"] .proj:nth-child(4n+4), :root[data-style="psychedelic"] .skill:nth-child(4) { background: #ff5e00; color: #ffffff; }
+:root[data-style="psychedelic"] :is(.proj, .skill):nth-child(n+2) :is(.proj-title, .skill-h, .proj-kicker) { color: #ffffff; }
+:root[data-style="psychedelic"] .proj-idx, :root[data-style="psychedelic"] .proj:nth-child(even) .proj-idx { background: #ffffff; color: #3b0060; border: 3px solid #3b0060; }
+:root[data-style="psychedelic"] .bubble { border-radius: 48px 16px 48px 16px; }
+:root[data-style="psychedelic"] .kicker .tag { border: 3px solid #3b0060; }
+:root[data-style="psychedelic"] .sec-num { background: #ffd000; color: #3b0060; border: 4px solid #3b0060; }
+:root[data-style="psychedelic"] .ink .sec-title, :root[data-style="psychedelic"] .poster-title { color: #ffd000; }
+:root[data-style="psychedelic"] .pub:nth-child(n) { border: 2px solid rgba(255, 255, 255, .4); backdrop-filter: blur(2px); background: rgba(59, 0, 96, .75); }
+:root[data-style="psychedelic"] .poster-sub, :root[data-style="psychedelic"] .poster-kicker { background: #3b0060; color: #ffffff; display: inline-block; padding: 4px 12px; border-radius: 12px; }
+:root[data-style="psychedelic"] .poster-kicker { display: table; }
+:root[data-style="psychedelic"] .ticker:not(.rev) { rotate: -1deg; }
+:root[data-style="psychedelic"] .ticker.rev { rotate: 1deg; }
+
+/* waveform */
+:root[data-style="psychedelic"] { --wave-mode: bars; --wave-colors: #ff5e00, #ffd000, #ff2fa0, #7a2cff, #2bd9a6; --wave-bar: 9; --wave-gap: 3; }

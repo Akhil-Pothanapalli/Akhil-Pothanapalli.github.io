@@ -1,0 +1,31 @@
+/* Organic / Earthy: sage and clay tones, a soft serif, blob shapes instead of rectangles. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;600;700&display=swap');
+:root[data-style="organic"] {
+  --bg: #eef0e2; --surface: #f8f8ef; --surface-2: #e2e6cf; --text: #2f3b26; --muted: #66735a;
+  --accent: #a0583a; --on-accent: #f8f8ef; --accent-2: #6d7f4f; --on-accent-2: #f8f8ef; --t3: #6d7f4f; --line: rgba(47, 59, 38, .18);
+  --card-bg: #f8f8ef; --radius: 42px 18px 46px 22px; --radius-lg2: 64px 28px 72px 36px; --portrait-radius: 62% 38% 46% 54% / 55% 46% 54% 45%;
+  --portrait-border: 8px solid #f8f8ef;
+  --hero-bg: #dfe6c8; --chip-bg: #e2e6cf; --chip-text: #2f3b26;
+  --band-bg: #2f3b26; --band-text: #eef0e2; --band-muted: #c4cdb0; --band-surface: rgba(238, 240, 226, .07); --band-accent: #e2b48c; --on-band-accent: #2f3b26;
+  --cta-bg: #b8c99a; --cta-text: #2f3b26; --cta-card-bg: #f8f8ef; --cta-card-text: #2f3b26;
+  --ticker-bg: #a0583a; --ticker-text: #f8f8ef; --ticker2-bg: #6d7f4f; --ticker2-text: #f8f8ef;
+  --wave-bg: #2f3b26; --wave-hi: #e2b48c; --wave-lo: #b8c99a;
+  --font-display: "Fraunces", Georgia, serif; --font-body: "Karla", system-ui, sans-serif; --display-weight: 600; --display-tracking: -0.02em;
+}
+:root[data-style="organic"] .stage { position: relative; }
+:root[data-style="organic"] .stage::before { content: ""; position: absolute; right: -6%; top: -12%; width: 48%; aspect-ratio: 1; background: #b8c99a; border-radius: 62% 38% 46% 54% / 55% 46% 54% 45%; animation: blobMorph 14s ease-in-out infinite; }
+:root[data-style="organic"] .stage::after { content: ""; position: absolute; right: 30%; bottom: -14%; width: 22%; aspect-ratio: 1; background: #e2b48c; border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%; animation: blobMorph 11s ease-in-out infinite reverse; }
+:root[data-style="organic"] .stage > * { position: relative; z-index: 1; }
+:root[data-style="organic"] .t2 { font-style: italic; font-weight: 400; color: #a0583a; }
+:root[data-style="organic"] .sec-num { background: #6d7f4f; color: #f8f8ef; border-radius: 58% 42% 50% 50% / 45% 55% 45% 55%; }
+:root[data-style="organic"] .about-statement { font-style: italic; font-weight: 400; color: #6d7f4f; }
+:root[data-style="organic"] .proj:nth-child(even), :root[data-style="organic"] .skill:nth-child(even) { background: #f3eadc; border-radius: 18px 46px 22px 42px; }
+:root[data-style="organic"] .now { background: #e2e6cf; }
+:root[data-style="organic"] .proj-idx { border-radius: 58% 42% 50% 50% / 45% 55% 45% 55%; }
+:root[data-style="organic"] .pub-year { border-radius: 50% 50% 46% 54% / 60% 40% 60% 40%; border: 0; background: #e2b48c; color: #2f3b26; }
+:root[data-style="organic"] .ticker { border-radius: 40px 12px 40px 12px; }
+@keyframes blobMorph { 50% { border-radius: 38% 62% 54% 46% / 45% 55% 45% 55%; transform: rotate(8deg); } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="organic"] .stage::before, :root[data-style="organic"] .stage::after { animation: none; } }
+
+/* waveform */
+:root[data-style="organic"] { --wave-mode: area; --wave-colors: #b8c99a, #e2b48c, #a0583a; }
