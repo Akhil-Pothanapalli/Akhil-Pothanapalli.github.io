@@ -9,7 +9,6 @@
 - { id: pixel, name: Pixel / 8-bit, group: Retro }
 - { id: win95, name: Windows 95, group: Retro }
 - { id: terminal, name: Terminal, group: Retro }
-- { id: psychedelic, name: Psychedelic, group: Retro }
 - { id: glass, name: Glassmorphism, group: Soft }
 - { id: neumorphism, name: Neumorphism, group: Soft }
 - { id: clay, name: Claymorphism, group: Soft }

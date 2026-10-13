@@ -30,7 +30,7 @@ Visitors pick a look from the **Style** button (bottom-right); the choice is sav
 | `maximal` | Maximalism (default, `site.css`) | `pixel` | Pixel / 8-bit |
 | `minimal` | Minimalism | `win95` | Windows 95 |
 | `swiss` | Swiss / International | `terminal` | Terminal |
-| `flat` | Flat | `psychedelic` | Psychedelic |
+| `flat` | Flat | | |
 | `newspaper` | Newspaper | `glass` | Glassmorphism |
 | `y2k` | Y2K futurism | `neumorphism` | Neumorphism |
 | `vaporwave` | Vaporwave | `clay` | Claymorphism |
@@ -43,7 +43,7 @@ Visitors pick a look from the **Style** button (bottom-right); the choice is sav
 - `_includes/head.html` reads `?style=` or the saved choice before first paint, adds `class="calm"` to `<html>` for any style except Maximalism, and loads `assets/css/styles/<id>.css`.
 - `assets/css/styles/base.css` turns off the collage and tilts under `.calm` and rebuilds every section from a small set of tokens (`--bg`, `--text`, `--accent`, `--card-bg`, `--band-bg`, `--cta-bg`, `--font-display` …). A style file mostly sets those tokens under `:root[data-style="<id>"]`, then adds its own details.
 - The hero waveform is drawn by `assets/js/main.js`; a style chooses how with `--wave-mode` (`bars`, `blocks`, `scope`, `area`, `line`, `none`) plus `--wave-colors`, `--wave-bar` and `--wave-gap`.
-- `assets/js/style-fx.js` holds extras CSS can't do: Terminal's boot screen and typing banners, Glass's pointer highlight and floating orbs, Skeuomorphism's cassette tape, Flat's live tiles, Swiss's arcs, Space's starfield and orbit, and Food's pixel-art dishes (drawn on a 24×24 grid in code, so there are no image files to load).
+- `assets/js/style-fx.js` (and per-style files in `assets/js/fx/`, which call `registerStyleFx(id, {on, off})`) holds extras CSS can't do: Terminal's boot screen and typing banners, Glass's pointer highlight and floating orbs, Skeuomorphism's cassette tape, Flat's live tiles, Swiss's arcs, Space's starfield and orbit, and Food's pixel-art dishes (drawn on a 24×24 grid in code, so there are no image files to load).
 
 ### Add your own style
 1. Copy a style file in `assets/css/styles/` to `<id>.css` and change the tokens at the top.
@@ -84,13 +84,6 @@ Sources used to research each style, so you can study the originals yourself. St
 - [Reading design insights and breaking NES constraints](https://gamedevelopment.com/art/reading-design-insights-and-breaking-nes-constraints), Game Developer
 - [Pixel art](https://en.wikipedia.org/wiki/Pixel_art), Wikipedia: from light-bulb matrix signs to Xerox PARC's SuperPaint
 - [History of pixel art](https://pixnote.net/en/learn/history), Pixnote; [Pixel art, a closer look](https://blog.artsper.com/en/a-closer-look/art-movements-en/pixel-art/), Artsper
-
-**Psychedelic** (the 1966–71 Fillmore and Avalon concert posters and liquid light shows: melting Art Nouveau lettering after Wes Wilson, vibrating complementary pairs after Victor Moscoso, a drifting oil-projection backdrop after the Joshua Light Show, op-art rings, BG poster numbers)
-- [Key poster artists of the psychedelic era](https://gocollect.com/index.php/blog/key-poster-artists-of-the-psychedelic-era), GoCollect: Wilson, Moscoso, Griffin, Kelley and Mouse
-- [1960s concert poster artists](https://psychedelicscene.com/2024/05/08/1960s-concert-posters-artists/), Psychedelic Scene
-- [The Fillmore and Avalon posters](https://tfaoi.org/aa/8aa/8aa519.htm), Resource Library: some 500 posters, 1966–71, "unorthodox juxtapositions of electric colors"
-- [Wes Wilson remembered](https://liveforlivemusic.com/news/wes-wilson-dead/), Live for Live Music; [Rick Griffin](https://recordart.net/tag/rick-griffin/) and [Wes Wilson](https://recordart.net/tag/wes-wilson/), RecordArt
-- [Liquid light show](https://en.wikipedia.org/wiki/Liquid_light_show) and [The Joshua Light Show](https://en.wikipedia.org/wiki/The_Joshua_Light_Show), Wikipedia; [Joshua Light Show, *Liquid Loops* (1967)](https://www.moma.org/collection/works/200467), MoMA
 
 ## Run locally (optional)
 `gem install jekyll && jekyll serve`

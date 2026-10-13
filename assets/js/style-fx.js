@@ -810,51 +810,6 @@
     };
   })();
 
-  /* ── Psychedelic: a liquid light show (coloured oil blobs drifting and merging) and a gentle melt for the big lettering ── */
-  fx.psychedelic = (function () {
-    var nodes = [], raf = 0, t = 0;
-    return {
-      on: function () {
-        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", "0"); svg.setAttribute("height", "0"); svg.setAttribute("aria-hidden", "true"); svg.style.position = "absolute";
-        svg.innerHTML = '<filter id="psyWarp" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".012 .03" numOctaves="2" seed="4" result="n"><animate attributeName="seed" values="4;5;6;5;4" dur="9s" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="7"/></filter>';
-        if (reduce) svg.querySelector("animate").remove();
-        document.body.appendChild(svg); nodes.push(svg);
-        var c = el("canvas", "psy-liquid"); c.setAttribute("aria-hidden", "true");
-        document.body.insertBefore(c, document.body.firstChild); nodes.push(c);
-        var g = c.getContext("2d"), W = 160, H = 100; c.width = W; c.height = H;
-        var cols = ["255,42,31", "25,217,122", "31,77,255", "255,43,214", "255,229,0", "255,138,0", "139,43,255"];
-        var blobs = cols.concat(cols.slice(0, 3)).map(function (col, i) {
-          return { col: col, x: Math.random() * W, y: Math.random() * H, r: 18 + Math.random() * 26, a: Math.random() * 6.28, s: .0012 + Math.random() * .002, ox: 30 + Math.random() * 50, oy: 20 + Math.random() * 30 };
-        });
-        function frame() {
-          t++;
-          g.globalCompositeOperation = "source-over"; g.fillStyle = "#0b0612"; g.fillRect(0, 0, W, H);
-          g.globalCompositeOperation = "lighter";
-          blobs.forEach(function (b, i) {
-            var x = W / 2 + Math.cos(b.a + t * b.s * (i % 2 ? 1 : -1)) * b.ox + Math.sin(t * b.s * .7) * 10;
-            var y = H / 2 + Math.sin(b.a * 1.3 + t * b.s) * b.oy;
-            var r = b.r * (1 + .25 * Math.sin(t * .01 + i));
-            var grd = g.createRadialGradient(x, y, 0, x, y, r);
-            grd.addColorStop(0, "rgba(" + b.col + ",.75)"); grd.addColorStop(.6, "rgba(" + b.col + ",.35)"); grd.addColorStop(1, "rgba(" + b.col + ",0)");
-            g.fillStyle = grd; g.beginPath(); g.arc(x, y, r, 0, 6.283); g.fill();
-          });
-          if (!reduce && !document.hidden) raf = requestAnimationFrame(frame);
-          else if (!reduce) raf = setTimeout(frame, 500);
-        }
-        frame();
-        /* rotating-snakes illusions in the margins: concentric rings of black→blue→white→yellow, alternating direction */
-        [["about", "psy-snake--a"], ["research", "psy-snake--b"], ["work", "psy-snake--c"]].forEach(function (p) {
-          var sec = document.getElementById(p[0]); if (!sec) return;
-          var d = el("div", "psy-snake " + p[1]); d.setAttribute("aria-hidden", "true");
-          for (var r = 0; r < 5; r++) { var ring = el("span"); ring.style.setProperty("--i", r); d.appendChild(ring); }
-          sec.appendChild(d); nodes.push(d);
-        });
-      },
-      off: function () { cancelAnimationFrame(raf); clearTimeout(raf); nodes.forEach(function (n) { n.remove(); }); nodes = []; }
-    };
-  })();
-
   /* ── Glass: floating glass orbs, and a highlight that follows the pointer across each pane ── */
   fx.glass = (function () {
     var orbs = null, sel = ".stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster";
@@ -888,24 +843,6 @@
     };
   })();
 
-  /* ── Skeuomorphism: the waveform becomes a cassette tape ── */
-  fx.skeuo = (function () {
-    var tape = null;
-    return {
-      on: function () {
-        var bar = document.querySelector(".wavebar");
-        if (!bar) return;
-        tape = el("div", "cassette",
-          '<div class="cs-label"><span class="cs-side">A</span><span class="cs-title">Machines that listen · mix 2026</span><span class="cs-lines"></span></div>' +
-          '<div class="cs-window"><span class="cs-reel"></span><span class="cs-tape"></span><span class="cs-reel"></span></div>' +
-          '<div class="cs-foot"><i></i><i></i><i></i><i></i></div>' +
-          '<span class="cs-screw"></span><span class="cs-screw"></span><span class="cs-screw"></span><span class="cs-screw"></span>');
-        tape.setAttribute("aria-hidden", "true");
-        bar.appendChild(tape);
-      },
-      off: function () { if (tape) tape.remove(); tape = null; }
-    };
-  })();
 
   var current = null;
   function sync() {
@@ -916,5 +853,7 @@
     if (fx[id]) fx[id].on();
   }
   document.addEventListener("stylechange", sync);
+  /* per-style effect files in assets/js/fx/ register themselves here */
+  window.registerStyleFx = function (id, impl) { fx[id] = impl; if (current === id) impl.on(); };
   sync();
 })();
