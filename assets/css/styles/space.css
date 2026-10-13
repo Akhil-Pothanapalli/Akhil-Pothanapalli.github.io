@@ -1,0 +1,135 @@
+/* Space: a mission-control portfolio drifting in deep space. Starfield, shooting stars and the orbit are drawn by
+   style-fx.js; type pairs a technical display face with monospaced telemetry labels. */
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;500;700;800&family=IBM+Plex+Sans:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap');
+:root[data-style="space"] {
+  --void: #04060d; --star: #e8edf7; --cyan: #4cc9f0; --nebula: #7b5cff; --mars: #ff8a4c; --dim: #8a93ad;
+  --panel: rgba(12, 18, 38, .62); --edge: rgba(140, 170, 255, .22);
+  --bg: #04060d; --surface: rgba(12, 18, 38, .62); --surface-2: rgba(76, 201, 240, .08); --text: #e8edf7; --muted: #8a93ad;
+  --accent: #4cc9f0; --on-accent: #04060d; --accent-2: #ff8a4c; --on-accent-2: #04060d; --t3: #ff8a4c; --line: rgba(140, 170, 255, .22);
+  --card-bg: rgba(12, 18, 38, .62); --card-border: 1px solid rgba(140, 170, 255, .22); --card-shadow: 0 20px 50px -20px rgba(0, 0, 0, .8); --radius: 6px; --radius-lg2: 10px;
+  --portrait-radius: 50%; --portrait-border: 0 solid transparent;
+  --hero-bg: transparent; --hero-text: #e8edf7; --chip-bg: rgba(76, 201, 240, .08); --chip-text: #cfe9ff; --chip-border: 1px solid rgba(76, 201, 240, .25);
+  --band-bg: rgba(8, 12, 28, .7); --band-text: #e8edf7; --band-muted: #8a93ad; --band-surface: rgba(255, 255, 255, .03); --band-accent: #4cc9f0; --on-band-accent: #04060d;
+  --cta-bg: transparent; --cta-text: #e8edf7; --cta-card-bg: rgba(12, 18, 38, .72); --cta-card-text: #e8edf7;
+  --ticker-bg: rgba(8, 12, 28, .7); --ticker-text: #4cc9f0; --ticker2-bg: rgba(8, 12, 28, .7); --ticker2-text: #ff8a4c; --ticker-border: 1px solid rgba(140, 170, 255, .22);
+  --btn-radius: 4px; --btn-border: 1px solid rgba(76, 201, 240, .6); --btn-weight: 500;
+  --wave-bg: rgba(8, 12, 28, .7); --wave-mode: scope; --wave-colors: #4cc9f0; --wave-lo: #4cc9f0;
+  --font-display: "Oxanium", system-ui, sans-serif; --font-body: "IBM Plex Sans", system-ui, sans-serif; --display-weight: 700; --display-tracking: -0.01em;
+  --heading: #e8edf7; --link: #4cc9f0;
+}
+:root[data-style="space"] body { background: #04060d; }
+:root[data-style="space"] ::selection { background: #4cc9f0; color: #04060d; }
+.space-sky { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+:root[data-style="space"] body::before { content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: radial-gradient(ellipse at 15% 20%, rgba(123, 92, 255, .22), transparent 45%), radial-gradient(ellipse at 85% 75%, rgba(76, 201, 240, .14), transparent 45%), radial-gradient(ellipse at 60% 10%, rgba(255, 138, 76, .08), transparent 35%), #04060d; }
+:root[data-style="space"] .mono, :root[data-style="space"] .label { font-family: "Space Mono", ui-monospace, monospace; }
+
+/* nav: a thin console bar */
+:root[data-style="space"] .site-nav { background: rgba(4, 6, 13, .75); border-bottom: 1px solid rgba(140, 170, 255, .18); }
+:root[data-style="space"] .nav-brand { font-family: "Oxanium", sans-serif; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 16px; }
+:root[data-style="space"] .nav-links a { font-family: "Space Mono", monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; border-radius: 4px; }
+:root[data-style="space"] .nav-links a span { color: #ff8a4c; }
+:root[data-style="space"] .nav-links a.is-active { background: rgba(76, 201, 240, .14); color: #4cc9f0; box-shadow: inset 0 0 0 1px rgba(76, 201, 240, .45); }
+:root[data-style="space"] .nav-links { background: rgba(8, 12, 28, .95); }
+
+/* buttons: console keys */
+:root[data-style="space"] .btn { font-family: "Space Mono", monospace; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
+:root[data-style="space"] .btn-primary { background: #4cc9f0; color: #04060d; border-color: #4cc9f0; box-shadow: 0 0 24px rgba(76, 201, 240, .35); }
+:root[data-style="space"] .btn-secondary { background: transparent; color: #e8edf7; border-color: rgba(140, 170, 255, .4); }
+
+/* hero: mission brief on the left, the portrait as a planet with an orbit on the right */
+:root[data-style="space"] .stage { padding-top: clamp(40px, 6vw, 90px); }
+:root[data-style="space"] .kicker .tag { font-family: "Space Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; background: transparent; border: 1px solid rgba(76, 201, 240, .35); color: #cfe9ff; }
+:root[data-style="space"] .kicker .tag-accent-2::before { content: "● "; color: #3dff8a; }
+:root[data-style="space"] .title { font-size: clamp(48px, 6.6vw, 104px); line-height: .95; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; }
+:root[data-style="space"] .t2 { background: linear-gradient(90deg, #4cc9f0, #7b5cff 55%, #ff8a4c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:root[data-style="space"] .t3 { color: #e8edf7; }
+:root[data-style="space"] .bubble { background: rgba(8, 12, 28, .7); border: 1px solid rgba(140, 170, 255, .22); backdrop-filter: blur(6px); position: relative; padding-top: 40px; }
+:root[data-style="space"] .bubble::before { content: "▸ INCOMING TRANSMISSION"; position: absolute; left: var(--space-6); top: 14px; font: 11px/1 "Space Mono", monospace; letter-spacing: .14em; color: #ff8a4c; }
+:root[data-style="space"] .bubble p { font-weight: 300; }
+:root[data-style="space"] .art { overflow: visible; }
+:root[data-style="space"] .art .portrait { position: relative; width: min(100%, 320px); }
+:root[data-style="space"] .portrait .washed { position: relative; z-index: 1; box-shadow: inset -30px -30px 60px rgba(0, 0, 0, .55), 0 0 0 2px rgba(76, 201, 240, .5), 0 0 80px rgba(76, 201, 240, .25); }
+:root[data-style="space"] .portrait .washed::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 70% 70%, transparent 40%, rgba(4, 6, 13, .55) 75%); pointer-events: none; }
+:root[data-style="space"] .art .portrait::before { content: ""; position: absolute; z-index: 2; left: -22%; right: -22%; top: 42%; height: 26%; border-radius: 50%; border: 2px solid rgba(255, 138, 76, .7); border-top-color: transparent; transform: rotate(-14deg); pointer-events: none; }
+:root[data-style="space"] .art .portrait::after { content: ""; position: absolute; z-index: 0; left: -22%; right: -22%; top: 42%; height: 26%; border-radius: 50%; border: 2px solid rgba(255, 138, 76, .35); border-bottom-color: transparent; transform: rotate(-14deg); pointer-events: none; }
+.space-orbit { position: absolute; inset: -16%; z-index: 3; border-radius: 50%; border: 1px dashed rgba(140, 170, 255, .28); animation: spaceOrbit 18s linear infinite; pointer-events: none; }
+.space-orbit::before { content: ""; position: absolute; left: 50%; top: -7px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffffff, #b9c4dc 45%, #59617a); box-shadow: 0 0 12px rgba(255, 255, 255, .5); }
+@keyframes spaceOrbit { to { transform: rotate(360deg); } }
+:root[data-style="space"] .wavebar { position: relative; border: 1px solid rgba(76, 201, 240, .35); border-radius: 4px; }
+:root[data-style="space"] .wavebar::after { content: "DEEP SPACE NETWORK · INCOMING SIGNAL · 8.4 GHz"; position: absolute; left: 12px; top: 8px; font: 10px/1 "Space Mono", monospace; letter-spacing: .14em; color: rgba(76, 201, 240, .75); }
+
+/* telemetry tickers */
+:root[data-style="space"] .ticker { margin-inline: var(--space-3); }
+:root[data-style="space"] .ticker-run span:not(.dot) { font-family: "Space Mono", monospace; text-transform: uppercase; font-size: clamp(14px, 1.6vw, 20px); letter-spacing: .14em; }
+:root[data-style="space"] .ticker .dot, :root[data-style="space"] .ticker.rev .dot { width: 6px; height: 6px; background: currentColor; opacity: .7; }
+
+/* section heads: mission numbers */
+:root[data-style="space"] .sec-num { background: transparent; color: #ff8a4c; border: 1px solid rgba(255, 138, 76, .6); border-radius: 4px; width: auto; height: auto; padding: 6px 10px; font: 700 12px/1 "Space Mono", monospace; letter-spacing: .14em; }
+:root[data-style="space"] .sec-num::before { content: "MISSION "; }
+:root[data-style="space"] .sec-title { text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(40px, 6vw, 84px); }
+:root[data-style="space"] .sec-note { font-family: "Space Mono", monospace; font-size: 14px; color: #8a93ad; }
+:root[data-style="space"] .caption-box { font-family: "Space Mono", monospace; color: #ff8a4c; font-weight: 400; }
+:root[data-style="space"] .about-statement { color: #e8edf7; font-family: "Oxanium", sans-serif; font-weight: 500; text-transform: none; }
+:root[data-style="space"] .about-body { color: #c4cbe0; font-weight: 300; }
+:root[data-style="space"] .about-body strong { color: #ffffff; font-weight: 600; }
+:root[data-style="space"] .now .label, :root[data-style="space"] .proj-kicker, :root[data-style="space"] .job-period, :root[data-style="space"] .link-cell .label { font-family: "Space Mono", monospace; letter-spacing: .1em; }
+:root[data-style="space"] .now li { font-family: "Oxanium", sans-serif; font-weight: 500; }
+:root[data-style="space"] .now li::before { background: transparent; color: #4cc9f0; border: 1px solid rgba(76, 201, 240, .5); }
+
+/* research: mission patches */
+:root[data-style="space"] .proj { position: relative; overflow: hidden; backdrop-filter: blur(6px); }
+:root[data-style="space"] .proj-idx, :root[data-style="space"] .proj:nth-child(even) .proj-idx { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2a3a7a, #0b1230 70%); color: #e8edf7; font: 700 18px/1 "Oxanium", sans-serif; box-shadow: 0 0 0 3px #04060d, 0 0 0 5px #ff8a4c, inset 0 0 0 6px rgba(76, 201, 240, .25); }
+:root[data-style="space"] .proj:nth-child(even) .proj-idx { box-shadow: 0 0 0 3px #04060d, 0 0 0 5px #4cc9f0, inset 0 0 0 6px rgba(255, 138, 76, .25); }
+:root[data-style="space"] .proj-title { text-transform: uppercase; font-size: clamp(26px, 2.8vw, 38px); }
+:root[data-style="space"] .proj-kicker { color: #4cc9f0; }
+:root[data-style="space"] .proj-facts dt { font-family: "Oxanium", sans-serif; color: #4cc9f0; }
+:root[data-style="space"] .proj-facts > div { background: rgba(76, 201, 240, .06); border: 1px solid rgba(76, 201, 240, .2); border-radius: 4px; }
+
+/* papers: the flight log */
+:root[data-style="space"] .ink { margin-inline: var(--space-3); border: 1px solid rgba(140, 170, 255, .2); backdrop-filter: blur(6px); }
+:root[data-style="space"] .ink .sec-num { background: transparent; color: #ff8a4c; }
+:root[data-style="space"] .pub:nth-child(n) { border: 1px solid rgba(140, 170, 255, .14); border-radius: 6px; }
+:root[data-style="space"] .pub:nth-child(n) .pub-year { border-radius: 50%; border: 1px dashed rgba(76, 201, 240, .5); background: rgba(76, 201, 240, .06); color: #4cc9f0; font: 700 20px/1 "Oxanium", sans-serif; }
+:root[data-style="space"] .pub-short { font-family: "Space Mono", monospace; color: #ff8a4c; }
+:root[data-style="space"] .pub-title { font-family: "Oxanium", sans-serif; font-weight: 500; text-transform: none; }
+
+/* skills: instrument panels */
+:root[data-style="space"] .skill { backdrop-filter: blur(6px); }
+:root[data-style="space"] .skill-h { font-family: "Oxanium", sans-serif; text-transform: uppercase; font-size: 18px; letter-spacing: .02em; }
+:root[data-style="space"] .skill-h .accent { background: transparent; color: #ff8a4c; border: 1px solid rgba(255, 138, 76, .6); }
+:root[data-style="space"] .skill li { font-family: "Space Mono", monospace; font-size: 12px; }
+:root[data-style="space"] .skill li:hover { background: #4cc9f0; color: #04060d; }
+
+/* work: a trajectory line with orbit nodes */
+:root[data-style="space"] .jobs { position: relative; padding-left: 28px; }
+:root[data-style="space"] .jobs::before { content: ""; position: absolute; left: 6px; top: 10px; bottom: 10px; border-left: 1px dashed rgba(76, 201, 240, .45); }
+:root[data-style="space"] .job { position: relative; backdrop-filter: blur(6px); }
+:root[data-style="space"] .job::before { content: ""; position: absolute; left: -28px; top: 34px; width: 13px; height: 13px; border-radius: 50%; background: #04060d; border: 2px solid #4cc9f0; box-shadow: 0 0 12px rgba(76, 201, 240, .6); }
+:root[data-style="space"] .job-period { color: #ff8a4c; }
+:root[data-style="space"] .job-org { text-transform: uppercase; }
+:root[data-style="space"] .job-points li::before { background: #4cc9f0; width: 6px; height: 6px; top: 9px; }
+
+/* contact: a planet rising */
+:root[data-style="space"] .poster { position: relative; overflow: hidden; }
+:root[data-style="space"] .poster::before { display: block; content: ""; position: absolute; right: -10%; bottom: -55%; top: auto; width: 60%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #ffc79e, #ff8a4c 30%, #b24a2b 60%, #3a1410 85%); box-shadow: inset -60px -40px 120px rgba(0, 0, 0, .75), 0 0 120px rgba(255, 138, 76, .35); }
+:root[data-style="space"] .poster-kicker { font-family: "Space Mono", monospace; color: #4cc9f0; }
+:root[data-style="space"] .poster-title { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; }
+:root[data-style="space"] .poster-sub { color: #c4cbe0; font-weight: 300; }
+:root[data-style="space"] .link-cell { backdrop-filter: blur(8px); }
+:root[data-style="space"] .link-cell .label { color: #4cc9f0; }
+:root[data-style="space"] .link-cell strong { font-family: "Oxanium", sans-serif; font-weight: 500; }
+:root[data-style="space"] .foot-row { font-family: "Space Mono", monospace; text-transform: uppercase; font-weight: 400; letter-spacing: .1em; font-size: 12px; }
+:root[data-style="space"] .foot-row::after { content: "END OF TRANSMISSION ■"; color: #8a93ad; }
+
+@media (max-width: 900px) { :root[data-style="space"] .art .portrait { width: 220px; } }
+@media (prefers-reduced-motion: reduce) { .space-orbit { animation: none; } }
+:root[data-style="space"] .sec-num { white-space: nowrap; }
+:root[data-style="space"] .proj-tags .tag { background: transparent; color: #cfe9ff; border: 1px solid rgba(76, 201, 240, .45); font-family: "Space Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+:root[data-style="space"] .sec-num { justify-self: start; }
+@media (max-width: 900px) {
+  :root[data-style="space"] .art { justify-items: center; padding-block: 34px 10px; }
+  :root[data-style="space"] .art .portrait { width: 190px; }
+  :root[data-style="space"] .wavebar::after { content: "DSN · INCOMING SIGNAL"; }
+}

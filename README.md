@@ -37,12 +37,13 @@ Visitors pick a look from the **Style** button (bottom-right); the choice is sav
 | `vaporwave` | Vaporwave | `aurora` | Aurora |
 | `organic` | Organic / Earthy | `skeuo` | Skeuomorphism |
 | `deco` | Art Deco | `cyberpunk` | Cyberpunk |
+| `space` | Space (world) | `food` | Food (world) |
 
 ### How it works
 - `_includes/head.html` reads `?style=` or the saved choice before first paint, adds `class="calm"` to `<html>` for any style except Maximalism, and loads `assets/css/styles/<id>.css`.
 - `assets/css/styles/base.css` turns off the collage and tilts under `.calm` and rebuilds every section from a small set of tokens (`--bg`, `--text`, `--accent`, `--card-bg`, `--band-bg`, `--cta-bg`, `--font-display` …). A style file mostly sets those tokens under `:root[data-style="<id>"]`, then adds its own details.
 - The hero waveform is drawn by `assets/js/main.js`; a style chooses how with `--wave-mode` (`bars`, `blocks`, `scope`, `area`, `line`, `none`) plus `--wave-colors`, `--wave-bar` and `--wave-gap`.
-- `assets/js/style-fx.js` holds extras CSS can't do: Terminal's boot screen and typing banners, Glass's pointer highlight and floating orbs, Skeuomorphism's cassette tape.
+- `assets/js/style-fx.js` holds extras CSS can't do: Terminal's boot screen and typing banners, Glass's pointer highlight and floating orbs, Skeuomorphism's cassette tape, Flat's live tiles, Swiss's arcs, Space's starfield and orbit, and Food's pixel-art dishes (drawn on a 24×24 grid in code, so there are no image files to load).
 
 ### Add your own style
 1. Copy a style file in `assets/css/styles/` to `<id>.css` and change the tokens at the top.

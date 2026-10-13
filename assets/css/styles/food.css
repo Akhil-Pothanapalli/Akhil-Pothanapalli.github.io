@@ -1,0 +1,138 @@
+/* Food: the portfolio as a menu. Pixel-art dishes (chocolate, chai, samosa, jalebi, gulab jamun, ladoo, chilli) are
+   drawn and animated by style-fx.js at a GIF-like frame rate; type pairs a pixel face with Baloo 2. */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Baloo+2:wght@400;500;700;800&display=swap');
+:root[data-style="food"] {
+  --cream: #fff6e5; --ink: #2b160c; --cocoa: #6b3a1f; --turmeric: #f2b134; --chili: #d6402b; --coriander: #3c9a5f; --leaf: #2f6b3a;
+  --bg: #fff6e5; --surface: #ffffff; --surface-2: #fde9c4; --text: #2b160c; --muted: #7a5a44;
+  --accent: #d6402b; --on-accent: #ffffff; --accent-2: #f2b134; --on-accent-2: #2b160c; --t3: #3c9a5f; --line: #2b160c;
+  --card-bg: #ffffff; --card-border: 3px solid #2b160c; --card-shadow: 5px 5px 0 #2b160c; --radius: 14px; --radius-lg2: 22px; --num-radius: 10px;
+  --portrait-radius: 50%; --portrait-border: 0 solid transparent;
+  --hero-bg: #fde9c4; --hero-border: 3px solid #2b160c; --hero-shadow: 6px 6px 0 #2b160c;
+  --chip-bg: #fde9c4; --chip-text: #2b160c; --chip-border: 2px solid #2b160c;
+  --band-bg: #2f6b3a repeating-linear-gradient(115deg, rgba(255, 255, 255, .07) 0 2px, transparent 2px 46px); --band-text: #fff6e5; --band-muted: #cfe8c8; --band-surface: rgba(0, 0, 0, .14); --band-accent: #f2b134; --on-band-accent: #2b160c;
+  --cta-bg: #4a2a1a; --cta-text: #fff6e5; --cta-card-bg: #fff6e5; --cta-card-text: #2b160c;
+  --ticker-bg: #f2b134; --ticker-text: #2b160c; --ticker2-bg: #d6402b; --ticker2-text: #fff6e5; --ticker-border: 3px solid #2b160c;
+  --btn-radius: 10px; --btn-border: 3px solid #2b160c; --btn-shadow: 3px 3px 0 #2b160c; --btn-weight: 700;
+  --wave-bg: #4a2a1a; --wave-mode: bars; --wave-colors: #f2b134, #d6402b, #3c9a5f, #fff6e5; --wave-bar: 8; --wave-gap: 4; --wave-radius: 0;
+  --font-display: "Pixelify Sans", system-ui, sans-serif; --font-body: "Baloo 2", system-ui, sans-serif; --display-weight: 700; --display-tracking: 0;
+  --heading: #2b160c; --link: #d6402b;
+}
+:root[data-style="food"] body { background: #fff6e5 radial-gradient(rgba(214, 64, 43, .06) 2px, transparent 2.5px) 0 0 / 28px 28px; font-size: 17px; }
+:root[data-style="food"] ::selection { background: #f2b134; color: #2b160c; }
+.food-sprite { image-rendering: pixelated; image-rendering: crisp-edges; display: block; pointer-events: none; }
+
+/* nav */
+:root[data-style="food"] .site-nav { background: #fff6e5; border-bottom: 3px solid #2b160c; }
+:root[data-style="food"] .nav-brand { font-family: "Pixelify Sans", sans-serif; font-weight: 700; }
+:root[data-style="food"] .nav-brand .accent { color: #d6402b; }
+:root[data-style="food"] .nav-links a { font-weight: 700; }
+:root[data-style="food"] .nav-links a span { color: #d6402b; }
+:root[data-style="food"] .nav-links a.is-active { background: #f2b134; color: #2b160c; box-shadow: inset 0 0 0 2px #2b160c; }
+:root[data-style="food"] .btn-primary { background: #f2b134; color: #2b160c; }
+:root[data-style="food"] .btn-primary:hover { background: #ffc54d; filter: none; color: #2b160c; }
+:root[data-style="food"] .btn-secondary { background: #ffffff; color: #2b160c; border-color: #2b160c; }
+:root[data-style="food"] .btn:active { translate: 3px 3px; box-shadow: none; }
+
+/* hero: the portrait on a steel thali ringed with dishes */
+:root[data-style="food"] .stage { position: relative; overflow: visible; }
+:root[data-style="food"] .stage::after { content: "TODAY'S MENU"; position: absolute; left: clamp(28px, 5vw, 72px); top: -16px; background: #d6402b; color: #fff6e5; font: 700 14px/1 "Pixelify Sans", sans-serif; letter-spacing: .1em; padding: 8px 14px; border: 3px solid #2b160c; border-radius: 8px; }
+:root[data-style="food"] .kicker .tag { border: 2px solid #2b160c; font-weight: 700; }
+:root[data-style="food"] .kicker .tag-accent-2 { background: #3c9a5f; color: #ffffff; }
+:root[data-style="food"] .kicker .tag-accent { background: #ffffff; color: #2b160c; }
+:root[data-style="food"] .title { font-size: clamp(46px, 6vw, 92px); line-height: 1; }
+:root[data-style="food"] .t1 { color: #2b160c; } :root[data-style="food"] .t2 { color: #d6402b; text-shadow: 4px 4px 0 #f2b134; } :root[data-style="food"] .t3 { color: #3c9a5f; }
+:root[data-style="food"] .bubble { position: relative; }
+:root[data-style="food"] .bubble p { font-size: 19px; }
+:root[data-style="food"] .art { overflow: visible; padding: 40px; }
+:root[data-style="food"] .art .portrait { position: relative; width: min(100%, 300px); }
+:root[data-style="food"] .portrait .washed { position: relative; z-index: 1; border: 14px solid #c9ced6; box-shadow: 0 0 0 3px #2b160c, inset 0 0 0 3px #8f959f, 0 0 0 9px #e6e9ee, 0 0 0 12px #2b160c, 8px 10px 0 12px rgba(43, 22, 12, .25); }
+.food-ring { position: absolute; inset: -22%; z-index: 2; pointer-events: none; }
+.food-ring .food-sprite { position: absolute; width: 64px; height: 64px; translate: -50% -50%; animation: foodBob 2.4s ease-in-out infinite; }
+.food-ring .food-sprite:nth-child(even) { animation-delay: -1.2s; }
+@keyframes foodBob { 50% { transform: translateY(-6px); } }
+:root[data-style="food"] .wavebar { position: relative; border: 3px solid #2b160c; box-shadow: 4px 4px 0 #2b160c; }
+:root[data-style="food"] .wavebar::after { content: "NOW COOKING · MACHINES THAT LISTEN"; position: absolute; left: 12px; top: 6px; font: 700 11px/1 "Pixelify Sans", sans-serif; letter-spacing: .08em; color: #f2b134; }
+
+/* tickers: today's specials */
+:root[data-style="food"] .ticker { margin-inline: var(--space-3); box-shadow: 4px 4px 0 #2b160c; }
+:root[data-style="food"] .ticker-run span:not(.dot) { font-family: "Pixelify Sans", sans-serif; }
+:root[data-style="food"] .ticker .dot, :root[data-style="food"] .ticker.rev .dot { width: 12px; height: 12px; border-radius: 3px; background: currentColor; opacity: 1; }
+
+/* section heads: a course name above, a dish beside */
+:root[data-style="food"] .sec-head { position: relative; grid-template-columns: auto auto 1fr; align-items: center; }
+:root[data-style="food"] .sec-head .food-sprite { grid-row: 1 / 3; width: 72px; height: 72px; }
+:root[data-style="food"] .sec-num { background: #f2b134; color: #2b160c; border: 3px solid #2b160c; box-shadow: 3px 3px 0 #2b160c; font-family: "Pixelify Sans", sans-serif; }
+:root[data-style="food"] .sec-title { font-size: clamp(40px, 6vw, 76px); }
+:root[data-style="food"] .sec-note { grid-column: 3; }
+:root[data-style="food"] .sec-head::before { position: absolute; left: 0; top: -28px; font: 700 14px/1 "Pixelify Sans", sans-serif; letter-spacing: .14em; color: #d6402b; }
+:root[data-style="food"] #about .sec-head::before { content: "STARTERS"; } :root[data-style="food"] #research .sec-head::before { content: "MAINS"; }
+:root[data-style="food"] #papers .sec-head::before { content: "CHEF'S SPECIALS"; color: #f2b134; } :root[data-style="food"] #skills .sec-head::before { content: "SPICE RACK"; }
+:root[data-style="food"] #work .sec-head::before { content: "KITCHENS I'VE COOKED IN"; }
+:root[data-style="food"] .caption-box { color: #3c9a5f; font-family: "Pixelify Sans", sans-serif; text-transform: none; letter-spacing: 0; font-size: 18px; }
+:root[data-style="food"] .about-statement { color: #d6402b; font-family: "Baloo 2", sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+:root[data-style="food"] .now { background: #fde9c4; }
+:root[data-style="food"] .now .label { font-family: "Pixelify Sans", sans-serif; color: #d6402b; letter-spacing: .08em; }
+:root[data-style="food"] .now li { font-family: "Baloo 2", sans-serif; font-weight: 700; }
+:root[data-style="food"] .now li::before { background: #3c9a5f; color: #ffffff; border: 2px solid #2b160c; border-radius: 6px; }
+
+/* research: menu cards with a price-style fact */
+:root[data-style="food"] .projects { gap: 32px; }
+:root[data-style="food"] .proj:nth-child(even) { background: #fde9c4; }
+:root[data-style="food"] .proj-idx, :root[data-style="food"] .proj:nth-child(even) .proj-idx { background: #d6402b; color: #ffffff; border: 3px solid #2b160c; font-family: "Pixelify Sans", sans-serif; }
+:root[data-style="food"] .proj-kicker { color: #3c9a5f; }
+:root[data-style="food"] .proj-title { font-size: clamp(28px, 3vw, 40px); }
+:root[data-style="food"] .proj-tags .tag { background: #ffffff; border: 2px solid #2b160c; font-weight: 700; }
+:root[data-style="food"] .proj-facts > div { background: #f2b134; border: 2px solid #2b160c; }
+:root[data-style="food"] .proj-facts dt { font-family: "Pixelify Sans", sans-serif; }
+
+/* papers: served on a banana leaf */
+:root[data-style="food"] .ink { margin-inline: var(--space-3); border: 3px solid #2b160c; box-shadow: 6px 6px 0 #2b160c; }
+:root[data-style="food"] .ink .sec-title { color: #fff6e5; }
+:root[data-style="food"] .pub:nth-child(n) { background: rgba(255, 246, 229, .95); color: #2b160c; border: 3px solid #2b160c; box-shadow: 4px 4px 0 rgba(0, 0, 0, .35); }
+:root[data-style="food"] .ink .pub a { color: #2b160c; }
+:root[data-style="food"] .pub-full { color: #7a5a44; }
+:root[data-style="food"] .pub-short { color: #d6402b; }
+:root[data-style="food"] .pub-role { background: #fde9c4; color: #2b160c; }
+:root[data-style="food"] .pub:nth-child(n) .pub-year { background: #f2b134; color: #2b160c; border: 3px solid #2b160c; border-radius: 50%; font-family: "Pixelify Sans", sans-serif; }
+:root[data-style="food"] .pub-links a { background: #ffffff; border: 2px solid #2b160c; }
+:root[data-style="food"] .ink .pub-links a:hover { background: #f2b134; color: #2b160c; }
+
+/* skills: spice tins */
+:root[data-style="food"] .skill:nth-child(1) { background: #fde9c4; } :root[data-style="food"] .skill:nth-child(2) { background: #ffe1d6; } :root[data-style="food"] .skill:nth-child(3) { background: #e3f3df; } :root[data-style="food"] .skill:nth-child(4) { background: #ffffff; }
+:root[data-style="food"] .skill-h .accent { background: #d6402b; color: #ffffff; border: 2px solid #2b160c; }
+:root[data-style="food"] .skill li { background: #ffffff; border: 2px solid #2b160c; font-weight: 700; }
+:root[data-style="food"] .skill li:hover { background: #f2b134; color: #2b160c; }
+
+/* work */
+:root[data-style="food"] .job-period { color: #d6402b; font-family: "Pixelify Sans", sans-serif; }
+:root[data-style="food"] .job:nth-child(2) { background: #fde9c4; }
+:root[data-style="food"] .job-points li::before { background: #3c9a5f; border-radius: 3px; }
+
+/* contact: the dessert course */
+:root[data-style="food"] .poster { margin-inline: var(--space-3); border: 3px solid #2b160c; box-shadow: 6px 6px 0 #2b160c; }
+:root[data-style="food"] .poster-kicker::before { content: "DESSERT · "; color: #f2b134; }
+:root[data-style="food"] .poster-kicker { color: #fff6e5; font-family: "Pixelify Sans", sans-serif; }
+:root[data-style="food"] .poster-title { color: #fff6e5; text-shadow: 5px 5px 0 #d6402b; }
+:root[data-style="food"] .poster-sub { color: #fde9c4; }
+.food-dessert { display: flex; gap: 10px; margin: 6px 0 22px; }
+.food-dessert .food-sprite { width: 72px; height: 72px; }
+:root[data-style="food"] .link-cell { border: 3px solid #2b160c; }
+:root[data-style="food"] .link-cell .label { color: #d6402b; }
+:root[data-style="food"] .foot-row::after { content: "made with too much chai"; color: #7a5a44; font-weight: 500; }
+
+@media (max-width: 900px) {
+  :root[data-style="food"] .art { padding: 46px 0 20px; justify-items: center; }
+  :root[data-style="food"] .art .portrait { width: 200px; }
+  .food-ring .food-sprite { width: 48px; height: 48px; }
+  :root[data-style="food"] .sec-head { grid-template-columns: auto 1fr; }
+  :root[data-style="food"] .sec-head .food-sprite { grid-row: auto; width: 56px; height: 56px; }
+  :root[data-style="food"] .sec-note { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .food-ring .food-sprite { animation: none; } }
+:root[data-style="food"] .poster > .food-dessert { margin: 6px 0 22px max(0px, calc((100% - var(--max)) / 2)); }
+:root[data-style="food"] .proj-tags .tag { color: #2b160c; }
+:root[data-style="food"] .pub-title { font-family: "Baloo 2", sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+@media (max-width: 900px) {
+  :root[data-style="food"] .sec-head { grid-template-columns: auto 1fr; justify-items: start; }
+  :root[data-style="food"] .sec-title { grid-column: 1 / -1; }
+}

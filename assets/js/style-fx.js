@@ -270,6 +270,217 @@
     };
   })();
 
+  /* ── Space: a three-layer starfield that drifts with scroll, twinkles and throws the odd shooting star; an orbit round the portrait ── */
+  fx.space = (function () {
+    var sky = null, orbit = null, raf = 0, stars = [], shoot = null, W = 0, H = 0, ctx = null, t = 0;
+    function seeded(n) { var x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); }
+    function size() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      sky.width = W * dpr; sky.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function frame() {
+      t += 1;
+      ctx.clearRect(0, 0, W, H);
+      var sy = window.scrollY || 0;
+      stars.forEach(function (s) {
+        var y = ((s.y * H * 3 - sy * s.depth) % (H * 3) + H * 3) % (H * 3);
+        if (y > H) return;
+        var tw = reduce ? 1 : 0.65 + 0.35 * Math.sin(t * s.speed + s.phase);
+        ctx.globalAlpha = s.a * tw; ctx.fillStyle = s.c;
+        ctx.beginPath(); ctx.arc(s.x * W, y, s.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!reduce) {
+        if (!shoot && Math.random() < 0.004) shoot = { x: Math.random() * W * 0.8 + W * 0.2, y: Math.random() * H * 0.4, life: 0 };
+        if (shoot) {
+          shoot.life += 1;
+          var len = 140, k = shoot.life * 9, x = shoot.x - k, y = shoot.y + k * 0.45;
+          var g = ctx.createLinearGradient(x, y, x + len, y - len * 0.45);
+          g.addColorStop(0, "rgba(255,255,255,.95)"); g.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.globalAlpha = Math.max(0, 1 - shoot.life / 45); ctx.strokeStyle = g; ctx.lineWidth = 1.6;
+          ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + len, y - len * 0.45); ctx.stroke();
+          if (shoot.life > 45) shoot = null;
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      ctx.globalAlpha = 1;
+    }
+    function scrolled() { if (reduce) frame(); }
+    return {
+      on: function () {
+        sky = el("canvas", "space-sky"); sky.setAttribute("aria-hidden", "true");
+        document.body.insertBefore(sky, document.body.firstChild);
+        ctx = sky.getContext("2d");
+        var tints = ["#ffffff", "#ffffff", "#ffffff", "#cfe0ff", "#ffe2c4", "#bfefff"];
+        stars = [];
+        for (var i = 0; i < 420; i++) {
+          var layer = i % 3;
+          stars.push({ x: seeded(i), y: seeded(i + 999), depth: [0.08, 0.2, 0.42][layer], r: [0.6, 1, 1.6][layer] * (0.6 + seeded(i + 7) * 0.8),
+            a: [0.45, 0.7, 0.95][layer], c: tints[i % tints.length], speed: 0.02 + seeded(i + 3) * 0.05, phase: seeded(i + 5) * 6.28 });
+        }
+        size(); window.addEventListener("resize", size); window.addEventListener("scroll", scrolled, { passive: true });
+        var p = document.querySelector(".art .portrait");
+        if (p) { orbit = el("span", "space-orbit"); orbit.setAttribute("aria-hidden", "true"); p.appendChild(orbit); }
+        frame();
+      },
+      off: function () {
+        cancelAnimationFrame(raf); window.removeEventListener("resize", size); window.removeEventListener("scroll", scrolled);
+        if (sky) sky.remove(); if (orbit) orbit.remove(); sky = orbit = null; shoot = null;
+      }
+    };
+  })();
+
+  /* ── Food: pixel-art dishes drawn on a 24×24 grid, auto-outlined, scaled up crisp and animated like a GIF ── */
+  fx.food = (function () {
+    var N = 24, INK = "#2b160c", nodes = [], sprites = [], timer = 0, frame = 0;
+    function hex(c) { var n = parseInt(c.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+    function make() {
+      var px = new Array(N * N).fill(null), soft = new Array(N * N).fill(false);
+      var g = {
+        set: function (x, y, c) { x = Math.round(x); y = Math.round(y); if (x >= 0 && y >= 0 && x < N && y < N) px[y * N + x] = c; },
+        get: function (x, y) { return px[y * N + x]; },
+        clear: function (x, y) { x = Math.round(x); y = Math.round(y); if (x >= 0 && y >= 0 && x < N && y < N) px[y * N + x] = null; },
+        steam: function (x, y, c) { x = Math.round(x); y = Math.round(y); if (x >= 0 && y >= 0 && x < N && y < N && !px[y * N + x]) { px[y * N + x] = c || "#f4efe6"; soft[y * N + x] = true; } },
+        disc: function (cx, cy, r, c) { for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) if ((x + .5 - cx) * (x + .5 - cx) + (y + .5 - cy) * (y + .5 - cy) <= r * r) g.set(x, y, typeof c === "function" ? c(x, y) : c); },
+        outline: function () {
+          var add = [];
+          for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) {
+            if (px[y * N + x]) continue;
+            var near = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(function (d) { var X = x + d[0], Y = y + d[1]; return X >= 0 && Y >= 0 && X < N && Y < N && px[Y * N + X] && !soft[Y * N + X]; });
+            if (near) add.push(y * N + x);
+          }
+          add.forEach(function (i) { px[i] = INK; });
+        },
+        data: function () { return px; }
+      };
+      return g;
+    }
+    function steam(g, xs, f, top) {
+      xs.forEach(function (xc, k) {
+        for (var y = top; y < top + 7; y++) {
+          if ((y + f + k * 2) % 4 === 0) continue;
+          g.steam(xc + Math.round(Math.sin((y + f * 1.4 + k * 2) * 0.9)), y);
+        }
+      });
+    }
+    var draw = {
+      chocolate: function (g, f) {
+        for (var y = 3; y <= 14; y++) for (var x = 5; x <= 18; x++) {
+          var cx = (x - 5) % 7, cy = (y - 3) % 6, edge = cx === 6 || cy === 5;
+          g.set(x, y, edge ? "#4a2a1a" : (cx === 0 || cy === 0) ? "#8c5530" : "#6b3a1f");
+        }
+        for (var y2 = 0; y2 < 9; y2++) for (var x2 = 14; x2 < 24; x2++) if ((x2 + .5 - 19.5) * (x2 + .5 - 19.5) + (y2 + .5 - 2.5) * (y2 + .5 - 2.5) < 20) g.clear(x2, y2);
+        var s = f % 10;
+        if (s < 7) for (var yy = 3; yy <= 14; yy++) for (var xx = 5; xx <= 18; xx++) { var d = (xx - yy) - (s * 4 - 10); if ((d === 0 || d === 1) && g.get(xx, yy)) g.set(xx, yy, "#c99a6e"); }
+        for (var fy = 14; fy <= 20; fy++) for (var fx2 = 4; fx2 <= 19; fx2++) { if (fy === 14 && fx2 % 2) continue; g.set(fx2, fy, fx2 % 3 === 0 ? "#9aa1ab" : "#d7dbe1"); }
+        g.outline();
+      },
+      truffle: function (g, f) {
+        var b = (f % 6 === 1 || f % 6 === 2) ? -1 : 0;
+        for (var y = 15; y <= 20; y++) for (var x = 5 + Math.floor((y - 15) / 2); x <= 18 - Math.floor((y - 15) / 2); x++) g.set(x, y, x % 2 ? "#a8693b" : "#8c5530");
+        g.disc(11.5, 10.5 + b, 6.6, "#4a2a1a");
+        [[8, 7], [9, 7], [8, 8]].forEach(function (p) { g.set(p[0], p[1] + b, "#8c5530"); });
+        for (var x3 = 6; x3 <= 17; x3++) { var yy = Math.round(9.5 + Math.sin(x3 * 1.3) * 1.2) + b; if (g.get(x3, yy) === "#4a2a1a") g.set(x3, yy, "#fff6e5"); }
+        g.outline();
+      },
+      jalebi: function (g, f) {
+        var i = 0;
+        for (var t = 0; t < Math.PI * 3.3; t += 0.06, i++) {
+          var r = 1.6 + t * 1.45, x = 11.5 + r * Math.cos(t), y = 12 + r * Math.sin(t);
+          var c = (Math.floor(t * 3) % 10) === (f % 10) ? "#ffe08a" : "#f28c1b";
+          g.set(x, y, c); g.set(x + 1, y, c === "#ffe08a" ? c : "#e0700f");
+        }
+        g.outline();
+      },
+      samosa: function (g, f) {
+        function inside(x, y) { var a = (21 - 3) * (y - 5) - (x - 12) * 0; return y >= 5 && y <= 19 && Math.abs(x + .5 - 12) <= (y - 4) * 0.64; }
+        for (var y = 5; y <= 19; y++) for (var x = 2; x <= 22; x++) if (inside(x, y)) {
+          var c = "#d79a3c";
+          if ((x * 7 + y * 3) % 11 === 0) c = "#b0702c";
+          if (Math.abs(x + .5 - 12) > (y - 4) * 0.64 - 1.2 && x < 12) c = "#e8b45c";
+          if (y === 19) c = x % 2 ? "#9a5a1e" : "#b8742c";
+          g.set(x, y, c);
+        }
+        g.set(19, 20, "#3c9a5f"); g.set(20, 20, "#3c9a5f"); g.set(20, 19, "#7cc576");
+        g.outline(); steam(g, [9, 15], f, 0);
+      },
+      chai: function (g, f) {
+        for (var y = 10; y <= 20; y++) { var l = Math.round(6 + (y - 10) * 0.3), r = Math.round(17 - (y - 10) * 0.3);
+          for (var x = l; x <= r; x++) g.set(x, y, x > r - 3 ? "#7e3518" : x < l + 2 ? "#cf6d3e" : "#b5562b"); }
+        for (var x2 = 6; x2 <= 17; x2++) g.set(x2, 9, "#d0784a");
+        for (var x3 = 7; x3 <= 16; x3++) g.set(x3, 10, x3 < 10 ? "#d49a5e" : "#a8652f");
+        for (var x4 = 7; x4 <= 16; x4++) if (x4 % 3 === 0) g.set(x4, 15, "#d0784a");
+        g.outline(); steam(g, [9, 12, 15], f, 1);
+      },
+      jamun: function (g, f) {
+        for (var y = 13; y <= 20; y++) { var hw = Math.round(10 - (y - 13) * 0.9); for (var x = 12 - hw; x < 12 + hw; x++) g.set(x, y, y === 13 ? "#eef0f3" : y > 17 ? "#9aa1ab" : "#c9ced6"); }
+        for (var x2 = 4; x2 < 20; x2++) g.set(x2, 14, "#e0a02a");
+        [[8, 11.4, 3.3], [15.5, 11.4, 3.3], [11.8, 9.2, 3.1]].forEach(function (b) {
+          g.disc(b[0], b[1], b[2], function (x, y) { return (x + .5 < b[0] - .6 && y + .5 < b[1] - .6) ? "#c0562a" : "#7a2f12"; });
+        });
+        g.outline(); steam(g, [9, 15], f, 0);
+      },
+      ladoo: function (g, f) {
+        var b = (f % 6 === 2 || f % 6 === 3) ? -1 : 0;
+        function ball(cx, cy) { g.disc(cx, cy, 4.6, function (x, y) { if (x + .5 < cx - 1 && y + .5 < cy - 1) return "#ffd27a"; return (x * 5 + y * 7) % 6 === 0 ? "#d9821a" : "#f5a623"; }); }
+        ball(7.5, 16.5); ball(16.5, 16.5); ball(12, 9.5 + b);
+        g.outline();
+      },
+      chilli: function (g, f) {
+        var w = Math.round(Math.sin(f * 0.9));
+        for (var t = 0; t <= 1; t += 0.02) {
+          var x = 5 + t * 15, y = 7 + 10 * t * t + w * t, th = 2.6 - t * 1.8;
+          for (var k = -th; k <= th; k += 0.5) g.set(x, y + k, k < -th + 0.8 ? "#f06a4f" : "#d6402b");
+        }
+        g.set(4, 6, "#3c9a5f"); g.set(3, 5, "#3c9a5f"); g.set(4, 5, "#7cc576"); g.set(5, 6, "#3c9a5f"); g.set(3, 4, "#3c9a5f");
+        g.outline();
+      }
+    };
+    function sprite(name) {
+      var c = el("canvas", "food-sprite"); c.width = N; c.height = N; c.setAttribute("aria-hidden", "true");
+      sprites.push({ c: c, ctx: c.getContext("2d"), name: name }); return c;
+    }
+    function render() {
+      sprites.forEach(function (s) {
+        var g = make(); draw[s.name](g, frame);
+        var img = s.ctx.createImageData(N, N), d = g.data();
+        d.forEach(function (c, i) { if (!c) return; var v = hex(c); img.data[i * 4] = v[0]; img.data[i * 4 + 1] = v[1]; img.data[i * 4 + 2] = v[2]; img.data[i * 4 + 3] = 255; });
+        s.ctx.putImageData(img, 0, 0);
+      });
+    }
+    return {
+      on: function () {
+        var p = document.querySelector(".art .portrait");
+        if (p) {
+          var ring = el("div", "food-ring"); ring.setAttribute("aria-hidden", "true");
+          ["chai", "samosa", "jalebi", "jamun", "ladoo", "chocolate"].forEach(function (n, i) {
+            var a = (-150 + i * 60) * Math.PI / 180, s = sprite(n);
+            s.style.left = (50 + 49 * Math.cos(a)) + "%"; s.style.top = (50 + 49 * Math.sin(a)) + "%";
+            ring.appendChild(s);
+          });
+          p.appendChild(ring); nodes.push(ring);
+        }
+        var bySection = { about: "chai", research: "samosa", papers: "chocolate", skills: "chilli", work: "ladoo" };
+        Object.keys(bySection).forEach(function (id) {
+          var head = document.querySelector("#" + id + " .sec-head");
+          if (!head) return;
+          var s = sprite(bySection[id]); head.insertBefore(s, head.firstChild); nodes.push(s);
+        });
+        var title = document.querySelector(".poster-title");
+        if (title) {
+          var box = el("div", "food-dessert"); box.setAttribute("aria-hidden", "true");
+          ["truffle", "chocolate", "jamun", "truffle"].forEach(function (n) { box.appendChild(sprite(n)); });
+          title.after(box); nodes.push(box);
+        }
+        render();
+        if (!reduce) timer = setInterval(function () { frame++; render(); }, 170);
+      },
+      off: function () {
+        clearInterval(timer); nodes.forEach(function (n) { n.remove(); }); nodes = []; sprites = []; frame = 0;
+      }
+    };
+  })();
+
   /* ── Glass: floating glass orbs, and a highlight that follows the pointer across each pane ── */
   fx.glass = (function () {
     var orbs = null, sel = ".stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster";

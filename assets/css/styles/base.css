@@ -203,6 +203,10 @@
 .sp-opt[data-style-id="cyberpunk"] { background: #fcee0a; color: #0b0b0d; border: 0; border-radius: 0; font: 800 12px/1 "Orbitron", sans-serif; text-transform: uppercase; letter-spacing: .04em; text-shadow: 1.5px 0 #ff003c, -1.5px 0 #00f0ff; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
 .sp-opt[data-style-id="cyberpunk"][aria-pressed="true"]::after { right: 6px; top: 6px; }
 .sp-opt[data-style-id="deco"][aria-pressed="true"] { outline-color: #4f6bff; }
+.sp-opt[data-style-id="space"] { background: #04060d radial-gradient(#ffffff 1px, transparent 1.4px) 0 0 / 14px 14px; color: #e8edf7; border: 1px solid rgba(76, 201, 240, .5); border-radius: 6px; font: 700 13px/1 "Oxanium", sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+.sp-opt[data-style-id="space"]::before { content: ""; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffc79e, #ff8a4c 50%, #7a2a14); box-shadow: 0 0 0 1px rgba(255, 138, 76, .5); flex: none; }
+.sp-opt[data-style-id="food"] { background: #fff6e5; color: #d6402b; border: 2px solid #2b160c; border-radius: 10px; font: 700 15px/1 "Pixelify Sans", sans-serif; box-shadow: 3px 3px 0 #2b160c; }
+.sp-opt[data-style-id="food"]::before { content: ""; width: 12px; height: 12px; margin-right: 8px; background: linear-gradient(#6b3a1f 0 0) 0 0 / 5px 5px, linear-gradient(#6b3a1f 0 0) 7px 0 / 5px 5px, linear-gradient(#6b3a1f 0 0) 0 7px / 5px 5px, linear-gradient(#6b3a1f 0 0) 7px 7px / 5px 5px; background-repeat: no-repeat; flex: none; }
 /* the picker's own text stays neutral whatever style is active */
 #stylePicker .sp-panel h2 { font: 700 15px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif; text-transform: none; letter-spacing: 0; color: #16161d; text-shadow: none; }
 #stylePicker .sp-panel p, #stylePicker .sp-group { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; text-shadow: none; }

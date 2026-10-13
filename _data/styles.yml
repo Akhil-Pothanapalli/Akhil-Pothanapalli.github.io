@@ -19,3 +19,5 @@
 - { id: skeuo, name: Skeuomorphism, group: Themed }
 - { id: deco, name: Art Deco, group: Themed }
 - { id: cyberpunk, name: Cyberpunk, group: Themed }
+- { id: space, name: Space, group: Worlds }
+- { id: food, name: Food, group: Worlds }
