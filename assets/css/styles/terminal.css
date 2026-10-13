@@ -136,3 +136,27 @@
 @media (prefers-reduced-motion: reduce) { :root[data-style="terminal"] main { animation: none; } :root[data-style="terminal"] :is(.sec-note, .about-body p:last-child, .poster-sub)::after { animation: none; } }
 :root[data-style="terminal"] .sec-num { display: inline-flex; align-items: center; white-space: nowrap; }
 .term-htop .bar i { color: #1f5a1f; }
+
+/* ── contact: copy on the left, a neofetch readout on the right ── */
+:root[data-style="terminal"] .poster { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); column-gap: clamp(28px, 4vw, 64px); align-items: start;
+  padding-inline: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad))); }
+:root[data-style="terminal"] .poster > * { grid-column: 1; max-width: none; margin-inline: 0; }
+:root[data-style="terminal"] .poster > .term-cmd, :root[data-style="terminal"] .poster .poster-kicker, :root[data-style="terminal"] .poster .poster-title, :root[data-style="terminal"] .poster .poster-sub { margin-left: 0; }
+:root[data-style="terminal"] .poster > .links { grid-column: 1 / -1; }
+:root[data-style="terminal"] .poster > .term-neofetch { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
+.term-neofetch { border: 1px solid #1f9e40; padding: 16px 18px; background: rgba(5, 18, 5, .7); font: 14px/1.55 "IBM Plex Mono", ui-monospace, monospace; color: #33ff66; }
+.nf-cmd { margin-bottom: 12px; }
+.nf-body { display: flex; gap: 22px; align-items: flex-start; }
+.nf-logo { margin: 4px 0 0; font: 9px/1.05 "IBM Plex Mono", ui-monospace, monospace; color: #33ff66; text-shadow: 0 0 6px rgba(51, 255, 102, .6); flex: none; }
+.nf-info { display: flex; flex-direction: column; min-width: 0; }
+.nf-info span { overflow-wrap: anywhere; }
+.nf-info i { font-style: normal; color: #ffb000; font-weight: 600; }
+.nf-user { color: #33ff66; font-weight: 700; } .nf-user span { color: #e8ffe8; }
+.nf-rule { color: #1f9e40; }
+.nf-palette { display: flex; gap: 0; margin-top: 10px; }
+.nf-palette u { width: 22px; height: 14px; }
+@media (max-width: 900px) {
+  :root[data-style="terminal"] .poster { grid-template-columns: minmax(0, 1fr); }
+  :root[data-style="terminal"] .poster > .term-neofetch { grid-column: 1; grid-row: auto; margin: 18px 0; }
+  .nf-body { flex-direction: column; }
+}

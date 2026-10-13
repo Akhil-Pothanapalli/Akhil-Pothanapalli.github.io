@@ -162,7 +162,32 @@
       }, { rootMargin: "-45% 0px -50% 0px" });
       ids.forEach(function (id) { var s2 = document.getElementById(id); if (s2) statusIO.observe(s2); });
     }
-    function extrasOn() { shell(); dress(); tmux(); }
+    function neofetch() {
+      var poster = q(".poster"); if (!poster) return;
+      var tags = qa(".kicker .tag").map(txt), jobs = qa(".job").filter(function (j) { return !/education/i.test(txt(j.querySelector(".job-org"))); }).map(function (j) { return txt(j.querySelector(".job-period")); });
+      var years = jobs.join(" ").match(/\b(19|20)\d{2}\b/g) || [], since = years.length ? Math.min.apply(0, years.map(Number)) : "";
+      var org = txt(q(".job-org")), team = txt(q(".job-team"));
+      var rows = [
+        ["OS", tags[0] || "Speech & Audio AI"],
+        ["Host", org + (team ? " · " + team.split("·")[0].trim() : "")],
+        ["Location", tags[1] || ""],
+        ["Uptime", since ? "shipping since " + since : ""],
+        ["Papers", qa(".pub").length + " (" + qa(".pub-role.is-first").length + " as co-first author)"],
+        ["Projects", qa(".proj").length + " benchmarks & systems"],
+        ["Focus", qa(".now li").map(txt).slice(0, 2).join(", ")],
+        ["Shell", "zsh · try the prompt up top"],
+        ["Status", "open to collaborations"]
+      ].filter(function (r) { return r[1]; });
+      var logo = ["        ██      ██        ", "    ██  ██  ██  ██  ██    ", "  ██ ██ ██ ██ ██ ██ ██ ██  ", "██ ██ ██ ██ ██ ██ ██ ██ ██", "  ██ ██ ██ ██ ██ ██ ██ ██  ", "    ██  ██  ██  ██  ██    ", "        ██      ██        "].join("\n");
+      var box = el("div", "term-neofetch",
+        '<div class="nf-cmd"><span class="term-ps1">akhil@lab:~$</span> neofetch</div>' +
+        '<div class="nf-body"><pre class="nf-logo">' + logo + '</pre><div class="nf-info"><b class="nf-user">akhil<span>@</span>lab</b><span class="nf-rule">' + "-".repeat(9) + '</span>' +
+        rows.map(function (r) { return '<span><i>' + esc(r[0]) + ':</i> ' + esc(r[1]) + '</span>'; }).join("") +
+        '<span class="nf-palette"><u style="background:#050a05"></u><u style="background:#ff5c5c"></u><u style="background:#33ff66"></u><u style="background:#ffb000"></u><u style="background:#5cc8ff"></u><u style="background:#c77dff"></u><u style="background:#5cf2e0"></u><u style="background:#e8ffe8"></u></span></div></div>');
+      box.setAttribute("aria-hidden", "true");
+      poster.appendChild(box); extra.push(box);
+    }
+    function extrasOn() { shell(); dress(); tmux(); neofetch(); }
     function extrasOff() {
       clearInterval(clockT); if (statusIO) statusIO.disconnect(); statusIO = null;
       extra.concat(decorated).forEach(function (n) { n.remove(); }); extra = []; decorated = [];
