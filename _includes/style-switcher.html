@@ -28,7 +28,7 @@
       var chars = {}, text = "";
       opts.forEach(function (o) { o.textContent.split("").forEach(function (c) { chars[c] = 1; }); });
       Object.keys(chars).forEach(function (c) { text += c + c.toUpperCase() + c.toLowerCase(); });
-      var fams = ["Caprasimo", "DM+Sans:wght@500", "Archivo:wght@900", "Open+Sans:wght@300", "UnifrakturMaguntia", "Michroma", "Shrikhand",
+      var fams = ["Caprasimo", "DM+Sans:wght@500", "Archivo:wght@900", "Open+Sans:wght@300", "UnifrakturMaguntia", "Michroma",
         "Righteous", "Press+Start+2P", "IBM+Plex+Mono:wght@500", "Outfit:wght@600", "Nunito:wght@800", "Fredoka:wght@600", "Sora:wght@600",
         "Fraunces:ital,wght@1,600", "Caveat:wght@700", "Poiret+One", "Orbitron:wght@800", "Oxanium:wght@700", "Pixelify+Sans:wght@700"];
       var link = document.createElement("link");

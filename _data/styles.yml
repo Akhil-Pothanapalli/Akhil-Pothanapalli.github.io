@@ -5,7 +5,6 @@
 - { id: flat, name: Flat, group: Clean }
 - { id: newspaper, name: Newspaper, group: Clean }
 - { id: y2k, name: Y2K, group: Retro }
-- { id: seventies, name: Retro 70s, group: Retro }
 - { id: vaporwave, name: Vaporwave, group: Retro }
 - { id: pixel, name: Pixel / 8-bit, group: Retro }
 - { id: win95, name: Windows 95, group: Retro }

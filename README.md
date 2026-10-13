@@ -33,8 +33,8 @@ Visitors pick a look from the **Style** button (bottom-right); the choice is sav
 | `flat` | Flat | `psychedelic` | Psychedelic |
 | `newspaper` | Newspaper | `glass` | Glassmorphism |
 | `y2k` | Y2K futurism | `neumorphism` | Neumorphism |
-| `seventies` | Retro 70s | `clay` | Claymorphism |
-| `vaporwave` | Vaporwave | `aurora` | Aurora |
+| `vaporwave` | Vaporwave | `clay` | Claymorphism |
+| `aurora` | Aurora | | |
 | `organic` | Organic / Earthy | `skeuo` | Skeuomorphism |
 | `deco` | Art Deco | `cyberpunk` | Cyberpunk |
 | `space` | Space (world) | `food` | Food (world) |
@@ -76,13 +76,6 @@ Sources used to research each style, so you can study the originals yourself. St
 - [Happy birthday Ludwig van Beethoven](https://www.emuseum.ch/themes/164669/happy-birthday-ludwig-van-beethoven), Zürich University of the Arts archive, on his concert posters turning music into rhythmic geometry
 - [The International Style 1950–1970](https://www.nb.admin.ch/snl/en/home/publications-research/dossiers/swiss-poster/international-style.html), Swiss National Library
 - [What is Swiss design](https://design.tutsplus.com/articles/what-is-swiss-design-and-why-you-should-know-its-history--cms-38463), Envato Tuts+; [International Typographic Style: key characteristics](https://blogs.ulster.ac.uk/caragreene/2020/12/08/international-typographic-style-the-swiss-style/), Ulster University
-
-**Retro 70s** (built as a printed 70s artefact: aged paper with grain, stains and vignette; misregistered offset-print headlines in Shrikhand with an ink-bleed filter; wavy layered supergraphic stripes; a sunburst; a halftone duotone portrait in a wood-panel TV; LP sleeves; daisies and a smiley; mustard, tangerine, rust, teal and chocolate)
-- [1970s graphic design: it's not just brown and orange](https://inkbotdesign.com/1970s-graphic-design/), Inkbot Design
-- [70s graphic design: disco, punk and the end of modernism](https://madegooddesigns.com/70s-graphic-design/), Made Good Designs
-- [Supergraphics are ready for their comeback](https://clickamericana.com/topics/home-garden/supergraphics-1970s), Click Americana
-- [Groovy graphic design trends from the 1970s](https://www.linearity.io/blog/70s-design-trends/), Linearity
-- [Scanning around with Gene: 70s type](https://creativepro.com/scanning-around-gene-part-1-70s-type/), CreativePro
 
 ## Run locally (optional)
 `gem install jekyll && jekyll serve`

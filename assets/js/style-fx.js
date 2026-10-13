@@ -427,21 +427,6 @@
     };
   })();
 
-  /* ── Retro 70s: an ink-bleed filter so headlines look offset-printed on paper ── */
-  fx.seventies = (function () {
-    var svg = null;
-    return {
-      on: function () {
-        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", "0"); svg.setAttribute("height", "0"); svg.setAttribute("aria-hidden", "true");
-        svg.style.position = "absolute";
-        svg.innerHTML = '<filter id="inkbleed"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6"/></filter>';
-        document.body.appendChild(svg);
-      },
-      off: function () { if (svg) svg.remove(); svg = null; }
-    };
-  })();
-
   /* ── Glass: floating glass orbs, and a highlight that follows the pointer across each pane ── */
   fx.glass = (function () {
     var orbs = null, sel = ".stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster";
