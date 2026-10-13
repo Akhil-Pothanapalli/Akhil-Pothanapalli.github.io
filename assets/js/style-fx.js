@@ -506,7 +506,19 @@
         if (state === "idle" || state === "over") { reset(); state = "run"; loop(); return; }
         if (y === 0) vy = 4.3;
       }
-      function text(s, x, yy, col, size, align) { g.font = (size || 8) + 'px "Press Start 2P", monospace'; g.textAlign = align || "left"; g.fillStyle = "#000"; g.fillText(s, x + 1, yy + 1); g.fillStyle = col || "#fcfcfc"; g.fillText(s, x, yy); }
+      var ui = el("div", "px-game-ui", '<span class="ui-score"></span><span class="ui-best"></span><span class="ui-msg"><b></b><i></i><small>JUMP: SPACE · UP · W · TAP</small></span>');
+      ui.setAttribute("aria-hidden", "true"); host.appendChild(ui); nodes.push(ui);
+      var uiScore = ui.querySelector(".ui-score"), uiBest = ui.querySelector(".ui-best"), uiMsg = ui.querySelector(".ui-msg"), last = "";
+      function hud2() {
+        var key = state + "|" + pts + "|" + best;
+        if (key === last) return; last = key;
+        uiScore.textContent = state === "run" || pts ? "SCORE " + pad(pts, 5) : "";
+        uiBest.textContent = "BEST " + pad(best, 5);
+        uiMsg.hidden = state === "run";
+        uiMsg.className = "ui-msg is-" + state;
+        uiMsg.querySelector("b").textContent = state === "over" ? "GAME OVER" : "SIGNAL RUN";
+        uiMsg.querySelector("i").textContent = state === "over" ? "SPACE OR TAP TO RETRY" : "PRESS SPACE OR TAP";
+      }
       function scene() {
         g.clearRect(0, 0, W, H);
         for (var b = 0; b < 20; b++) { var bx = ((b * 34) - dist * .35) % (W + 40); if (bx < -34) bx += W + 40; var bh = 12 + (b * 17) % 22; g.fillStyle = "#1c1c3c"; g.fillRect(Math.floor(bx), GROUND - bh, 28, bh); g.fillStyle = "#fcbc3c"; for (var wy = GROUND - bh + 4; wy < GROUND - 4; wy += 6) for (var wx = 4; wx < 24; wx += 8) if ((b + wx + wy) % 3) g.fillRect(Math.floor(bx) + wx, wy, 2, 2); }
@@ -536,10 +548,7 @@
         var img = y > 0 ? spr.j : (Math.floor(t / 6) % 2 ? spr.a : spr.b);
         if (state !== "run") img = spr.a;
         if (!(flash > 0 && flash-- % 2)) g.drawImage(img, 40, Math.floor(GROUND - 15 - y));
-        if (state === "run" || pts) { text("SCORE " + pad(pts, 5), 6, 10, "#fcfcfc", W < 300 ? 6 : 8); } text("BEST " + pad(best, 5), W - 6, 10, "#fcbc3c", W < 300 ? 6 : 8, "right");
-        
-        if (state === "idle") { text("SIGNAL RUN", W / 2, 24, "#fcbc3c", W < 300 ? 10 : 12, "center"); if (Math.floor(t / 30) % 2 || reduce) text("PRESS SPACE OR TAP", W / 2, 38, "#fcfcfc", 8, "center"); text("JUMP: SPACE / UP / W", W / 2, 49, "#a4a4a4", 6, "center"); }
-        if (state === "over") { text("GAME OVER", W / 2, 26, "#d82800", 12, "center"); text("SPACE OR TAP TO RETRY", W / 2, 42, "#fcfcfc", 8, "center"); }
+        hud2();
       }
       function loop() { cancelAnimationFrame(raf); var go = function () { frame(); if (inView && !document.hidden && (state === "run" || (!reduce && state !== "run"))) raf = requestAnimationFrame(go); }; go(); }
       var keys = function (e) {
@@ -559,62 +568,56 @@
       cleanups.push(function () { cancelAnimationFrame(raf); window.removeEventListener("keydown", keys); vis.disconnect(); });
     }
 
-    /* ── the Work cabinet: a wave of invaders, a ship that clears it on autopilot (or by hand), endless waves ── */
-    function invaders(before) {
-      var W = 240, H = 150, c = el("canvas", "px-shooter"), g;
-      c.width = W; c.height = H; c.tabIndex = 0;
-      c.setAttribute("role", "application"); c.setAttribute("aria-label", "Invader wave. The ship plays itself; use Left and Right to steer and Space to fire, or tap to shoot.");
-      before.before(c); nodes.push(c); g = c.getContext("2d"); g.imageSmoothingEnabled = false;
+    /* ── the Work battlefield: invaders, bombs and a ship on autopilot fill the section background; waves restart forever ── */
+    function invaders(section) {
+      var PX = 3, W = 0, H = 0, c = el("canvas", "px-shooter"), g;
+      c.setAttribute("aria-hidden", "true");
+      section.insertBefore(c, section.firstChild); nodes.push(c); g = c.getContext("2d");
+      var badge = el("div", "px-wave-badge", '<span class="wb-wave">WAVE 1</span><span class="wb-mode">AUTOPILOT</span><span class="wb-msg" hidden></span>');
+      badge.setAttribute("aria-hidden", "true"); section.appendChild(badge); nodes.push(badge);
+      var bWave = badge.querySelector(".wb-wave"), bMsg = badge.querySelector(".wb-msg");
       var A = [grid(S.inv), grid(S.invB)], B = [grid(S.inv2), grid(S.inv2B)], ship = grid(S.ship), boom = grid(S.boom);
-      var rows = 3, cols = 8, wave = 1, fx = 0, fy = 0, dir = 1, aliens = [], shots = [], bombs = [], sx = W / 2, manual = 0, cool = 0, state = "play", hold = 0, t = 0, raf = 0, inView = true, keys = {};
-      function spawn() { aliens = []; for (var r = 0; r < rows; r++) for (var q = 0; q < cols; q++) aliens.push({ r: r, q: q, alive: true, dead: 0 }); fx = 0; fy = 0; dir = 1; shots = []; bombs = []; state = "play"; }
-      function pos(a) { return { x: 22 + a.q * 24 + fx, y: 22 + a.r * 18 + fy }; }
-      function fire() { if (cool <= 0 && shots.length < 2) { shots.push({ x: sx, y: H - 18 }); cool = 14; } }
-      function text(s2, x, y, col, size) { g.font = (size || 8) + 'px "Press Start 2P", monospace'; g.textAlign = "center"; g.fillStyle = "#000"; g.fillText(s2, x + 1, y + 1); g.fillStyle = col; g.fillText(s2, x, y); }
+      var rows = 4, cols = 10, wave = 1, fx = 0, fy = 0, dir = 1, aliens = [], shots = [], bombs = [], sx = 0, cool = 0, state = "play", hold = 0, t = 0, raf = 0, inView = true, gapX = 24, gapY = 18, left = 0;
+      function size() {
+        var r = section.getBoundingClientRect();
+        W = Math.max(120, Math.round(r.width / PX)); H = Math.max(120, Math.round(r.height / PX));
+        c.width = W; c.height = H; g.imageSmoothingEnabled = false;
+        gapX = Math.max(16, Math.min(28, Math.floor((W - 40) / cols))); left = Math.max(10, Math.floor((W - gapX * cols) / 2));
+        if (!sx) sx = W / 2;
+      }
+      function spawn() { aliens = []; for (var r = 0; r < rows; r++) for (var q = 0; q < cols; q++) aliens.push({ r: r, q: q, alive: true, dead: 0 }); fx = 0; fy = 0; dir = 1; shots = []; bombs = []; state = "play"; bWave.textContent = "WAVE " + wave; bMsg.hidden = true; }
+      function pos(a) { return { x: left + a.q * gapX + fx, y: 30 + a.r * gapY + fy }; }
       function step() {
         t++; cool--;
         if (state === "play") {
           var alive = aliens.filter(function (a) { return a.alive; });
-          var spd = (0.25 + wave * 0.08) * (1 + (aliens.length - alive.length) / aliens.length);
-          fx += dir * spd;
-          var xs = alive.map(function (a) { return pos(a).x; }), minx = Math.min.apply(0, xs), maxx = Math.max.apply(0, xs);
-          if (maxx > W - 18 && dir > 0 || minx < 6 && dir < 0) { dir *= -1; fy += 6; }
-          if (manual > 0) { manual--; if (keys.ArrowLeft) sx -= 2.4; if (keys.ArrowRight) sx += 2.4; }
-          else if (alive.length) {
-            var low = alive.reduce(function (m, a) { var p = pos(a); return !m || Math.abs(p.x + 6 - sx) < Math.abs(m.x + 6 - sx) ? { x: p.x, y: p.y } : m; }, null);
-            var tx = low.x + 6; sx += Math.max(-2, Math.min(2, tx - sx));
-            if (Math.abs(tx - sx) < 4) fire();
+          fx += dir * (0.22 + wave * 0.06) * (1 + (aliens.length - alive.length) / aliens.length);
+          var xs = alive.map(function (a) { return pos(a).x; });
+          if (alive.length && (Math.max.apply(0, xs) > W - 18 && dir > 0 || Math.min.apply(0, xs) < 6 && dir < 0)) { dir *= -1; fy += 6; }
+          if (alive.length) {
+            var tgt = alive.reduce(function (m, a) { var p = pos(a); return !m || Math.abs(p.x + 6 - sx) < Math.abs(m.x + 6 - sx) ? p : m; }, null);
+            var tx = tgt.x + 6; sx += Math.max(-1.6, Math.min(1.6, tx - sx));
+            if (Math.abs(tx - sx) < 4 && cool <= 0 && shots.length < 2) { shots.push({ x: sx, y: H - 18 }); cool = 16; }
           }
-          sx = Math.max(8, Math.min(W - 8, sx));
-          if (t % 70 === 0 && alive.length) { var sh = alive[(t * 7) % alive.length], sp = pos(sh); bombs.push({ x: sp.x + 6, y: sp.y + 8 }); }
-          shots.forEach(function (b) { b.y -= 4; aliens.forEach(function (a) { if (!a.alive) return; var p = pos(a); if (b.x > p.x && b.x < p.x + 12 && b.y > p.y && b.y < p.y + 8) { a.alive = false; a.dead = 10; b.y = -10; award(a.r === 0 ? 30 : 20); } }); });
-          bombs.forEach(function (b) { b.y += 2; });
+          if (t % 60 === 0 && alive.length) { var sp = pos(alive[(t * 7) % alive.length]); bombs.push({ x: sp.x + 6, y: sp.y + 8 }); }
+          shots.forEach(function (b) { b.y -= 3.5; aliens.forEach(function (a) { if (!a.alive) return; var p = pos(a); if (b.x > p.x && b.x < p.x + 12 && b.y > p.y && b.y < p.y + 8) { a.alive = false; a.dead = 10; b.y = -10; award(a.r === 0 ? 30 : 20); } }); });
+          bombs.forEach(function (b) { b.y += 1.6; });
           shots = shots.filter(function (b) { return b.y > 0; }); bombs = bombs.filter(function (b) { return b.y < H - 10; });
-          if (!alive.length) { state = "clear"; hold = 110; award(500); }
-          else if (fy > 70) { state = "reset"; hold = 70; }
+          if (!alive.length) { state = "clear"; hold = 130; award(500); bMsg.textContent = "WAVE " + wave + " CLEAR!"; bMsg.hidden = false; }
+          else if (30 + rows * gapY + fy > H * .7) { state = "reset"; hold = 80; bMsg.textContent = "THEY LANDED · RETRY"; bMsg.hidden = false; }
         } else if (--hold <= 0) { if (state === "clear") wave++; spawn(); }
-        g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
-        for (var i = 0; i < 30; i++) { g.fillStyle = i % 4 ? "#383838" : "#a4a4a4"; g.fillRect((i * 47) % W, (i * 29 + Math.floor(t / 4)) % H, 1, 1); }
+        g.clearRect(0, 0, W, H);
         aliens.forEach(function (a) { var p = pos(a); if (a.alive) g.drawImage((a.r === 0 ? B : A)[Math.floor(t / 30) % 2], Math.round(p.x), Math.round(p.y)); else if (a.dead > 0) { a.dead--; g.drawImage(boom, Math.round(p.x) + 1, Math.round(p.y)); } });
         g.fillStyle = "#fcfcfc"; shots.forEach(function (b) { g.fillRect(Math.round(b.x), Math.round(b.y), 1, 4); });
-        g.fillStyle = "#f878f8"; bombs.forEach(function (b) { g.fillRect(Math.round(b.x), Math.round(b.y), 1, 3); g.fillRect(Math.round(b.x) + ((b.y >> 1) % 2 ? 1 : -1), Math.round(b.y) + 3, 1, 2); });
+        g.fillStyle = "#f878f8"; bombs.forEach(function (b) { g.fillRect(Math.round(b.x), Math.round(b.y), 1, 3); });
         g.drawImage(ship, Math.round(sx - 6), H - 14);
         g.fillStyle = "#00a800"; g.fillRect(0, H - 4, W, 1);
-        g.font = '6px "Press Start 2P", monospace'; g.textAlign = "left"; g.fillStyle = "#fcbc3c"; g.fillText("WAVE " + wave, 6, 10);
-        g.textAlign = "right"; g.fillStyle = "#a4a4a4"; g.fillText(manual > 0 ? "MANUAL" : "AUTOPILOT", W - 6, 10);
-        if (state === "clear") { text("WAVE " + wave + " CLEAR!", W / 2, 70, "#00d800", 10); text("NEXT WAVE INCOMING", W / 2, 86, "#fcfcfc", 6); }
-        if (state === "reset") text("THEY LANDED · RETRY", W / 2, 76, "#d82800", 8);
       }
       function loop() { cancelAnimationFrame(raf); var go = function () { step(); if (inView && !document.hidden && !reduce) raf = requestAnimationFrame(go); }; go(); }
-      var kd = function (e) { if (document.activeElement !== c) return; if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); keys[e.key] = true; manual = 240; if (e.key === " ") fire(); if (reduce) step(); } };
-      var ku = function (e) { keys[e.key] = false; };
-      var tap = function (e) { var r = c.getBoundingClientRect(); sx = (e.clientX - r.left) / r.width * W; manual = 240; cool = 0; fire(); if (reduce) step(); };
-      window.addEventListener("keydown", kd); window.addEventListener("keyup", ku); c.addEventListener("pointerdown", tap);
-      var vis = new IntersectionObserver(function (es) { inView = es[0].isIntersecting; if (inView) loop(); else cancelAnimationFrame(raf); }); vis.observe(c);
-      spawn();
-      var fr = document.fonts && document.fonts.load ? document.fonts.load('8px "Press Start 2P"') : Promise.resolve();
-      fr.then(loop, loop);
-      cleanups.push(function () { cancelAnimationFrame(raf); window.removeEventListener("keydown", kd); window.removeEventListener("keyup", ku); vis.disconnect(); });
+      var ro = new ResizeObserver(function () { size(); if (reduce) step(); }); ro.observe(section);
+      var vis = new IntersectionObserver(function (es) { inView = es[0].isIntersecting; if (inView) loop(); else cancelAnimationFrame(raf); }); vis.observe(section);
+      size(); spawn(); loop();
+      cleanups.push(function () { cancelAnimationFrame(raf); ro.disconnect(); vis.disconnect(); });
     }
 
     function onNum() {}
@@ -645,8 +648,8 @@
         }
         var bar = document.querySelector(".wavebar");
         if (bar) runner(bar);
-        var jobs = document.querySelector("#work .jobs");
-        if (jobs) invaders(jobs);
+        var work = document.getElementById("work");
+        if (work) invaders(work);
         var kicker = document.querySelector(".poster-kicker");
         if (kicker) { var p2 = el("span", "px-p2", "PLAYER 2 · PRESS START"); p2.setAttribute("aria-hidden", "true"); kicker.after(p2); nodes.push(p2); }
         var stages = { about: "1 RPG", research: "2 RUN&GUN", papers: "3 MAZE", skills: "4 PUZZLE", work: "5 SHOOTER", contact: "VS" };

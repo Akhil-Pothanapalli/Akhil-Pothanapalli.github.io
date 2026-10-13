@@ -286,7 +286,27 @@
 :root[data-style="pixel"] .skill li:hover, :root[data-style="pixel"] .skill li:nth-child(n):hover { background: #fcfcfc; color: #000000; transform: none; }
 :root[data-style="pixel"] .skill li:hover::before { content: ""; position: absolute; left: 6px; top: 50%; translate: 0 -50%; width: 10px; height: 12px; background: var(--px-arrow) 0 0 / 100% 100% no-repeat; filter: invert(1); image-rendering: pixelated; }
 
-/* work: the invader cabinet */
-.px-shooter { display: block; width: min(100%, 720px); height: auto; aspect-ratio: 240 / 150; margin: 0 auto 34px; image-rendering: pixelated; image-rendering: crisp-edges; border: 12px solid transparent; border-image: var(--px-frame) 3 / 12px / 0 stretch; background: #000000; background-clip: padding-box; cursor: var(--px-cursor, crosshair), crosshair; touch-action: manipulation; }
-.px-shooter:focus-visible { outline: 3px dashed #fcbc3c; outline-offset: 4px; }
 :root[data-style="pixel"] .ticker .dot, :root[data-style="pixel"] .ticker.rev .dot { background-image: var(--px-invader); }
+
+/* ── round 4: crisp page text over the games, invaders behind Work ── */
+:root[data-style="pixel"] .wavebar { position: relative; }
+.px-game-ui { position: absolute; inset: 0; pointer-events: none; font-family: "Press Start 2P", monospace; color: #fcfcfc; text-shadow: 3px 3px 0 #000000; }
+.px-game-ui .ui-score, .px-game-ui .ui-best { position: absolute; top: 10px; font-size: clamp(11px, 1.1vw, 14px); }
+.px-game-ui .ui-score { left: clamp(16px, 3vw, 40px); }
+.px-game-ui .ui-best { right: clamp(16px, 3vw, 40px); color: #fcbc3c; }
+.px-game-ui .ui-msg { position: absolute; left: 50%; top: 8%; translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 14px 22px; background: rgba(0, 0, 0, .82); box-shadow: 0 0 0 3px #fcfcfc; text-align: center; white-space: nowrap; }
+.px-game-ui .ui-msg[hidden] { display: none; }
+.px-game-ui .ui-msg b { font-weight: 400; font-size: clamp(16px, 2vw, 26px); color: #fcbc3c; }
+.px-game-ui .ui-msg.is-over b { color: #fc5040; }
+.px-game-ui .ui-msg i { font-style: normal; font-size: clamp(11px, 1.1vw, 14px); animation: pxBlink 1s steps(1) infinite; }
+.px-game-ui .ui-msg small { font-size: clamp(9px, .9vw, 11px); color: #c4c4c4; }
+@media (max-width: 700px) { .px-game-ui .ui-msg { top: 22px; padding: 8px 12px; gap: 6px; } .px-game-ui .ui-score, .px-game-ui .ui-best { top: 4px; font-size: 9px; } }
+
+:root[data-style="pixel"] #work { max-width: none; position: relative; overflow: hidden; isolation: isolate; padding-inline: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad))); padding-bottom: 90px; }
+:root[data-style="pixel"] #work > .px-shooter { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; max-width: none; margin: 0; opacity: .32; pointer-events: none; image-rendering: pixelated; image-rendering: crisp-edges; }
+:root[data-style="pixel"] #work > .px-wave-badge { position: absolute; right: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad))); top: clamp(64px, 9vw, 120px); z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font: 12px/1 "Press Start 2P", monospace; color: #fcbc3c; text-shadow: 2px 2px 0 #000000; pointer-events: none; }
+.px-wave-badge .wb-mode { color: #a4a4a4; font-size: 10px; }
+.px-wave-badge .wb-msg { color: #00d800; font-size: 14px; padding: 8px 10px; background: #000000; box-shadow: 0 0 0 3px #00d800; animation: pxBlink .6s steps(1) 4; }
+.px-wave-badge .wb-msg[hidden] { display: none; }
+@media (max-width: 700px) { .px-wave-badge { top: 18px; font-size: 9px; } .px-wave-badge .wb-msg { font-size: 10px; } }
+:root[data-style="pixel"] #work .sec-head { text-shadow: 3px 3px 0 #000000; }
