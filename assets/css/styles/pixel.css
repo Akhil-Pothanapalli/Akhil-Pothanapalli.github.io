@@ -1,8 +1,8 @@
-/* Pixel / 8-bit: the page plays like an NES game. Title screen hero with PUSH START and a ▶ menu, a live HUD
-   (SCORE, COINS, WORLD, TIME), hittable ? blocks, RPG dialogue boxes, a level-select for research, an arcade
-   HIGH SCORES table for papers, an inventory for skills, and a CONTINUE? countdown for contact.
-   NES rules: 8×8 tiles, few colours per sprite, black outlines, the NES palette. Every sprite (clouds, hills,
-   bricks, blocks, coins, frames, cursor) is drawn in code by style-fx.js and handed to CSS as --px-* images. */
+/* Pixel / 8-bit: an arcade of classic game genres, one per section. Hero is a Galaga/Gradius-style attract screen
+   with a scrolling starfield and INSERT COIN; the portrait is a fighting-game character-select card (photo left
+   sharp); About is an RPG town; Research a run-and-gun stage select over a jungle canopy; Papers a maze high-score
+   table; Skills a falling-block well; Work an invader wave you can shoot; Contact a VS screen waiting for Player 2.
+   8×8-tile thinking, few colours per sprite, black outlines; every sprite is drawn in code by style-fx.js (--px-*). */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 :root[data-style="pixel"] {
   --sky: #5c94fc; --brick: #c84c0c; --ground: #fc9838; --gold: #fcbc3c; --red: #d82800; --pipe: #00a800; --white: #fcfcfc; --ink: #000000; --dim: #a4a4a4;
@@ -43,7 +43,7 @@
 .px-hud { order: 10; flex-basis: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; padding: 6px 0 2px; border-top: 4px solid #181818; font: 11px/1.4 "Press Start 2P", monospace; color: #fcfcfc; text-transform: uppercase; }
 .px-hud b { display: block; font-weight: 400; color: #fcfcfc; }
 .px-hud span { color: #fcfcfc; }
-.px-hud .hud-coins b::before { content: ""; display: inline-block; width: 8px; height: 12px; margin-right: 6px; vertical-align: -1px; background: var(--px-coin) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
+.px-hud .hud-credits b::before { content: ""; display: inline-block; width: 8px; height: 12px; margin-right: 6px; vertical-align: -1px; background: var(--px-coin) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
 .px-hud .hud-lives b::before { content: ""; display: inline-block; width: 14px; height: 12px; margin-right: 6px; vertical-align: -1px; background: var(--px-heart) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
 
 /* buttons are menu items with a ▶ cursor */
@@ -56,47 +56,42 @@
 :root[data-style="pixel"] .btn:focus-visible { outline: 2px dashed #fcbc3c; outline-offset: 2px; }
 @keyframes pxNudge { 50% { translate: 3px -50%; } }
 
-/* hero: the title screen in the overworld */
+/* hero: arcade attract mode in deep space */
 :root[data-style="pixel"] .hero { padding: 0; }
-:root[data-style="pixel"] .stage {
-  position: relative; overflow: hidden; border-radius: 0; padding-block: 40px 140px;
-  background: var(--px-cloud) 6% 14% / 128px 64px no-repeat, var(--px-cloud) 58% 6% / 96px 48px no-repeat, var(--px-cloud) 76% 4% / 128px 64px no-repeat, #5c94fc;
-  image-rendering: pixelated;
-}
-:root[data-style="pixel"] .stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 128px; image-rendering: pixelated;
-  background: var(--px-hill) 4% calc(100% - 64px) / 240px 100px no-repeat, var(--px-bush) 38% calc(100% - 64px) / 128px 48px no-repeat, var(--px-hill) 74% calc(100% - 64px) / 160px 66px no-repeat, var(--px-bush) 96% calc(100% - 64px) / 96px 36px no-repeat,
-              var(--px-brick) 0 100% / 32px 32px repeat-x, var(--px-brick) 0 calc(100% - 32px) / 32px 32px repeat-x; }
-:root[data-style="pixel"] .stage > * { position: relative; z-index: 1; }
+:root[data-style="pixel"] .stage { position: relative; overflow: hidden; border-radius: 0; padding-block: 44px 60px; background: #000000; isolation: isolate; }
+:root[data-style="pixel"] .stage::before { content: ""; position: absolute; inset: 0; z-index: -1; image-rendering: pixelated;
+  background: radial-gradient(#fcfcfc 1px, transparent 1.6px) 0 0 / 61px 61px, radial-gradient(#5c94fc 1px, transparent 1.6px) 23px 37px / 97px 97px, radial-gradient(#fcbc3c 1px, transparent 1.6px) 47px 11px / 131px 131px;
+  animation: pxStars 6s steps(30) infinite linear; }
+@keyframes pxStars { to { background-position: 0 61px, 23px 134px, 47px 142px; } }
 :root[data-style="pixel"] .title-block { text-align: left; }
 :root[data-style="pixel"] .kicker { gap: 18px; }
-:root[data-style="pixel"] .kicker .tag { background: none; color: #fcfcfc; padding: 0; font: 10px/1.4 "Press Start 2P", monospace; text-shadow: 2px 2px 0 #000000; }
-:root[data-style="pixel"] .kicker .tag-accent-2::before { content: "1 PLAYER · "; color: #fcbc3c; }
-:root[data-style="pixel"] .title { display: inline-block; font-size: clamp(22px, 3.6vw, 52px); line-height: 1.35; padding: 22px 28px; background: #c84c0c; box-shadow: inset 0 0 0 4px #000000, inset 0 0 0 8px #fc9838, inset 0 0 0 12px #000000, 8px 8px 0 #000000; }
-:root[data-style="pixel"] .title span { color: #fcfcfc; text-shadow: 4px 4px 0 #000000; }
-:root[data-style="pixel"] .t2 { color: #fcbc3c !important; }
-:root[data-style="pixel"] .title-block::after { content: "PUSH START"; display: block; margin-top: 26px; font: 14px/1 "Press Start 2P", monospace; color: #fcfcfc; text-shadow: 3px 3px 0 #000000; animation: pxBlink 1s steps(1) infinite; }
+:root[data-style="pixel"] .kicker .tag { background: none; color: #fcfcfc; padding: 0; font: 10px/1.4 "Press Start 2P", monospace; }
+:root[data-style="pixel"] .kicker .tag-accent-2::before { content: "1UP · "; color: #d82800; }
+:root[data-style="pixel"] .title { font-size: clamp(24px, 4vw, 58px); line-height: 1.3; }
+:root[data-style="pixel"] .title span { color: #fcfcfc; text-shadow: 4px 4px 0 #d82800, 8px 8px 0 #000000; }
+:root[data-style="pixel"] .t2 { color: #fcbc3c !important; text-shadow: 4px 4px 0 #c84c0c, 8px 8px 0 #000000 !important; }
+.px-coinslot { display: inline-flex; align-items: center; gap: 12px; margin-top: 26px; padding: 0; border: 0; background: none; font: 14px/1 "Press Start 2P", monospace; color: #fcfcfc; }
+.px-coinslot span { animation: pxBlink 1s steps(1) infinite; }
+.px-coinslot::before { content: ""; width: 16px; height: 24px; background: var(--px-coin) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
+.px-coinslot:hover span, .px-coinslot:focus-visible span { color: #fcbc3c; animation: none; }
+.px-coinslot:focus-visible { outline: 2px dashed #fcbc3c; outline-offset: 6px; }
+.px-drop { position: absolute; left: 0; top: -6px; width: 16px; height: 24px; background: var(--px-coin) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; animation: pxDrop .5s steps(5) forwards; }
+@keyframes pxDrop { from { transform: translateY(-40px); } to { transform: translateY(6px); opacity: 0; } }
 :root[data-style="pixel"] .bubble { padding: 14px 16px 30px; position: relative; }
 :root[data-style="pixel"] .bubble p { font-size: 24px; line-height: 1.2; color: #fcfcfc; }
 :root[data-style="pixel"] .bubble p strong { color: #fcbc3c; font-weight: 400; }
 :root[data-style="pixel"] .bubble p a { color: #5c94fc; }
 :root[data-style="pixel"] .bubble::after { content: "▼"; display: block; position: absolute; right: 14px; bottom: 6px; border: 0; font: 12px/1 "Press Start 2P", monospace; color: #fcfcfc; animation: pxBlink .8s steps(1) infinite; }
 :root[data-style="pixel"] .actions { gap: 4px 18px; }
-/* player select: a pixelated portrait with ? blocks above */
-:root[data-style="pixel"] .art { display: grid; justify-items: center; align-content: start; gap: 18px; }
-:root[data-style="pixel"] .art .portrait { width: min(100%, 280px); padding: 12px; background: #000000; box-shadow: 0 0 0 4px #fcfcfc, 8px 8px 0 4px #000000; }
-:root[data-style="pixel"] .portrait .washed { position: relative; border: 0; }
-.px-portrait { position: absolute; inset: 0; width: 100%; height: 100%; }
-:root[data-style="pixel"] .art .portrait::after { content: "P1 · AKHIL"; display: block; margin-top: 10px; font: 11px/1 "Press Start 2P", monospace; color: #fcbc3c; text-align: center; }
-.px-blocks { display: flex; gap: 0; }
-.px-block { position: relative; width: 48px; height: 48px; border: 0; padding: 0; background: var(--px-qblock) 0 0 / 100% 100% no-repeat; }
-.px-block.is-used { background-image: var(--px-qused); }
-.px-block.is-hit { animation: pxBump .22s steps(3); }
-.px-coin { position: absolute; left: 12px; top: -10px; width: 24px; height: 36px; background: var(--px-coin) 0 0 / 100% 100% no-repeat; pointer-events: none; animation: pxCoin .6s steps(8) forwards; }
-.px-points { position: absolute; left: 50%; top: -30px; translate: -50% 0; font: 10px/1 "Press Start 2P", monospace; color: #fcfcfc; text-shadow: 2px 2px 0 #000000; pointer-events: none; animation: pxFloat .9s steps(6) forwards; }
-@keyframes pxBump { 50% { transform: translateY(-14px); } }
-@keyframes pxCoin { 0% { transform: translateY(0) scaleX(1); } 25% { transform: translateY(-50px) scaleX(.3); } 50% { transform: translateY(-80px) scaleX(1); } 75% { transform: translateY(-60px) scaleX(.3); opacity: 1; } 100% { transform: translateY(-20px) scaleX(1); opacity: 0; } }
-@keyframes pxFloat { to { transform: translateY(-30px); opacity: 0; } }
-@keyframes pxBlink { 50% { opacity: 0; } }
+/* character select: the real photo, kept sharp, in a fighter card with stats */
+:root[data-style="pixel"] .art { display: grid; justify-items: center; align-content: start; }
+:root[data-style="pixel"] .art .portrait { width: min(100%, 290px); padding: 10px 10px 0; background: #0000a8; box-shadow: 0 0 0 4px #fcfcfc, 0 0 0 8px #000000, 10px 10px 0 8px #d82800; }
+:root[data-style="pixel"] .portrait .washed { border: 0; outline: 4px solid #000000; }
+:root[data-style="pixel"] .art .portrait::after { content: "P1 · AKHIL"; display: block; padding: 10px 0; font: 12px/1 "Press Start 2P", monospace; color: #fcbc3c; text-align: center; }
+.px-stats { width: min(100%, 290px); margin-top: 22px; display: grid; gap: 8px; font: 9px/1 "Press Start 2P", monospace; color: #fcfcfc; }
+.px-stats div { display: grid; grid-template-columns: 76px 1fr; align-items: center; gap: 10px; }
+.px-stats i { display: block; height: 10px; background: repeating-linear-gradient(90deg, var(--c, #00d800) 0 8px, transparent 8px 10px) 0 0 / var(--v, 50%) 100% no-repeat, repeating-linear-gradient(90deg, #303030 0 8px, transparent 8px 10px); }
+.px-select { margin-top: 14px; font: 10px/1 "Press Start 2P", monospace; color: #fcfcfc; animation: pxBlink 1s steps(1) infinite; }
 /* sound test */
 :root[data-style="pixel"] .wavebar { height: 110px; padding: 30px 8px 6px; position: relative; }
 :root[data-style="pixel"] .wavebar::after { content: "SOUND TEST  ♪ 01"; position: absolute; left: 10px; top: 8px; font: 10px/1 "Press Start 2P", monospace; color: #fcbc3c; }
@@ -104,24 +99,27 @@
 /* tickers */
 :root[data-style="pixel"] .ticker, :root[data-style="pixel"] .ticker.rev { margin: 0; border-radius: 0; border-block: 4px solid #fcfcfc; }
 :root[data-style="pixel"] .ticker-run span:not(.dot) { font: clamp(14px, 1.8vw, 22px)/1.6 "Press Start 2P", monospace; text-transform: uppercase; }
-:root[data-style="pixel"] .ticker .dot, :root[data-style="pixel"] .ticker.rev .dot { width: 16px; height: 24px; border-radius: 0; opacity: 1; background: var(--px-coin) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
+:root[data-style="pixel"] .ticker .dot, :root[data-style="pixel"] .ticker.rev .dot { width: 22px; height: 16px; border-radius: 0; opacity: 1; background: var(--px-invader) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
 
-/* section heads: WORLD x-y over the title, the number in a ? block */
+/* section heads: genre and stage over the title */
 :root[data-style="pixel"] .sec-head { position: relative; padding-top: 30px; align-items: center; }
 :root[data-style="pixel"] .sec-head::before { position: absolute; left: 0; top: 0; font: 11px/1 "Press Start 2P", monospace; color: #fcbc3c; }
-:root[data-style="pixel"] #about .sec-head::before { content: "WORLD 1-1"; } :root[data-style="pixel"] #research .sec-head::before { content: "WORLD 1-2 · LEVEL SELECT"; }
-:root[data-style="pixel"] #papers .sec-head::before { content: "WORLD 1-3 · HIGH SCORES"; } :root[data-style="pixel"] #skills .sec-head::before { content: "WORLD 1-4 · INVENTORY"; }
-:root[data-style="pixel"] #work .sec-head::before { content: "WORLD 2-1 · STAGES CLEARED"; }
-:root[data-style="pixel"] .sec-num { width: 56px; height: 56px; background: var(--px-qblank) 0 0 / 100% 100% no-repeat; color: #000000; font: 14px/1 "Press Start 2P", monospace; image-rendering: pixelated; cursor: var(--px-cursor, pointer), pointer; }
+:root[data-style="pixel"] #about .sec-head::before { content: "RPG · TOWN OF ORIGIN"; } :root[data-style="pixel"] #research .sec-head::before { content: "RUN & GUN · STAGE SELECT"; }
+:root[data-style="pixel"] #papers .sec-head::before { content: "MAZE · HIGH SCORES"; } :root[data-style="pixel"] #skills .sec-head::before { content: "PUZZLE · BLOCK WELL"; }
+:root[data-style="pixel"] #work .sec-head::before { content: "SHOOTER · WAVES CLEARED"; }
+:root[data-style="pixel"] .sec-num { width: 56px; height: 56px; background: #000000; color: #fcbc3c; font: 14px/1 "Press Start 2P", monospace; box-shadow: inset 0 0 0 4px #fcfcfc; }
 :root[data-style="pixel"] .sec-title { font-size: clamp(22px, 3.6vw, 44px); line-height: 1.3; text-shadow: 4px 4px 0 #d82800; }
 :root[data-style="pixel"] .ink .sec-title { color: #fcfcfc; }
 :root[data-style="pixel"] .sec-note { color: #a4a4a4; font-size: 22px; }
 
-/* about: dialogue boxes */
-:root[data-style="pixel"] .caption-box { font: 12px/1.4 "Press Start 2P", monospace; color: #5c94fc; text-transform: uppercase; letter-spacing: 0; }
+/* about: an RPG town, grass tiles under dialogue boxes */
+:root[data-style="pixel"] #about { max-width: none; padding-inline: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad))); padding-bottom: 80px; background: var(--px-grass) 0 0 / 64px 64px, #00a800; image-rendering: pixelated; }
+:root[data-style="pixel"] #about .sec-head { background: #000000; padding: 34px 16px 12px; box-shadow: inset 0 0 0 4px #fcfcfc; }
+:root[data-style="pixel"] #about .sec-head::before { left: 16px; top: 14px; }
+:root[data-style="pixel"] .caption-box { font: 12px/1.4 "Press Start 2P", monospace; color: #fcfcfc; text-transform: uppercase; letter-spacing: 0; background: #000000; padding: 8px 10px; justify-self: start; }
 :root[data-style="pixel"] .about-statement { padding: 18px 20px; font-size: clamp(16px, 2.2vw, 26px); line-height: 1.5; color: #fcfcfc; max-width: none; position: relative; }
 :root[data-style="pixel"] .about-statement::before { content: "AKHIL:"; display: block; margin-bottom: 10px; color: #fcbc3c; font-size: 12px; }
-:root[data-style="pixel"] .about-body { font-size: 24px; line-height: 1.3; color: #e4e4e4; }
+:root[data-style="pixel"] .about-body { font-size: 24px; line-height: 1.3; color: #e4e4e4; background: #000000; padding: 18px 20px; border: 12px solid transparent; border-image: var(--px-frame) 3 / 12px / 0 stretch; background-clip: padding-box; }
 :root[data-style="pixel"] .about-body strong { color: #fcbc3c; font-weight: 400; }
 :root[data-style="pixel"] .now { padding: 18px 18px 14px; }
 :root[data-style="pixel"] .now .label { font: 11px/1 "Press Start 2P", monospace; color: #fcbc3c; }
@@ -129,30 +127,33 @@
 :root[data-style="pixel"] .now li { font: 22px/1.2 "VT323", monospace; color: #fcfcfc; }
 :root[data-style="pixel"] .now li::before { content: ""; width: 12px; height: 14px; background: var(--px-arrow) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
 
-/* research: level cards, each with a sky strip and a hill */
-:root[data-style="pixel"] .projects { gap: 26px; }
-:root[data-style="pixel"] .proj, :root[data-style="pixel"] .proj:nth-child(n) { padding: 0 0 16px; transition: none; }
+/* research: run-and-gun stage select under a jungle canopy */
+:root[data-style="pixel"] #research { max-width: none; padding-inline: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad))); background: var(--px-canopy) 0 0 / 64px 64px repeat-x, linear-gradient(#0c2a10, #000000 70%); image-rendering: pixelated; padding-top: 110px; }
+:root[data-style="pixel"] .projects { gap: 26px; counter-reset: stage; }
+:root[data-style="pixel"] .proj, :root[data-style="pixel"] .proj:nth-child(n) { padding: 0 0 16px; transition: none; counter-increment: stage; }
 :root[data-style="pixel"] .proj:hover { transform: translateY(-4px); }
-:root[data-style="pixel"] .proj::before { content: ""; grid-column: 1 / -1; height: 70px; margin-bottom: 12px; image-rendering: pixelated;
-  background: var(--px-cloud) 80% 10px / 64px 32px no-repeat, var(--px-hill) 10% 100% / 120px 50px no-repeat, var(--px-brick) 0 100% / 16px 16px repeat-x, #5c94fc; }
-:root[data-style="pixel"] .proj:nth-child(4n+2)::before { background: var(--px-cloud) 20% 12px / 64px 32px no-repeat, var(--px-bush) 70% 100% / 96px 36px no-repeat, var(--px-brick) 0 100% / 16px 16px repeat-x, #000000 radial-gradient(#fcfcfc 1px, transparent 1.4px) 0 0 / 22px 22px; }
-:root[data-style="pixel"] .proj:nth-child(4n+3)::before { background: var(--px-hill) 70% 100% / 140px 56px no-repeat, var(--px-brick) 0 100% / 16px 16px repeat-x, #fc9838; }
-:root[data-style="pixel"] .proj:nth-child(4n+4)::before { background: var(--px-cloud) 40% 8px / 64px 32px no-repeat, var(--px-brick) 0 100% / 16px 16px repeat-x, #3cbcfc; }
+:root[data-style="pixel"] .proj::before { grid-column: 1 / -1; height: 74px; margin-bottom: 12px; display: flex; align-items: flex-end; padding: 0 12px 8px; font: 11px/1 "Press Start 2P", monospace; color: #fcfcfc; text-shadow: 2px 2px 0 #000000; image-rendering: pixelated; }
+:root[data-style="pixel"] .proj:nth-child(4n+1)::before { content: "STAGE " counter(stage) " · JUNGLE"; background: var(--px-canopy) 0 0 / 48px 48px repeat-x, #005800; }
+:root[data-style="pixel"] .proj:nth-child(4n+2)::before { content: "STAGE " counter(stage) " · BASE"; background: repeating-linear-gradient(90deg, #585858 0 22px, #383838 22px 24px), #383838; }
+:root[data-style="pixel"] .proj:nth-child(4n+3)::before { content: "STAGE " counter(stage) " · WATERFALL"; background: repeating-linear-gradient(90deg, #3cbcfc 0 6px, #fcfcfc 6px 8px, #0078f8 8px 14px), #0078f8; }
+:root[data-style="pixel"] .proj:nth-child(4n+4)::before { content: "STAGE " counter(stage) " · SNOW FIELD"; background: radial-gradient(#fcfcfc 1.4px, transparent 2px) 0 0 / 14px 14px, linear-gradient(#a4e4fc 60%, #fcfcfc 60%); }
 :root[data-style="pixel"] .proj-idx, :root[data-style="pixel"] .proj-head, :root[data-style="pixel"] .proj-body, :root[data-style="pixel"] .proj-facts { margin-inline: 16px; }
-:root[data-style="pixel"] .proj-idx, :root[data-style="pixel"] .proj:nth-child(even) .proj-idx { width: 48px; height: 48px; background: var(--px-qblank) 0 0 / 100% 100% no-repeat; color: #000000; font: 12px/1 "Press Start 2P", monospace; image-rendering: pixelated; }
+:root[data-style="pixel"] .proj-idx, :root[data-style="pixel"] .proj:nth-child(even) .proj-idx { width: 48px; height: 48px; background: #d82800; color: #fcfcfc; font: 12px/1 "Press Start 2P", monospace; box-shadow: inset -4px -4px 0 #881400, inset 4px 4px 0 #fc7460; }
 :root[data-style="pixel"] .proj-kicker { font: 10px/1.4 "Press Start 2P", monospace; color: #fcbc3c; }
 :root[data-style="pixel"] .proj-title { font-size: clamp(14px, 1.7vw, 20px); line-height: 1.4; }
 :root[data-style="pixel"] .proj-body p { font-size: 22px; line-height: 1.2; color: #e4e4e4; }
 :root[data-style="pixel"] .proj-tags .tag { background: none; color: #5c94fc; padding: 0 10px 0 0; font: 20px/1 "VT323", monospace; text-transform: uppercase; }
 :root[data-style="pixel"] .proj-facts > div { background: none; padding: 0 16px 0 0; }
 :root[data-style="pixel"] .proj-facts dt { font: 14px/1 "Press Start 2P", monospace; color: #fcfcfc; }
-:root[data-style="pixel"] .proj-facts dt::before { content: "×"; color: #fcbc3c; margin-right: 4px; }
-:root[data-style="pixel"] .proj-facts > div::before { content: ""; width: 12px; height: 18px; align-self: center; background: var(--px-coin) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
+:root[data-style="pixel"] .proj-facts > div::before { content: ""; width: 12px; height: 12px; align-self: center; background: #fcbc3c; box-shadow: inset -2px -2px 0 #c84c0c; }
 :root[data-style="pixel"] .proj-facts dd { font: 20px/1 "VT323", monospace; color: #a4a4a4; text-transform: uppercase; }
 
-/* papers: arcade high-score table */
+/* papers: a maze, blue walls round a high-score table, a pellet trail */
 :root[data-style="pixel"] .ink { margin: 0; border-radius: 0; background: #000000; }
-:root[data-style="pixel"] .pub-bar { margin-bottom: 14px; }
+:root[data-style="pixel"] .ink > .pubs, :root[data-style="pixel"] .ink > .pub-bar { box-sizing: border-box; }
+:root[data-style="pixel"] .pubs { counter-reset: rank; gap: 0; padding: 18px 22px; border: 6px double #2121de; border-radius: 12px; box-shadow: 0 0 0 4px #000000, 0 0 0 7px #2121de; position: relative; }
+:root[data-style="pixel"] .pubs::before { content: ""; display: block; height: 8px; margin-bottom: 14px; background: radial-gradient(circle, #ffb8ae 2.5px, transparent 3px) 0 50% / 24px 8px repeat-x; }
+:root[data-style="pixel"] .pub-bar { margin-bottom: 18px; }
 :root[data-style="pixel"] .seg { border: 0; gap: 18px; overflow: visible; background: none; }
 :root[data-style="pixel"] .seg-opt { padding: 4px 0; font: 11px/1 "Press Start 2P", monospace; color: #a4a4a4; text-transform: uppercase; }
 :root[data-style="pixel"] .seg-opt + .seg-opt { border-left: 0; }
@@ -160,11 +161,11 @@
 :root[data-style="pixel"] .ink .seg-opt:has(input:checked)::before { content: "▶"; }
 :root[data-style="pixel"] .ink .seg-opt:not(:has(input:checked)):hover { background: none; color: #fcfcfc; }
 :root[data-style="pixel"] .ink .pub-bar .btn-primary { background: none; color: #fcfcfc; }
-:root[data-style="pixel"] .pubs { counter-reset: rank; gap: 0; border-top: 4px dashed #fcfcfc; }
-:root[data-style="pixel"] .pub:nth-child(n) { counter-increment: rank; background: none; border-radius: 0; padding: 18px 0; border-bottom: 4px dashed #383838; grid-template-columns: 90px 80px minmax(0, 1fr) auto; column-gap: 18px; margin: 0; }
+:root[data-style="pixel"] .pub:nth-child(n) { counter-increment: rank; background: none; border-radius: 0; padding: 16px 0; border-bottom: 3px dotted #2121de; grid-template-columns: 90px 80px minmax(0, 1fr) auto; column-gap: 18px; margin: 0; }
+:root[data-style="pixel"] .pub:last-child { border-bottom: 0; }
 :root[data-style="pixel"] .pub::before { content: counter(rank) "TH"; grid-row: 1 / span 2; align-self: start; font: 16px/1 "Press Start 2P", monospace; color: #fcfcfc; padding-top: 6px; }
-:root[data-style="pixel"] .pub:nth-child(1)::before { content: "1ST"; color: #fcbc3c; } :root[data-style="pixel"] .pub:nth-child(2)::before { content: "2ND"; color: #fc9838; } :root[data-style="pixel"] .pub:nth-child(3)::before { content: "3RD"; color: #d82800; }
-:root[data-style="pixel"] .pub:nth-child(n) .pub-year { grid-column: 2; width: auto; height: auto; background: none; border: 0; color: #5c94fc; font: 16px/1 "Press Start 2P", monospace; justify-content: start; align-items: start; padding-top: 6px; }
+:root[data-style="pixel"] .pub:nth-child(1)::before { content: "1ST"; color: #fcbc3c; } :root[data-style="pixel"] .pub:nth-child(2)::before { content: "2ND"; color: #ffb8ff; } :root[data-style="pixel"] .pub:nth-child(3)::before { content: "3RD"; color: #00ffff; } :root[data-style="pixel"] .pub:nth-child(4)::before { color: #ffb852; }
+:root[data-style="pixel"] .pub:nth-child(n) .pub-year { grid-column: 2; width: auto; height: auto; background: none; border: 0; color: #fcfcfc; font: 16px/1 "Press Start 2P", monospace; justify-content: start; align-items: start; padding-top: 6px; }
 :root[data-style="pixel"] .pub-venue, :root[data-style="pixel"] .pub-main { grid-column: 3; }
 :root[data-style="pixel"] .pub-links { grid-column: 4; }
 :root[data-style="pixel"] .pub-short { font: 10px/1.4 "Press Start 2P", monospace; color: #fcbc3c; }
@@ -177,19 +178,30 @@
 :root[data-style="pixel"] .ink .pub-links a:hover { background: none; color: #fcfcfc; }
 :root[data-style="pixel"] .pub-links a .ico { display: none; }
 
-/* skills: inventory windows with item slots */
+/* skills: a falling-block well, every skill a coloured block */
 :root[data-style="pixel"] .skills { gap: 22px; }
-:root[data-style="pixel"] .skill, :root[data-style="pixel"] .skill:nth-child(n) { padding: 16px; }
-:root[data-style="pixel"] .skill-h { font-size: 12px; line-height: 1.5; color: #fcbc3c; }
-:root[data-style="pixel"] .skill-h .accent { width: 28px; height: 28px; background: var(--px-qblank) 0 0 / 100% 100% no-repeat; color: #000000; font: 10px/1 "Press Start 2P", monospace; image-rendering: pixelated; }
-:root[data-style="pixel"] .skill ul { gap: 6px; }
-:root[data-style="pixel"] .skill li { background: #181818; border: 0; box-shadow: inset 0 0 0 2px #585858; color: #fcfcfc; padding: 6px 10px; font: 20px/1 "VT323", monospace; text-transform: uppercase; }
-:root[data-style="pixel"] .skill li:hover { background: #fcbc3c; color: #000000; box-shadow: inset 0 0 0 2px #000000; }
+:root[data-style="pixel"] .skill, :root[data-style="pixel"] .skill:nth-child(n) { padding: 16px; background-image: linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px); background-size: 24px 24px; }
+:root[data-style="pixel"] .skill-h { font-size: 12px; line-height: 1.5; color: #fcfcfc; }
+:root[data-style="pixel"] .skill-h .accent { width: 28px; height: 28px; color: #000000; font: 10px/1 "Press Start 2P", monospace; background: #fcbc3c; box-shadow: inset -3px -3px 0 rgba(0, 0, 0, .35), inset 3px 3px 0 rgba(255, 255, 255, .5); }
+:root[data-style="pixel"] .skill ul { gap: 4px; }
+:root[data-style="pixel"] .skill li { --blk: #00f0f0; background: var(--blk); color: #000000; padding: 6px 10px; font: 20px/1 "VT323", monospace; text-transform: uppercase; box-shadow: inset -4px -4px 0 rgba(0, 0, 0, .3), inset 4px 4px 0 rgba(255, 255, 255, .45); }
+:root[data-style="pixel"] .skill li:nth-child(7n+2) { --blk: #f0f000; } :root[data-style="pixel"] .skill li:nth-child(7n+3) { --blk: #a000f0; color: #fcfcfc; } :root[data-style="pixel"] .skill li:nth-child(7n+4) { --blk: #00f000; }
+:root[data-style="pixel"] .skill li:nth-child(7n+5) { --blk: #f00000; color: #fcfcfc; } :root[data-style="pixel"] .skill li:nth-child(7n+6) { --blk: #0000f0; color: #fcfcfc; } :root[data-style="pixel"] .skill li:nth-child(7n+7) { --blk: #f0a000; }
+:root[data-style="pixel"] .skill li:hover { transform: translateY(2px); background: var(--blk); color: inherit; }
 
-/* work: stages cleared */
+/* work: an invader wave marches overhead (style-fx.js) */
+:root[data-style="pixel"] #work { position: relative; }
+.px-wave { display: grid; grid-template-columns: repeat(11, 30px); gap: 10px 14px; justify-content: center; margin: 0 auto 34px; animation: pxMarch 4s steps(8) infinite alternate; }
+.px-wave button { width: 30px; height: 22px; padding: 0; border: 0; background: var(--px-invader) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; animation: pxFlap .8s steps(1) infinite; }
+.px-wave button:nth-child(n+12) { background-image: var(--px-invader2); animation-name: pxFlap2; }
+.px-wave button.is-dead { background-image: var(--px-boom); animation: none; pointer-events: none; }
+.px-wave button.is-gone { visibility: hidden; }
+@keyframes pxMarch { from { transform: translateX(-40px); } to { transform: translateX(40px); } }
+@keyframes pxFlap { 50% { background-image: var(--px-invader-b); } }
+@keyframes pxFlap2 { 50% { background-image: var(--px-invader2-b); } }
 :root[data-style="pixel"] .jobs { gap: 22px; }
 :root[data-style="pixel"] .job { padding: 22px; position: relative; }
-:root[data-style="pixel"] .job::after { content: "★ STAGE CLEAR"; position: absolute; right: 16px; top: 12px; font: 9px/1 "Press Start 2P", monospace; color: #00d800; }
+:root[data-style="pixel"] .job::after { content: "WAVE CLEAR"; position: absolute; right: 16px; top: 12px; font: 9px/1 "Press Start 2P", monospace; color: #00d800; }
 :root[data-style="pixel"] .job-period { font: 10px/1.5 "Press Start 2P", monospace; color: #fcbc3c; }
 :root[data-style="pixel"] .job-org { font-size: clamp(16px, 2vw, 24px); line-height: 1.4; }
 :root[data-style="pixel"] .job-org a:hover { color: #fcbc3c; }
@@ -198,14 +210,13 @@
 :root[data-style="pixel"] .job-points li { font-size: 22px; line-height: 1.2; color: #e4e4e4; padding-left: 26px; }
 :root[data-style="pixel"] .job-points li::before { width: 12px; height: 14px; top: 4px; border-radius: 0; background: var(--px-arrow) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; }
 
-/* contact: CONTINUE? over the overworld */
-:root[data-style="pixel"] .poster { position: relative; overflow: hidden; border-radius: 0; margin: 0; padding-bottom: 150px; image-rendering: pixelated;
-  background: var(--px-cloud) 70% 30px / 128px 64px no-repeat, var(--px-cloud) 90% 58% / 96px 48px no-repeat, #5c94fc; }
-:root[data-style="pixel"] .poster::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 128px; image-rendering: pixelated;
-  background: var(--px-bush) 12% calc(100% - 64px) / 128px 48px no-repeat, var(--px-hill) 86% calc(100% - 64px) / 200px 84px no-repeat, var(--px-brick) 0 100% / 32px 32px repeat-x, var(--px-brick) 0 calc(100% - 32px) / 32px 32px repeat-x; }
-:root[data-style="pixel"] .poster-kicker { font: 11px/1 "Press Start 2P", monospace; color: #fcfcfc; text-shadow: 2px 2px 0 #000000; }
-.px-continue { display: block; margin: 0 0 16px; font: clamp(16px, 2.4vw, 26px)/1.4 "Press Start 2P", monospace; color: #fcbc3c; text-shadow: 4px 4px 0 #000000; }
-:root[data-style="pixel"] .poster-title { font-size: clamp(22px, 4vw, 54px); line-height: 1.35; color: #fcfcfc; text-shadow: 5px 5px 0 #000000; }
+/* contact: a VS screen waiting for Player 2 */
+:root[data-style="pixel"] .poster { position: relative; overflow: hidden; border-radius: 0; margin: 0; background: linear-gradient(105deg, #0000a8 0 50%, #a80020 50%); }
+:root[data-style="pixel"] .poster::before { display: block; content: "VS"; position: absolute; right: 8%; top: 50%; translate: 0 -50%; width: auto; aspect-ratio: auto; border-radius: 0; background: none;
+  font: clamp(90px, 16vw, 220px)/1 "Press Start 2P", monospace; color: #fcbc3c; text-shadow: 8px 8px 0 #c84c0c, 14px 14px 0 #000000; opacity: .9; }
+:root[data-style="pixel"] .poster-kicker { font: 11px/1 "Press Start 2P", monospace; color: #fcfcfc; }
+.px-p2 { display: block; margin: 0 0 16px max(0px, calc((100% - var(--max)) / 2)); max-width: var(--max); font: clamp(14px, 2vw, 22px)/1.4 "Press Start 2P", monospace; color: #fcbc3c; text-shadow: 3px 3px 0 #000000; animation: pxBlink 1s steps(1) infinite; }
+:root[data-style="pixel"] .poster-title { font-size: clamp(22px, 4vw, 54px); line-height: 1.35; color: #fcfcfc; text-shadow: 5px 5px 0 #000000; max-width: none; }
 :root[data-style="pixel"] .poster-sub { color: #fcfcfc; font-size: 26px; text-shadow: 2px 2px 0 #000000; }
 :root[data-style="pixel"] .links { gap: 16px; }
 :root[data-style="pixel"] .link-cell { padding: 14px 14px 12px 36px; min-height: 0; position: relative; }
@@ -219,26 +230,37 @@
 /* footer: credits */
 :root[data-style="pixel"] .site-foot { max-width: none; background: #000000; text-align: center; }
 :root[data-style="pixel"] .foot-row { justify-content: center; flex-direction: column; align-items: center; gap: 12px; font: 11px/1.6 "Press Start 2P", monospace; text-transform: uppercase; color: #fcfcfc; }
-:root[data-style="pixel"] .foot-row::before { content: "THANK YOU FOR PLAYING!"; color: #fcbc3c; font-size: 14px; }
+:root[data-style="pixel"] .foot-row::before { content: "GAME OVER · THANK YOU FOR PLAYING"; color: #fcbc3c; font-size: 14px; }
 :root[data-style="pixel"] .foot-row a { color: #5c94fc; }
+:root[data-style="pixel"] .nav-menu { color: #fcfcfc; background: #000000; border: 0; box-shadow: inset 0 0 0 3px #fcfcfc; border-radius: 0; padding: 0; width: 40px; height: 40px; }
+:root[data-style="pixel"] .nav-menu::before { display: none; }
 
 @media (max-width: 900px) {
-  :root[data-style="pixel"] .stage { padding-bottom: 150px; }
-  :root[data-style="pixel"] .title { padding: 16px; }
+  :root[data-style="pixel"] .art .portrait, .px-stats { width: 240px; }
   :root[data-style="pixel"] .pub:nth-child(n) { grid-template-columns: 70px minmax(0, 1fr); }
   :root[data-style="pixel"] .pub:nth-child(n) .pub-year { grid-column: 2; grid-row: 1; }
   :root[data-style="pixel"] .pub::before { grid-row: 1; }
   :root[data-style="pixel"] .pub-venue, :root[data-style="pixel"] .pub-main, :root[data-style="pixel"] .pub-links { grid-column: 1 / -1; grid-row: auto; }
+  :root[data-style="pixel"] .pubs { padding: 14px; }
   .px-hud { font-size: 9px; gap: 4px 12px; }
   :root[data-style="pixel"] .job::after { position: static; display: block; margin-bottom: 8px; }
+  .px-wave { grid-template-columns: repeat(6, 26px); gap: 8px 10px; }
+  .px-wave button { width: 26px; height: 19px; }
+  .px-wave button:nth-child(n+7):nth-child(-n+11), .px-wave button:nth-child(n+18) { display: none; }
+  :root[data-style="pixel"] .poster::before { right: 4%; top: 18%; translate: 0 0; opacity: .35; }
 }
-@media (prefers-reduced-motion: reduce) { :root[data-style="pixel"] .title-block::after, :root[data-style="pixel"] .bubble::after, :root[data-style="pixel"] .btn::before { animation: none; } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="pixel"] .stage::before, .px-wave, .px-wave button, .px-coinslot span, .px-select, .px-p2, :root[data-style="pixel"] .bubble::after, :root[data-style="pixel"] .btn::before { animation: none; } }
 
-:root[data-style="pixel"] .poster > .px-continue { max-width: var(--max); margin: 0 0 16px max(0px, calc((100% - var(--max)) / 2)); }
-:root[data-style="pixel"] .poster-title { max-width: none; }
-:root[data-style="pixel"] .art > .px-blocks { display: flex; }
-:root[data-style="pixel"] .nav-menu { color: #fcfcfc; background: #000000; border: 0; box-shadow: inset 0 0 0 3px #fcfcfc; border-radius: 0; }
-@media (max-width: 900px) { :root[data-style="pixel"] .stage::after { background-size: 160px 66px, 96px 36px, 120px 50px, 72px 28px, 32px 32px, 32px 32px; } }
-:root[data-style="pixel"] .nav-menu { padding: 0; width: 40px; height: 40px; }
-:root[data-style="pixel"] .nav-menu::before { display: none; }
-@media (max-width: 900px) { :root[data-style="pixel"] .art .portrait { width: 220px; } }
+/* SIGNAL RUN: the endless runner lives in the old waveform slot */
+:root[data-style="pixel"] { --wave-mode: none; }
+:root[data-style="pixel"] .wavebar { height: auto; padding: 30px 6px 6px; }
+:root[data-style="pixel"] .wavebar #wave { display: none; }
+:root[data-style="pixel"] .wavebar::after { content: "MINIGAME · SIGNAL RUN"; }
+.px-game { display: block; width: 100%; height: auto; aspect-ratio: 256 / 96; image-rendering: pixelated; image-rendering: crisp-edges; cursor: var(--px-cursor, pointer), pointer; touch-action: manipulation; }
+.px-game:focus-visible { outline: 3px dashed #fcbc3c; outline-offset: 3px; }
+:root[data-style="pixel"] .art > .px-stats { display: grid; }
+:root[data-style="pixel"] .art > .px-select { display: block; }
+:root[data-style="pixel"] .proj::before { box-shadow: inset 0 -26px 0 rgba(0, 0, 0, .78); }
+:root[data-style="pixel"] .poster::before { top: auto; bottom: 26px; translate: 0 0; font-size: clamp(70px, 10vw, 150px); opacity: .35; }
+:root[data-style="pixel"] .poster::before { top: 40%; bottom: auto; right: 9%; font-size: clamp(70px, 9vw, 140px); opacity: .9; }
+@media (max-width: 900px) { :root[data-style="pixel"] .poster::before { top: 14px; right: 4%; opacity: .3; } }
