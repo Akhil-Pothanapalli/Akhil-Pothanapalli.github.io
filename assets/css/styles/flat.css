@@ -260,3 +260,24 @@
   :root[data-style="flat"] .wavebar { grid-template-columns: minmax(0, 1fr); padding-top: 16px; }
   :root[data-style="flat"] .np-info { padding-left: 16px; }
 }
+
+/* live tiles beyond the hero (style-fx.js): facts, focus areas and contact handles slide up in turn */
+.mt-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.mt-box { position: relative; overflow: hidden; color: #ffffff; }
+.mt-box .mt-face { background: transparent; padding: 0; justify-content: center; }
+.mt-box.is-flipped .mt-flip { transform: translateY(-100%); }
+.mt-facts { grid-column: 1 / -1; height: 86px; margin-top: 4px; }
+.mt-facts .mt-big { font-size: 56px; }
+.mt-facts small { margin-top: 2px; font-size: 14px; text-transform: lowercase; }
+.mt-now { height: 120px; margin-top: 4px; }
+.mt-now .mt-face { justify-content: flex-start; }
+.mt-now .mt-num { font-size: 40px; font-weight: 300; line-height: 1; color: rgba(255, 255, 255, .6); }
+.mt-now b { font-size: 30px; font-weight: 300; line-height: 1.1; text-transform: lowercase; margin-top: 6px; }
+.mt-link { position: absolute; left: 12px; right: 40px; top: 12px; bottom: 34px; }
+.mt-link .mt-face { justify-content: flex-start; }
+.mt-handle { font-size: 22px; font-weight: 300; line-height: 1.2; overflow-wrap: anywhere; }
+.mt-icon-face { display: grid; place-items: center; height: 100%; }
+.mt-icon-face svg { width: 52px; height: 52px; }
+.mt-glyph { font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+:root[data-style="flat"] .link-cell:has(.mt-link) { min-height: 160px; }
+:root[data-style="flat"] .link-cell:has(.mt-link) .label { margin-top: auto; }

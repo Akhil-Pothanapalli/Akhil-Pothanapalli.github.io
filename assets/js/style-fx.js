@@ -101,6 +101,60 @@
       }
       timers.push(setTimeout(flip, delay));
     }
+    /* live tiles further down the page: a two-face box that slides up, refilling the hidden face each time */
+    var boxes = [], hidden = [];
+    function cycle(box, faces, every, delay) {
+      var flip = box.querySelector(".mt-flip"), a = flip.children[0], b = flip.children[1], i = 0;
+      a.innerHTML = faces[0];
+      if (reduce || faces.length < 2) return;
+      function step() {
+        i = (i + 1) % faces.length;
+        var showingB = box.classList.contains("is-flipped");
+        (showingB ? a : b).innerHTML = faces[i];
+        box.classList.toggle("is-flipped");
+        timers.push(setTimeout(step, every));
+      }
+      timers.push(setTimeout(step, delay));
+    }
+    function liveBox(cls) {
+      var box = el("div", "mt-box " + cls, '<div class="mt-flip"><div class="mt-face"></div><div class="mt-face mt-back"></div></div>');
+      box.setAttribute("aria-hidden", "true"); boxes.push(box); return box;
+    }
+    function hide(n) { if (n) { n.classList.add("mt-sr"); hidden.push(n); } }
+    var glyph = {
+      email: '<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2.5"><rect x="5" y="11" width="38" height="26"/><path d="M5 11l19 15 19-15"/></svg>',
+      "google scholar": '<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 18 24 8l21 10-21 10z"/><path d="M12 23v10c6 5 18 5 24 0V23"/><path d="M45 18v12"/></svg>',
+      linkedin: '<span class="mt-glyph">in</span>',
+      github: '<span class="mt-glyph">{ }</span>'
+    };
+    function deeper() {
+      var k = 0;
+      document.querySelectorAll(".proj").forEach(function (p) {
+        var facts = Array.prototype.map.call(p.querySelectorAll(".proj-facts > div"), function (d) {
+          return '<span class="mt-big">' + esc(d.querySelector("dt").textContent) + '</span><small>' + esc(d.querySelector("dd").textContent) + '</small>';
+        });
+        var dl = p.querySelector(".proj-facts");
+        if (!dl || !facts.length) return;
+        var box = liveBox("mt-facts"); dl.after(box); hide(dl);
+        cycle(box, facts, 3200, 1800 + 900 * k++);
+      });
+      var now = document.querySelector(".now ol");
+      if (now) {
+        var items = Array.prototype.map.call(now.querySelectorAll("li"), function (li, n) {
+          return '<span class="mt-num">' + (n + 1) + '</span><b>' + esc(li.textContent.trim()) + '</b>';
+        });
+        var nb = liveBox("mt-now"); now.after(nb); hide(now);
+        cycle(nb, items, 2800, 1200);
+      }
+      document.querySelectorAll(".link-cell").forEach(function (c, n) {
+        var label = (c.querySelector(".label") || {}).textContent || "", handle = c.querySelector("strong");
+        var icon = glyph[label.trim().toLowerCase()];
+        if (!handle || !icon) return;
+        var box = liveBox("mt-link"); c.appendChild(box); hide(handle);
+        cycle(box, ['<span class="mt-handle">' + esc(handle.textContent) + '</span>', '<span class="mt-icon-face">' + icon + '</span>'], 4200, 2200 + 1100 * n);
+      });
+    }
+
     /* the waveform becomes the Music + Videos "now playing" tile */
     var np = [], ticker = null;
     function clock(t) { return Math.floor(t / 60) + ":" + ("0" + Math.floor(t % 60)).slice(-2); }
@@ -152,6 +206,7 @@
           '<a class="mt mt-wide mt-live" href="#research"><div class="mt-flip"><div class="mt-face"><b>now working on</b><small>' + esc(now.slice(0, 2).join(" · ")) + '</small></div><div class="mt-face mt-back"></div></div><span class="mt-label">research</span></a>';
         stage.appendChild(box);
         player();
+        deeper();
         if (reduce) return;
         var tiles = box.querySelectorAll(".mt-live");
         live(tiles[0], venues.map(function (v) { return "<b>" + esc(v) + "</b>"; }), 3800, 2600);
@@ -162,6 +217,8 @@
         if (box) box.remove(); box = null;
         if (ticker) clearInterval(ticker); ticker = null;
         np.forEach(function (n) { n.remove(); }); np = [];
+        boxes.forEach(function (n) { n.remove(); }); boxes = [];
+        hidden.forEach(function (n) { n.classList.remove("mt-sr"); }); hidden = [];
         var bar = document.querySelector(".wavebar"); if (bar) bar.classList.remove("is-paused");
         window.dispatchEvent(new Event("resize"));
       }
