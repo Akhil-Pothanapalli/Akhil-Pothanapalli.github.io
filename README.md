@@ -61,5 +61,12 @@ Sources used to research each style, so you can study the originals yourself. St
 - [Frutiger Aero](https://www.kittl.com/blogs/?p=19536), Kittl
 - Web Design Museum galleries: [futuristic Flash sites incl. 2Advanced Studios v1–v4](https://www.webdesignmuseum.org/gallery/style-futuristic/tag-flash), [Y2K-tagged sites 2000/2006](https://www.webdesignmuseum.org/gallery/style-gradients-or-icons-or-y2k-aesthetic/year-2000-or-2006)
 
+**Flat** (2010–2014: Microsoft Metro's lowercase type and live tiles, the Flat UI palette in Lato, 45° long shadows)
+- [Flat design, Wikipedia](https://en.wikipedia.org/wiki/Flat_design): Swiss roots, Metro on Zune and Windows Phone 7, iOS 7
+- [From Marx to Microsoft: the origins of flat design](https://www.process.st/flat-design/), Process Street
+- [A short history of flat design](https://popwebdesign.net/popart_blog/en/2016/02/a-short-history-of-flat-design), PopArt Studio
+- [We've evolved past flat design](https://uxdesign.cc/weve-evolved-past-flat-design-where-are-we-headed-next-2a227e3416ef), UX Collective
+- Flat UI colour names and values: [W3.CSS Flat UI colors](https://www.w3schools.com/colors/colors_flatui.asp), [flat UI color codes](https://www.webnots.com/flat-ui-color-codes/); Designmodo on [Emerald in the Flat UI kit](https://designmodo.com/pantone-emerald-17-5641/)
+
 ## Run locally (optional)
 `gem install jekyll && jekyll serve`
