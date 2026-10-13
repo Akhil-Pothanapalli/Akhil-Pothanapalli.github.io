@@ -10,7 +10,9 @@
   --btn-radius: 0; --btn-weight: 500; --wave-bg: #fafafa; --wave-hi: #111111; --wave-lo: #c4c4c4; --wave-radius: 0;
   --font-display: "DM Sans", system-ui, sans-serif; --font-body: "DM Sans", system-ui, sans-serif; --display-weight: 500; --display-tracking: -0.035em;
 }
-:root[data-style="minimal"] .stage { padding-inline: 0; }
+:root[data-style="minimal"] .hero { padding-inline: var(--pad); }
+:root[data-style="minimal"] .stage { max-width: calc(var(--max) - 2 * var(--pad)); margin-inline: auto; padding-inline: 0; }
+:root[data-style="minimal"] .sec-num { justify-self: start; }
 :root[data-style="minimal"] .title { font-size: clamp(44px, 5.6vw, 84px); }
 :root[data-style="minimal"] .bubble { padding: 0; }
 :root[data-style="minimal"] :is(.proj, .skill, .job, .now) { border-top: 1px solid #111111; padding-inline: 0; }
