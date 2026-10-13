@@ -191,14 +191,6 @@
 
 /* work: an invader wave marches overhead (style-fx.js) */
 :root[data-style="pixel"] #work { position: relative; }
-.px-wave { display: grid; grid-template-columns: repeat(11, 30px); gap: 10px 14px; justify-content: center; margin: 0 auto 34px; animation: pxMarch 4s steps(8) infinite alternate; }
-.px-wave button { width: 30px; height: 22px; padding: 0; border: 0; background: var(--px-invader) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; animation: pxFlap .8s steps(1) infinite; }
-.px-wave button:nth-child(n+12) { background-image: var(--px-invader2); animation-name: pxFlap2; }
-.px-wave button.is-dead { background-image: var(--px-boom); animation: none; pointer-events: none; }
-.px-wave button.is-gone { visibility: hidden; }
-@keyframes pxMarch { from { transform: translateX(-40px); } to { transform: translateX(40px); } }
-@keyframes pxFlap { 50% { background-image: var(--px-invader-b); } }
-@keyframes pxFlap2 { 50% { background-image: var(--px-invader2-b); } }
 :root[data-style="pixel"] .jobs { gap: 22px; }
 :root[data-style="pixel"] .job { padding: 22px; position: relative; }
 :root[data-style="pixel"] .job::after { content: "WAVE CLEAR"; position: absolute; right: 16px; top: 12px; font: 9px/1 "Press Start 2P", monospace; color: #00d800; }
@@ -244,13 +236,9 @@
   :root[data-style="pixel"] .pubs { padding: 14px; }
   .px-hud { font-size: 9px; gap: 4px 12px; }
   :root[data-style="pixel"] .job::after { position: static; display: block; margin-bottom: 8px; }
-  .px-wave { grid-template-columns: repeat(6, 26px); gap: 8px 10px; }
-  .px-wave button { width: 26px; height: 19px; }
-  .px-wave button:nth-child(n+7):nth-child(-n+11), .px-wave button:nth-child(n+18) { display: none; }
-  :root[data-style="pixel"] .poster::before { right: 4%; top: 18%; translate: 0 0; opacity: .35; }
+        :root[data-style="pixel"] .poster::before { right: 4%; top: 18%; translate: 0 0; opacity: .35; }
 }
-@media (prefers-reduced-motion: reduce) { :root[data-style="pixel"] .stage::before, .px-wave, .px-wave button, .px-coinslot span, .px-select, .px-p2, :root[data-style="pixel"] .bubble::after, :root[data-style="pixel"] .btn::before { animation: none; } }
-
+@media (prefers-reduced-motion: reduce) { :root[data-style="pixel"] .stage::before, .px-coinslot span, .px-select, .px-p2, :root[data-style="pixel"] .bubble::after, :root[data-style="pixel"] .btn::before { animation: none; } }
 /* SIGNAL RUN: the endless runner lives in the old waveform slot */
 :root[data-style="pixel"] { --wave-mode: none; }
 :root[data-style="pixel"] .wavebar { height: auto; padding: 30px 6px 6px; }
@@ -264,3 +252,41 @@
 :root[data-style="pixel"] .poster::before { top: auto; bottom: 26px; translate: 0 0; font-size: clamp(70px, 10vw, 150px); opacity: .35; }
 :root[data-style="pixel"] .poster::before { top: 40%; bottom: auto; right: 9%; font-size: clamp(70px, 9vw, 140px); opacity: .9; }
 @media (max-width: 900px) { :root[data-style="pixel"] .poster::before { top: 14px; right: 4%; opacity: .3; } }
+
+/* ── round 3 ── */
+/* hero: title, coin slot and intro on the left, the fighter card on the right, SIGNAL RUN as the ground strip */
+:root[data-style="pixel"] .stage { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); grid-template-areas: "title art" "bubble art" "wave wave"; padding-bottom: 0; row-gap: 26px; }
+:root[data-style="pixel"] .wavebar { grid-area: wave; border: 0; border-image: none; background: none; padding: 0; height: auto; margin: 10px calc(-1 * clamp(28px, 5vw, 72px)) 0; }
+:root[data-style="pixel"] .wavebar::after { content: none; }
+.px-game { aspect-ratio: 480 / 104; }
+:root[data-style="pixel"] .bubble { align-self: start; }
+@media (max-width: 900px) {
+  :root[data-style="pixel"] .stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: "art" "title" "bubble" "wave"; }
+  :root[data-style="pixel"] .wavebar { margin-inline: calc(-1 * var(--space-4)); }
+}
+
+/* about: the overworld */
+:root[data-style="pixel"] #about { background:
+    var(--px-cloud) 8% 60px / 128px 64px no-repeat, var(--px-cloud) 62% 30px / 96px 48px no-repeat, var(--px-cloud) 94% 190px / 128px 64px no-repeat,
+    var(--px-hill) 2% calc(100% - 64px) / 240px 100px no-repeat, var(--px-bush) 34% calc(100% - 64px) / 128px 48px no-repeat,
+    var(--px-hill) 72% calc(100% - 64px) / 160px 66px no-repeat, var(--px-bush) 97% calc(100% - 64px) / 96px 36px no-repeat,
+    var(--px-brick) 0 100% / 32px 32px repeat-x, var(--px-brick) 0 calc(100% - 32px) / 32px 32px repeat-x, #5c94fc;
+  padding-bottom: 170px; }
+:root[data-style="pixel"] #about .caption-box { box-shadow: 4px 4px 0 #000000; }
+
+/* skills: an RPG item menu, one bag per group, items listed with a cursor */
+:root[data-style="pixel"] .skill, :root[data-style="pixel"] .skill:nth-child(n) { background-image: none; padding: 16px 14px; }
+:root[data-style="pixel"] .skill-h { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #fcbc3c; padding-bottom: 12px; margin-bottom: 10px; border-bottom: 3px dotted #585858; }
+:root[data-style="pixel"] .skill-h .accent { width: 40px; height: 48px; flex: none; background: var(--px-mic) center / contain no-repeat; font-size: 0; color: transparent; box-shadow: none; image-rendering: pixelated; }
+:root[data-style="pixel"] .skill:nth-child(2) .skill-h .accent { background-image: var(--px-scroll); }
+:root[data-style="pixel"] .skill:nth-child(3) .skill-h .accent { background-image: var(--px-gem); }
+:root[data-style="pixel"] .skill:nth-child(4) .skill-h .accent { background-image: var(--px-sword); }
+:root[data-style="pixel"] .skill ul { display: grid; gap: 0; }
+:root[data-style="pixel"] .skill li, :root[data-style="pixel"] .skill li:nth-child(n) { --blk: none; background: none; color: #fcfcfc; box-shadow: none; padding: 5px 6px 5px 24px; position: relative; font: 21px/1 "VT323", monospace; text-transform: uppercase; }
+:root[data-style="pixel"] .skill li:hover, :root[data-style="pixel"] .skill li:nth-child(n):hover { background: #fcfcfc; color: #000000; transform: none; }
+:root[data-style="pixel"] .skill li:hover::before { content: ""; position: absolute; left: 6px; top: 50%; translate: 0 -50%; width: 10px; height: 12px; background: var(--px-arrow) 0 0 / 100% 100% no-repeat; filter: invert(1); image-rendering: pixelated; }
+
+/* work: the invader cabinet */
+.px-shooter { display: block; width: min(100%, 720px); height: auto; aspect-ratio: 240 / 150; margin: 0 auto 34px; image-rendering: pixelated; image-rendering: crisp-edges; border: 12px solid transparent; border-image: var(--px-frame) 3 / 12px / 0 stretch; background: #000000; background-clip: padding-box; cursor: var(--px-cursor, crosshair), crosshair; touch-action: manipulation; }
+.px-shooter:focus-visible { outline: 3px dashed #fcbc3c; outline-offset: 4px; }
+:root[data-style="pixel"] .ticker .dot, :root[data-style="pixel"] .ticker.rev .dot { background-image: var(--px-invader); }

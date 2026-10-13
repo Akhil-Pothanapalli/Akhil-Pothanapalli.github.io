@@ -432,7 +432,7 @@
   fx.pixel = (function () {
     var root = document.documentElement, nodes = [], timers = [], io = null, onScroll = null, vars = [], cleanups = [];
     var P = { k: "#000000", w: "#fcfcfc", y: "#fcbc3c", Y: "#c84c0c", o: "#c84c0c", O: "#fc9838", g: "#00a800", G: "#80d010", d: "#005800",
-              r: "#d82800", R: "#fc7460", s: "#a4a4a4", S: "#585858", b: "#3cbcfc", B: "#0058f8", p: "#f878f8", m: "#00a844" };
+              r: "#d82800", R: "#fc7460", s: "#a4a4a4", S: "#585858", b: "#3cbcfc", B: "#0058f8", p: "#f878f8", m: "#00a844", c: "#a4e4fc" };
     function draw(w, h, scale, fn) {
       var c = document.createElement("canvas"); c.width = w * scale; c.height = h * scale;
       var g = c.getContext("2d");
@@ -455,8 +455,28 @@
       robotA: [".....kr.....", ".....kk.....", "..kkkkkkkk..", ".kwwwwwwwwk.", "kykwkwwkwkyk", "kykwwwwwwkyk", "kykwwrrwwkyk", ".kkwwwwwwkk.", "..kkkkkkkk..", "..kssssssk..", ".ksbssssbsk.", ".kssssssssk.", "..kssssssk..", "..ks....sk..", "..kk....kk.."],
       robotB: [".....kr.....", ".....kk.....", "..kkkkkkkk..", ".kwwwwwwwwk.", "kykwkwwkwkyk", "kykwwwwwwkyk", "kykwwrrwwkyk", ".kkwwwwwwkk.", "..kkkkkkkk..", "..kssssssk..", ".ksbssssbsk.", ".kssssssssk.", "..kssssssk..", "...ks..sk...", "...kk..kk..."],
       robotJ: [".....kr.....", ".....kk.....", "..kkkkkkkk..", ".kwwwwwwwwk.", "kykwkwwkwkyk", "kykwwwwwwkyk", "kykwwOOwwkyk", ".kkwwwwwwkk.", "..kkkkkkkk..", "..kssssssk..", ".ksbssssbsk.", ".kssssssssk.", ".kssk..kssk.", ".kk......kk.", "............"],
-      note: ["...kkk.", "...kyk.", "...kykk", "...kyyk", "...kk..", "...k...", ".kkk...", "kyyk...", "kyyk...", ".kk...."]
+      note: ["...kkk.", "...kyk.", "...kykk", "...kyyk", "...kk..", "...k...", ".kkk...", "kyyk...", "kyyk...", ".kk...."],
+      mic: ["...kkkk...", "..kssssk..", "..kswssk..", "..kswssk..", "..kssssk..", "..kssssk..", "k.kssssk.k", "k..kkkk..k", ".k......k.", "..kkkkkk..", "....kk....", "..kkkkkk.."],
+      scroll: [".kkkkkkkk.", "kwwwwwwwwk", "kwkkkkkkwk", "kwwwwwwwwk", "kwkkkkwwwk", "kwwwwwwwwk", "kwkkkkkkwk", "kwwwwwwwwk", "kwkkkwwwwk", "kwwwwwwwwk", ".kkkkkkkk.", ".........."],
+      gem: ["..........", "..kkkkkk..", ".kbwbbbbk.", "kbwbbbbbbk", "kkkkkkkkkk", ".kBbbbbBk.", "..kBbbBk..", "...kBBk...", "....kk....", ".........."],
+      sword: ["........kk", ".......kwk", "......kwk.", ".....kwk..", "....kwk...", ".k.kwk....", "..kyk.....", "..kyk.....", ".kykk.....", "kyk.k.....", "kk........", ".........."],
+      ship: ["......b......", ".....bbb.....", ".....bbb.....", ".bbbbbbbbbbb.", "bbbbbbbbbbbbb", "bbbbbbbbbbbbb", "bbbbbbbbbbbbb"]
     };
+    function blob(w, h, discs, fill, shade) {
+      var gr = [];
+      for (var y = 0; y < h; y++) { gr[y] = []; for (var x = 0; x < w; x++) {
+        var inside = discs.some(function (d) { return (x + .5 - d[0]) * (x + .5 - d[0]) / (d[2] * d[2]) + (y + .5 - d[1]) * (y + .5 - d[1]) / ((d[3] || d[2]) * (d[3] || d[2])) <= 1; });
+        gr[y][x] = inside ? (y > h * .62 ? shade : fill) : null; } }
+      return draw(w, h, 1, function (x, y) {
+        if (gr[y][x]) return gr[y][x];
+        return [[1, 0], [-1, 0], [0, 1], [0, -1]].some(function (d) { var X = x + d[0], Y = y + d[1]; return X >= 0 && Y >= 0 && X < w && Y < h && gr[Y][X]; }) ? "k" : null;
+      });
+    }
+    function brick() { return draw(16, 16, 1, function (x, y) { var off = Math.floor(y / 4) % 2 ? 4 : 0; if (y % 4 === 3 || (x + off) % 8 === 7) return "k"; return y % 4 === 0 ? "O" : "o"; }); }
+    function hill() { var w = 48, h = 20, cx = w / 2;
+      function inn(x, y) { return (x + .5 - cx) * (x + .5 - cx) / ((cx - 1) * (cx - 1)) + (y + .5 - h) * (y + .5 - h) / ((h - 1) * (h - 1)) <= 1; }
+      return draw(w, h, 1, function (x, y) { if (inn(x, y)) { if ((x === 18 || x === 19) && y > 8 && y < 13 || (x === 28 || x === 29) && y > 9 && y < 14 || (x === 23 || x === 24) && y > 4 && y < 8) return "d"; return "g"; }
+        return [[1, 0], [-1, 0], [0, 1], [0, -1]].some(function (d) { return y + d[1] < h && inn(x + d[0], y + d[1]); }) ? "k" : null; }); }
     function grass() { return draw(16, 16, 1, function (x, y) { if ((x * 7 + y * 13) % 29 === 0 || (x * 5 + y * 3) % 31 === 0) return "d"; if ((x + y * 3) % 23 === 0) return "G"; return "g"; }); }
     function canopy() { return draw(16, 16, 1, function (x, y) { var top = 6 + Math.round(3 * Math.sin(x / 2.5)); if (y < top - 1) return null; if (y === top - 1) return "k"; if ((x * 3 + y) % 7 === 0) return "G"; return y > 12 ? "d" : "g"; }); }
 
@@ -474,8 +494,8 @@
 
     /* ── SIGNAL RUN ── */
     function runner(host) {
-      var W = 256, H = 96, GROUND = 82, c = el("canvas", "px-game"), g;
-      c.width = W; c.height = H; c.tabIndex = 0;
+      var W = window.innerWidth < 700 ? 240 : 480, H = 104, GROUND = 88, c = el("canvas", "px-game"), g;
+      c.width = W; c.height = H; c.tabIndex = 0; c.style.aspectRatio = W + " / " + H;
       c.setAttribute("role", "application"); c.setAttribute("aria-label", "Signal Run, a small endless runner. Press Space or Up to jump, or tap.");
       host.appendChild(c); nodes.push(c); g = c.getContext("2d"); g.imageSmoothingEnabled = false;
       var spr = { a: grid(S.robotA), b: grid(S.robotB), j: grid(S.robotJ), note: grid(S.note) };
@@ -488,9 +508,8 @@
       }
       function text(s, x, yy, col, size, align) { g.font = (size || 8) + 'px "Press Start 2P", monospace'; g.textAlign = align || "left"; g.fillStyle = "#000"; g.fillText(s, x + 1, yy + 1); g.fillStyle = col || "#fcfcfc"; g.fillText(s, x, yy); }
       function scene() {
-        g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
-        for (var i = 0; i < 40; i++) { var sx = ((i * 53) - dist * .15) % W; if (sx < 0) sx += W; g.fillStyle = i % 5 ? "#585858" : "#fcfcfc"; g.fillRect(Math.floor(sx), (i * 37) % 50, 1, 1); }
-        for (var b = 0; b < 12; b++) { var bx = ((b * 34) - dist * .35) % (W + 40); if (bx < -34) bx += W + 40; var bh = 16 + (b * 17) % 26; g.fillStyle = "#1c1c3c"; g.fillRect(Math.floor(bx), GROUND - bh, 28, bh); g.fillStyle = "#fcbc3c"; for (var wy = GROUND - bh + 4; wy < GROUND - 4; wy += 6) for (var wx = 4; wx < 24; wx += 8) if ((b + wx + wy) % 3) g.fillRect(Math.floor(bx) + wx, wy, 2, 2); }
+        g.clearRect(0, 0, W, H);
+        for (var b = 0; b < 20; b++) { var bx = ((b * 34) - dist * .35) % (W + 40); if (bx < -34) bx += W + 40; var bh = 12 + (b * 17) % 22; g.fillStyle = "#1c1c3c"; g.fillRect(Math.floor(bx), GROUND - bh, 28, bh); g.fillStyle = "#fcbc3c"; for (var wy = GROUND - bh + 4; wy < GROUND - 4; wy += 6) for (var wx = 4; wx < 24; wx += 8) if ((b + wx + wy) % 3) g.fillRect(Math.floor(bx) + wx, wy, 2, 2); }
         g.fillStyle = "#00a800"; g.fillRect(0, GROUND, W, 2); g.fillStyle = "#005800"; g.fillRect(0, GROUND + 2, W, H - GROUND - 2);
         g.fillStyle = "#00a800"; for (var d = 0; d < W + 16; d += 16) g.fillRect(Math.floor(d - (dist % 16)), GROUND + 6, 6, 2);
       }
@@ -503,7 +522,7 @@
           if (--nextNote <= 0) { notes.push({ x: W + 4, y: GROUND - 30 - Math.random() * 20 }); nextNote = 70 + Math.random() * 90; }
           obs.forEach(function (o) { o.x -= speed; }); notes.forEach(function (n) { n.x -= speed; });
           obs = obs.filter(function (o) { return o.x > -12; }); notes = notes.filter(function (n) { return n.x > -10 && !n.got; });
-          var rx = 28, ry = GROUND - 15 - y;
+          var rx = 42, ry = GROUND - 15 - y;
           obs.forEach(function (o) { if (rx + 9 > o.x && rx + 3 < o.x + o.w && ry + 14 > GROUND - o.h) { state = "over"; flash = 8; if (pts > best) { best = pts; try { localStorage.setItem("pxRunBest", best); } catch (e) {} } } });
           notes.forEach(function (n) { if (Math.abs(rx + 6 - (n.x + 3)) < 9 && Math.abs(ry + 7 - (n.y + 5)) < 11) { n.got = true; pts += 50; award(50); } });
           if (t % 6 === 0) { pts += 1; if (t % 30 === 0) award(5); }
@@ -516,11 +535,11 @@
         notes.forEach(function (n) { g.drawImage(spr.note, Math.floor(n.x), Math.floor(n.y + Math.sin((t + n.x) / 8) * 2)); });
         var img = y > 0 ? spr.j : (Math.floor(t / 6) % 2 ? spr.a : spr.b);
         if (state !== "run") img = spr.a;
-        if (!(flash > 0 && flash-- % 2)) g.drawImage(img, 26, Math.floor(GROUND - 15 - y));
-        text("SCORE " + pad(pts, 5), 6, 12, "#fcfcfc", 8); text("BEST " + pad(best, 5), W - 6, 12, "#fcbc3c", 8, "right");
-        if (state !== "run") { g.fillStyle = "rgba(0,0,0,.78)"; g.fillRect(0, 22, W, 48); }
-        if (state === "idle") { text("SIGNAL RUN", W / 2, 36, "#fcbc3c", 12, "center"); if (Math.floor(t / 30) % 2 || reduce) text("PRESS SPACE OR TAP", W / 2, 52, "#fcfcfc", 8, "center"); text("JUMP: SPACE / UP / W", W / 2, 64, "#a4a4a4", 6, "center"); }
-        if (state === "over") { text("GAME OVER", W / 2, 38, "#d82800", 12, "center"); text("SPACE OR TAP TO RETRY", W / 2, 54, "#fcfcfc", 8, "center"); }
+        if (!(flash > 0 && flash-- % 2)) g.drawImage(img, 40, Math.floor(GROUND - 15 - y));
+        if (state === "run" || pts) { text("SCORE " + pad(pts, 5), 6, 10, "#fcfcfc", W < 300 ? 6 : 8); } text("BEST " + pad(best, 5), W - 6, 10, "#fcbc3c", W < 300 ? 6 : 8, "right");
+        
+        if (state === "idle") { text("SIGNAL RUN", W / 2, 24, "#fcbc3c", W < 300 ? 10 : 12, "center"); if (Math.floor(t / 30) % 2 || reduce) text("PRESS SPACE OR TAP", W / 2, 38, "#fcfcfc", 8, "center"); text("JUMP: SPACE / UP / W", W / 2, 49, "#a4a4a4", 6, "center"); }
+        if (state === "over") { text("GAME OVER", W / 2, 26, "#d82800", 12, "center"); text("SPACE OR TAP TO RETRY", W / 2, 42, "#fcfcfc", 8, "center"); }
       }
       function loop() { cancelAnimationFrame(raf); var go = function () { frame(); if (inView && !document.hidden && (state === "run" || (!reduce && state !== "run"))) raf = requestAnimationFrame(go); }; go(); }
       var keys = function (e) {
@@ -540,12 +559,72 @@
       cleanups.push(function () { cancelAnimationFrame(raf); window.removeEventListener("keydown", keys); vis.disconnect(); });
     }
 
+    /* ── the Work cabinet: a wave of invaders, a ship that clears it on autopilot (or by hand), endless waves ── */
+    function invaders(before) {
+      var W = 240, H = 150, c = el("canvas", "px-shooter"), g;
+      c.width = W; c.height = H; c.tabIndex = 0;
+      c.setAttribute("role", "application"); c.setAttribute("aria-label", "Invader wave. The ship plays itself; use Left and Right to steer and Space to fire, or tap to shoot.");
+      before.before(c); nodes.push(c); g = c.getContext("2d"); g.imageSmoothingEnabled = false;
+      var A = [grid(S.inv), grid(S.invB)], B = [grid(S.inv2), grid(S.inv2B)], ship = grid(S.ship), boom = grid(S.boom);
+      var rows = 3, cols = 8, wave = 1, fx = 0, fy = 0, dir = 1, aliens = [], shots = [], bombs = [], sx = W / 2, manual = 0, cool = 0, state = "play", hold = 0, t = 0, raf = 0, inView = true, keys = {};
+      function spawn() { aliens = []; for (var r = 0; r < rows; r++) for (var q = 0; q < cols; q++) aliens.push({ r: r, q: q, alive: true, dead: 0 }); fx = 0; fy = 0; dir = 1; shots = []; bombs = []; state = "play"; }
+      function pos(a) { return { x: 22 + a.q * 24 + fx, y: 22 + a.r * 18 + fy }; }
+      function fire() { if (cool <= 0 && shots.length < 2) { shots.push({ x: sx, y: H - 18 }); cool = 14; } }
+      function text(s2, x, y, col, size) { g.font = (size || 8) + 'px "Press Start 2P", monospace'; g.textAlign = "center"; g.fillStyle = "#000"; g.fillText(s2, x + 1, y + 1); g.fillStyle = col; g.fillText(s2, x, y); }
+      function step() {
+        t++; cool--;
+        if (state === "play") {
+          var alive = aliens.filter(function (a) { return a.alive; });
+          var spd = (0.25 + wave * 0.08) * (1 + (aliens.length - alive.length) / aliens.length);
+          fx += dir * spd;
+          var xs = alive.map(function (a) { return pos(a).x; }), minx = Math.min.apply(0, xs), maxx = Math.max.apply(0, xs);
+          if (maxx > W - 18 && dir > 0 || minx < 6 && dir < 0) { dir *= -1; fy += 6; }
+          if (manual > 0) { manual--; if (keys.ArrowLeft) sx -= 2.4; if (keys.ArrowRight) sx += 2.4; }
+          else if (alive.length) {
+            var low = alive.reduce(function (m, a) { var p = pos(a); return !m || Math.abs(p.x + 6 - sx) < Math.abs(m.x + 6 - sx) ? { x: p.x, y: p.y } : m; }, null);
+            var tx = low.x + 6; sx += Math.max(-2, Math.min(2, tx - sx));
+            if (Math.abs(tx - sx) < 4) fire();
+          }
+          sx = Math.max(8, Math.min(W - 8, sx));
+          if (t % 70 === 0 && alive.length) { var sh = alive[(t * 7) % alive.length], sp = pos(sh); bombs.push({ x: sp.x + 6, y: sp.y + 8 }); }
+          shots.forEach(function (b) { b.y -= 4; aliens.forEach(function (a) { if (!a.alive) return; var p = pos(a); if (b.x > p.x && b.x < p.x + 12 && b.y > p.y && b.y < p.y + 8) { a.alive = false; a.dead = 10; b.y = -10; award(a.r === 0 ? 30 : 20); } }); });
+          bombs.forEach(function (b) { b.y += 2; });
+          shots = shots.filter(function (b) { return b.y > 0; }); bombs = bombs.filter(function (b) { return b.y < H - 10; });
+          if (!alive.length) { state = "clear"; hold = 110; award(500); }
+          else if (fy > 70) { state = "reset"; hold = 70; }
+        } else if (--hold <= 0) { if (state === "clear") wave++; spawn(); }
+        g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
+        for (var i = 0; i < 30; i++) { g.fillStyle = i % 4 ? "#383838" : "#a4a4a4"; g.fillRect((i * 47) % W, (i * 29 + Math.floor(t / 4)) % H, 1, 1); }
+        aliens.forEach(function (a) { var p = pos(a); if (a.alive) g.drawImage((a.r === 0 ? B : A)[Math.floor(t / 30) % 2], Math.round(p.x), Math.round(p.y)); else if (a.dead > 0) { a.dead--; g.drawImage(boom, Math.round(p.x) + 1, Math.round(p.y)); } });
+        g.fillStyle = "#fcfcfc"; shots.forEach(function (b) { g.fillRect(Math.round(b.x), Math.round(b.y), 1, 4); });
+        g.fillStyle = "#f878f8"; bombs.forEach(function (b) { g.fillRect(Math.round(b.x), Math.round(b.y), 1, 3); g.fillRect(Math.round(b.x) + ((b.y >> 1) % 2 ? 1 : -1), Math.round(b.y) + 3, 1, 2); });
+        g.drawImage(ship, Math.round(sx - 6), H - 14);
+        g.fillStyle = "#00a800"; g.fillRect(0, H - 4, W, 1);
+        g.font = '6px "Press Start 2P", monospace'; g.textAlign = "left"; g.fillStyle = "#fcbc3c"; g.fillText("WAVE " + wave, 6, 10);
+        g.textAlign = "right"; g.fillStyle = "#a4a4a4"; g.fillText(manual > 0 ? "MANUAL" : "AUTOPILOT", W - 6, 10);
+        if (state === "clear") { text("WAVE " + wave + " CLEAR!", W / 2, 70, "#00d800", 10); text("NEXT WAVE INCOMING", W / 2, 86, "#fcfcfc", 6); }
+        if (state === "reset") text("THEY LANDED · RETRY", W / 2, 76, "#d82800", 8);
+      }
+      function loop() { cancelAnimationFrame(raf); var go = function () { step(); if (inView && !document.hidden && !reduce) raf = requestAnimationFrame(go); }; go(); }
+      var kd = function (e) { if (document.activeElement !== c) return; if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); keys[e.key] = true; manual = 240; if (e.key === " ") fire(); if (reduce) step(); } };
+      var ku = function (e) { keys[e.key] = false; };
+      var tap = function (e) { var r = c.getBoundingClientRect(); sx = (e.clientX - r.left) / r.width * W; manual = 240; cool = 0; fire(); if (reduce) step(); };
+      window.addEventListener("keydown", kd); window.addEventListener("keyup", ku); c.addEventListener("pointerdown", tap);
+      var vis = new IntersectionObserver(function (es) { inView = es[0].isIntersecting; if (inView) loop(); else cancelAnimationFrame(raf); }); vis.observe(c);
+      spawn();
+      var fr = document.fonts && document.fonts.load ? document.fonts.load('8px "Press Start 2P"') : Promise.resolve();
+      fr.then(loop, loop);
+      cleanups.push(function () { cancelAnimationFrame(raf); window.removeEventListener("keydown", kd); window.removeEventListener("keyup", ku); vis.disconnect(); });
+    }
+
     function onNum() {}
     return {
       on: function () {
         var sp = { "--px-coin": url(grid(S.coin)), "--px-heart": url(grid(S.heart)), "--px-arrow": url(grid(S.arrow)), "--px-frame": url(grid(S.frame)),
           "--px-cursor": url(grid(S.cursor, 2)) + " 0 0", "--px-invader": url(grid(S.inv)), "--px-invader-b": url(grid(S.invB)), "--px-invader2": url(grid(S.inv2)),
-          "--px-invader2-b": url(grid(S.inv2B)), "--px-boom": url(grid(S.boom)), "--px-grass": url(grass()), "--px-canopy": url(canopy()) };
+          "--px-invader2-b": url(grid(S.inv2B)), "--px-boom": url(grid(S.boom)), "--px-grass": url(grass()), "--px-canopy": url(canopy()), "--px-brick": url(brick()), "--px-hill": url(hill()),
+          "--px-cloud": url(blob(32, 16, [[9, 10, 6, 5], [16, 7, 7, 6], [24, 10, 6, 5], [16, 11, 10, 4]], "w", "c")), "--px-bush": url(blob(32, 12, [[8, 8, 6, 5], [16, 6, 7, 6], [24, 8, 6, 5], [16, 9, 12, 3]], "G", "g")),
+          "--px-mic": url(grid(S.mic)), "--px-scroll": url(grid(S.scroll)), "--px-gem": url(grid(S.gem)), "--px-sword": url(grid(S.sword)) };
         Object.keys(sp).forEach(function (k) { root.style.setProperty(k, sp[k]); vars.push(k); });
         var nav = document.querySelector(".site-nav");
         if (nav) {
@@ -567,15 +646,7 @@
         var bar = document.querySelector(".wavebar");
         if (bar) runner(bar);
         var jobs = document.querySelector("#work .jobs");
-        if (jobs) {
-          var wave = el("div", "px-wave"); wave.setAttribute("aria-label", "Invader wave: click to shoot");
-          for (var i = 0; i < 22; i++) {
-            var b = el("button"); b.type = "button"; b.setAttribute("aria-label", "Invader");
-            b.addEventListener("click", function () { var me = this; if (me.classList.contains("is-dead")) return; me.classList.add("is-dead"); award(i < 11 ? 30 : 20); timers.push(setTimeout(function () { me.classList.add("is-gone"); }, 250)); timers.push(setTimeout(function () { me.classList.remove("is-dead", "is-gone"); }, 9000)); });
-            wave.appendChild(b);
-          }
-          jobs.before(wave); nodes.push(wave);
-        }
+        if (jobs) invaders(jobs);
         var kicker = document.querySelector(".poster-kicker");
         if (kicker) { var p2 = el("span", "px-p2", "PLAYER 2 · PRESS START"); p2.setAttribute("aria-hidden", "true"); kicker.after(p2); nodes.push(p2); }
         var stages = { about: "1 RPG", research: "2 RUN&GUN", papers: "3 MAZE", skills: "4 PUZZLE", work: "5 SHOOTER", contact: "VS" };
