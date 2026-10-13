@@ -77,5 +77,13 @@ Sources used to research each style, so you can study the originals yourself. St
 - [The International Style 1950–1970](https://www.nb.admin.ch/snl/en/home/publications-research/dossiers/swiss-poster/international-style.html), Swiss National Library
 - [What is Swiss design](https://design.tutsplus.com/articles/what-is-swiss-design-and-why-you-should-know-its-history--cms-38463), Envato Tuts+; [International Typographic Style: key characteristics](https://blogs.ulster.ac.uk/caragreene/2020/12/08/international-typographic-style-the-swiss-style/), Ulster University
 
+**Pixel / 8-bit** (the page plays like an NES game: title screen with PUSH START and a ▶ menu, a live SCORE / COINS / WORLD / TIME HUD, hittable ? blocks, RPG dialogue boxes, level select, an arcade HIGH SCORES table, an inventory and a CONTINUE? countdown; NES palette, 8×8-tile thinking and black-outlined sprites, all drawn in code)
+- [NES limitations](https://noelberry.ca/posts/nes/index.html), Noel Berry: 256×240 screen, 4 colours per palette, 8 palettes
+- [Creating NES graphics](https://megacatstudios.com/blogs/press/creating-nes-graphics) and [Adding detail and colour with palettes in NES art](https://megacatstudios.com/blogs/retro-development/adding-detail-and-color-with-palettes-in-nes-art), Mega Cat Studios
+- [List of video game console palettes](https://en.wikipedia.org/wiki/List_of_video_game_console_palettes), Wikipedia: the ~54-colour NES palette and attribute limits
+- [Reading design insights and breaking NES constraints](https://gamedevelopment.com/art/reading-design-insights-and-breaking-nes-constraints), Game Developer
+- [Pixel art](https://en.wikipedia.org/wiki/Pixel_art), Wikipedia: from light-bulb matrix signs to Xerox PARC's SuperPaint
+- [History of pixel art](https://pixnote.net/en/learn/history), Pixnote; [Pixel art, a closer look](https://blog.artsper.com/en/a-closer-look/art-movements-en/pixel-art/), Artsper
+
 ## Run locally (optional)
 `gem install jekyll && jekyll serve`

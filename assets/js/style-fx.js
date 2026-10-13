@@ -427,6 +427,130 @@
     };
   })();
 
+  /* ── Pixel / 8-bit: NES sprites drawn in code, a live HUD, hittable ? blocks, a pixelated portrait and a CONTINUE? countdown ── */
+  fx.pixel = (function () {
+    var root = document.documentElement, nodes = [], timers = [], io = null, onScroll = null, vars = [];
+    var P = { k: "#000000", w: "#fcfcfc", y: "#fcbc3c", Y: "#c84c0c", o: "#c84c0c", O: "#fc9838", n: "#881400", g: "#00a800", G: "#80d010", d: "#005800", c: "#a4e4fc", r: "#d82800", R: "#fc7460", s: "#a4a4a4" };
+    function draw(w, h, scale, fn) {
+      var c = document.createElement("canvas"); c.width = w * scale; c.height = h * scale;
+      var g = c.getContext("2d");
+      for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) { var ch = fn(x, y); if (ch && P[ch]) { g.fillStyle = P[ch]; g.fillRect(x * scale, y * scale, scale, scale); } }
+      return 'url("' + c.toDataURL() + '")';
+    }
+    function rows(r, scale) { return draw(r[0].length, r.length, scale || 1, function (x, y) { var ch = r[y][x]; return ch === "." ? null : ch; }); }
+    function blob(w, h, discs, fill, shade, scale) {
+      var grid = [];
+      for (var y = 0; y < h; y++) { grid[y] = []; for (var x = 0; x < w; x++) {
+        var inside = discs.some(function (d) { return (x + .5 - d[0]) * (x + .5 - d[0]) / (d[2] * d[2]) + (y + .5 - d[1]) * (y + .5 - d[1]) / ((d[3] || d[2]) * (d[3] || d[2])) <= 1; });
+        grid[y][x] = inside ? (y > h * .62 ? shade : fill) : null;
+      } }
+      return draw(w, h, scale || 1, function (x, y) {
+        if (grid[y][x]) return grid[y][x];
+        var n = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(function (d) { var X = x + d[0], Y = y + d[1]; return X >= 0 && Y >= 0 && X < w && Y < h && grid[Y][X]; });
+        return n ? "k" : null;
+      });
+    }
+    function sprites() {
+      var q = [".kkkkkkkkkkkkkk.", "kyyyyyyyyyyyyyyk", "kykyyyyyyyyyykyk", "kyyyykkkkkyyyyyk", "kyyykkYyykkyyyyk", "kyyykkYyykkYyyyk", "kyyyyYYyykkYyyyk",
+               "kyyyyyyykkYYyyyk", "kyyyyyykkYYyyyyk", "kyyyyyykkYyyyyyk", "kyyyyyyYYyyyyyyk", "kyyyyyykkyyyyyyk", "kyyyyyykkYyyyyyk", "kykyyyyyYYyyykyk", "kyyyyyyyyyyyyyyk", ".kkkkkkkkkkkkkk."];
+      var blank = q.map(function (r, i) { return i > 2 && i < 13 ? "kyyyyyyyyyyyyyyk" : r; });
+      var used = q.map(function (r, i) { return r.replace(/[yY]/g, "o").replace(/k(?=o)/g, "k"); }).map(function (r, i) { return i > 2 && i < 13 ? "kooooooooooooook" : r; });
+      var coin = ["..kkkk..", ".kyyyyk.", "kyywwyyk", "kyywYyyk", "kyywYyyk", "kyywYyyk", "kyywYyyk", "kyywYyyk", "kyywYyyk", "kyyyYyyk", ".kyyyyk.", "..kkkk.."];
+      var heart = [".kk...kk.", "kRRk.krrk", "kRrrkrrrk", "krrrrrrrk", ".krrrrrk.", "..krrrk..", "...krk...", "....k...."];
+      var arrow = ["w.....", "ww....", "www...", "wwww..", "wwwww.", "wwww..", "www...", "ww....", "w....."];
+      var cursor = ["k.........", "kk........", "kwk.......", "kwwk......", "kwwwk.....", "kwwwwk....", "kwwwwwk...", "kwwwwwwk..", "kwwwwwwwk.", "kwwwwkkkkk", "kwwkwk....", "kwk.kwk...", "kk..kwk...", "k....kwk..", ".....kk..."];
+      var frame = [".wwwwwww.", "w.......w", "w.......w", "w.......w", "w.......w", "w.......w", "w.......w", "w.......w", ".wwwwwww."];
+      var brick = draw(16, 16, 1, function (x, y) {
+        var row = Math.floor(y / 4), off = row % 2 ? 4 : 0;
+        if (y % 4 === 3 || (x + off) % 8 === 7) return "k";
+        return y % 4 === 0 ? "O" : "o";
+      });
+      var hill = (function () {
+        var w = 48, h = 20;
+        return draw(w, h, 1, function (x, y) {
+          var cx = w / 2, inside = (x + .5 - cx) * (x + .5 - cx) / ((cx - 1) * (cx - 1)) + (y + .5 - h) * (y + .5 - h) / ((h - 1) * (h - 1)) <= 1;
+          var edge = !inside && [[1, 0], [-1, 0], [0, 1], [0, -1]].some(function (d) { var X = x + d[0] + .5 - cx, Y = y + d[1] + .5 - h; return X * X / ((cx - 1) * (cx - 1)) + Y * Y / ((h - 1) * (h - 1)) <= 1 && y + d[1] < h; });
+          if (edge) return "k";
+          if (!inside) return null;
+          if ((x === 18 || x === 19) && y > 8 && y < 13 || (x === 28 || x === 29) && y > 9 && y < 14 || (x === 23 || x === 24) && y > 4 && y < 8) return "d";
+          return "g";
+        });
+      })();
+      var cloud = blob(32, 16, [[9, 10, 6, 5], [16, 7, 7, 6], [24, 10, 6, 5], [16, 11, 10, 4]], "w", "c");
+      var bush = blob(32, 12, [[8, 8, 6, 5], [16, 6, 7, 6], [24, 8, 6, 5], [16, 9, 12, 3]], "G", "g");
+      return { "--px-qblock": rows(q), "--px-qblank": rows(blank), "--px-qused": rows(used), "--px-coin": rows(coin), "--px-heart": rows(heart), "--px-arrow": rows(arrow),
+        "--px-frame": rows(frame), "--px-brick": brick, "--px-hill": hill, "--px-cloud": cloud, "--px-bush": bush, "--px-cursor": rows(cursor, 2) + " 0 0" };
+    }
+    var hud = null, score = 0, coins = 0, best = 0, time = 400;
+    function pad(n, l) { return ("000000" + n).slice(-l); }
+    function paint() { if (!hud) return; hud.querySelector(".hud-score b").textContent = pad(score, 6); hud.querySelector(".hud-coins b").textContent = "×" + pad(coins, 2); hud.querySelector(".hud-time b").textContent = pad(time, 3); }
+    function award(n, coin) { score += n; if (coin) coins = (coins + 1) % 100; paint(); }
+    function hit(block, host) {
+      if (block.classList.contains("is-used")) { block.classList.remove("is-hit"); void block.offsetWidth; block.classList.add("is-hit"); return; }
+      block.classList.remove("is-hit"); void block.offsetWidth; block.classList.add("is-hit");
+      var c = el("span", "px-coin"), p = el("span", "px-points", "200");
+      (host || block).appendChild(c); (host || block).appendChild(p);
+      setTimeout(function () { c.remove(); p.remove(); }, 1000);
+      award(200, true);
+      if (block.classList.contains("px-block")) { block.classList.add("is-used"); timers.push(setTimeout(function () { block.classList.remove("is-used"); }, 12000)); }
+    }
+    return {
+      on: function () {
+        var sp = sprites();
+        Object.keys(sp).forEach(function (k) { root.style.setProperty(k, sp[k]); vars.push(k); });
+        var nav = document.querySelector(".site-nav");
+        if (nav) {
+          hud = el("div", "px-hud", '<span class="hud-lives">AKHIL<b>×03</b></span><span class="hud-score">SCORE<b>000000</b></span><span class="hud-coins">COINS<b>×00</b></span><span class="hud-world">WORLD<b>TITLE</b></span><span class="hud-time">TIME<b>400</b></span>');
+          hud.setAttribute("aria-hidden", "true"); nav.appendChild(hud); nodes.push(hud);
+        }
+        var art = document.querySelector(".art"), portrait = document.querySelector(".art .portrait");
+        if (art && portrait) {
+          var row = el("div", "px-blocks"); row.setAttribute("aria-hidden", "true");
+          for (var i = 0; i < 3; i++) { var b = el("button", "px-block"); b.type = "button"; b.tabIndex = -1; b.addEventListener("click", function () { hit(this); }); row.appendChild(b); }
+          art.insertBefore(row, portrait); nodes.push(row);
+          var img = portrait.querySelector("img");
+          if (img) {
+            var px = el("canvas", "px-portrait"); px.width = 44; px.height = 44; px.setAttribute("aria-hidden", "true");
+            var paintImg = function () {
+              var g = px.getContext("2d"), s = Math.min(img.naturalWidth, img.naturalHeight);
+              if (!s) return;
+              g.imageSmoothingEnabled = true;
+              g.drawImage(img, (img.naturalWidth - s) / 2, (img.naturalHeight - s) / 2, s, s, 0, 0, 44, 44);
+            };
+            if (img.complete) paintImg(); else img.addEventListener("load", paintImg, { once: true });
+            portrait.querySelector(".washed").appendChild(px); nodes.push(px);
+          }
+        }
+        document.querySelectorAll(".sec-num").forEach(function (n) { n.addEventListener("click", onNum); });
+        var kicker = document.querySelector(".poster-kicker");
+        if (kicker) {
+          var cont = el("span", "px-continue", "CONTINUE? 9"); cont.setAttribute("aria-hidden", "true");
+          kicker.after(cont); nodes.push(cont);
+          var k = 9; if (!reduce) timers.push(setInterval(function () { k = k > 0 ? k - 1 : 9; cont.textContent = "CONTINUE? " + k; }, 1000));
+        }
+        var worlds = { about: "1-1", research: "1-2", papers: "1-3", skills: "1-4", work: "2-1", contact: "2-2" };
+        io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting && hud) { hud.querySelector(".hud-world b").textContent = worlds[e.target.id]; if (e.target.id === "contact" && best < 1e9) { award(1000); best = 1e9; } } });
+        }, { rootMargin: "-40% 0px -55% 0px" });
+        Object.keys(worlds).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+        onScroll = function () { var d = Math.floor((window.scrollY || 0) / 100); if (d > best && best < 1e9) { award((d - best) * 10); best = d; } };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        if (!reduce) timers.push(setInterval(function () { time = time > 0 ? time - 1 : 400; paint(); }, 1000));
+        paint();
+      },
+      off: function () {
+        timers.forEach(function (t) { clearTimeout(t); clearInterval(t); }); timers = [];
+        if (io) io.disconnect(); io = null;
+        if (onScroll) window.removeEventListener("scroll", onScroll);
+        document.querySelectorAll(".sec-num").forEach(function (n) { n.removeEventListener("click", onNum); });
+        nodes.forEach(function (n) { n.remove(); }); nodes = []; hud = null;
+        vars.forEach(function (k) { root.style.removeProperty(k); }); vars = [];
+        score = 0; coins = 0; best = 0; time = 400;
+      }
+    };
+    function onNum(e) { var n = e.currentTarget; n.style.position = "relative"; hit(n, n); }
+  })();
+
   /* ── Glass: floating glass orbs, and a highlight that follows the pointer across each pane ── */
   fx.glass = (function () {
     var orbs = null, sel = ".stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster";
