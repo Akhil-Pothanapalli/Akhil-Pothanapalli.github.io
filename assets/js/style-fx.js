@@ -810,6 +810,44 @@
     };
   })();
 
+  /* ── Psychedelic: a liquid light show (coloured oil blobs drifting and merging) and a gentle melt for the big lettering ── */
+  fx.psychedelic = (function () {
+    var nodes = [], raf = 0, t = 0;
+    return {
+      on: function () {
+        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", "0"); svg.setAttribute("height", "0"); svg.setAttribute("aria-hidden", "true"); svg.style.position = "absolute";
+        svg.innerHTML = '<filter id="psyWarp" x="-5%" y="-10%" width="110%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".012 .03" numOctaves="2" seed="4" result="n"><animate attributeName="seed" values="4;5;6;5;4" dur="9s" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="7"/></filter>';
+        if (reduce) svg.querySelector("animate").remove();
+        document.body.appendChild(svg); nodes.push(svg);
+        var c = el("canvas", "psy-liquid"); c.setAttribute("aria-hidden", "true");
+        document.body.insertBefore(c, document.body.firstChild); nodes.push(c);
+        var g = c.getContext("2d"), W = 160, H = 100; c.width = W; c.height = H;
+        var cols = ["255,42,31", "25,217,122", "31,77,255", "255,43,214", "255,229,0", "255,138,0", "139,43,255"];
+        var blobs = cols.concat(cols.slice(0, 3)).map(function (col, i) {
+          return { col: col, x: Math.random() * W, y: Math.random() * H, r: 18 + Math.random() * 26, a: Math.random() * 6.28, s: .0012 + Math.random() * .002, ox: 30 + Math.random() * 50, oy: 20 + Math.random() * 30 };
+        });
+        function frame() {
+          t++;
+          g.globalCompositeOperation = "source-over"; g.fillStyle = "#0b0612"; g.fillRect(0, 0, W, H);
+          g.globalCompositeOperation = "lighter";
+          blobs.forEach(function (b, i) {
+            var x = W / 2 + Math.cos(b.a + t * b.s * (i % 2 ? 1 : -1)) * b.ox + Math.sin(t * b.s * .7) * 10;
+            var y = H / 2 + Math.sin(b.a * 1.3 + t * b.s) * b.oy;
+            var r = b.r * (1 + .25 * Math.sin(t * .01 + i));
+            var grd = g.createRadialGradient(x, y, 0, x, y, r);
+            grd.addColorStop(0, "rgba(" + b.col + ",.75)"); grd.addColorStop(.6, "rgba(" + b.col + ",.35)"); grd.addColorStop(1, "rgba(" + b.col + ",0)");
+            g.fillStyle = grd; g.beginPath(); g.arc(x, y, r, 0, 6.283); g.fill();
+          });
+          if (!reduce && !document.hidden) raf = requestAnimationFrame(frame);
+          else if (!reduce) raf = setTimeout(frame, 500);
+        }
+        frame();
+      },
+      off: function () { cancelAnimationFrame(raf); clearTimeout(raf); nodes.forEach(function (n) { n.remove(); }); nodes = []; }
+    };
+  })();
+
   /* ── Glass: floating glass orbs, and a highlight that follows the pointer across each pane ── */
   fx.glass = (function () {
     var orbs = null, sel = ".stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster";

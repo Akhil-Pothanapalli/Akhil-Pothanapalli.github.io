@@ -1,38 +1,152 @@
-/* Psychedelic: swirling hot colour rings, outlined wavy type, loud alternating cards. */
-@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Outfit:wght@400;600;800&display=swap');
+/* Psychedelic, after the 1966–71 Fillmore/Avalon concert posters and liquid light shows. Melting Art Nouveau
+   lettering (Wes Wilson) via an SVG warp filter; vibrating complementary pairs, red on green and magenta on blue
+   (Victor Moscoso); an oil-and-water projection drifting behind everything (Joshua Light Show), all on black.
+   The liquid layer and the warp filter are added by style-fx.js. */
+@import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Federo&family=Outfit:wght@400;500;700&display=swap');
 :root[data-style="psychedelic"] {
-  --bg: #fff1d0; --surface: #ffd000; --surface-2: #ffffff; --text: #3b0060; --muted: #7a2c9a;
-  --accent: #ff2fa0; --on-accent: #ffffff; --accent-2: #7a2cff; --on-accent-2: #ffffff; --t3: #ff5e00; --line: #3b0060;
-  --card-bg: #ffd000; --card-text: #3b0060; --card-border: 4px solid #3b0060; --card-shadow: 8px 8px 0 #3b0060; --radius: 40px 12px 40px 12px; --radius-lg2: 48px;
-  --portrait-border: 6px solid #3b0060; --portrait-shadow: 0 0 0 12px #ffd000, 0 0 0 18px #3b0060, 0 0 0 30px #ff2fa0, 0 0 0 36px #3b0060;
-  --hero-bg: repeating-radial-gradient(circle at 20% 120%, #ff5e00 0 26px, #ffd000 26px 52px, #ff2fa0 52px 78px, #7a2cff 78px 104px); --hero-text: #ffffff; --hero-border: 4px solid #3b0060;
-  --chip-bg: #ffffff; --chip-border: 2px solid #3b0060;
-  --band-bg: repeating-conic-gradient(from 0deg at 80% 0%, #3b0060 0 6deg, #52008a 6deg 12deg); --band-text: #ffffff; --band-muted: #ffc6f0; --band-surface: rgba(255, 255, 255, .1); --band-accent: #ffd000; --on-band-accent: #3b0060;
-  --cta-bg: repeating-radial-gradient(circle at 100% 0%, #7a2cff 0 30px, #ff2fa0 30px 60px, #ff5e00 60px 90px, #ffd000 90px 120px); --cta-text: #ffffff; --cta-card-bg: #ffffff; --cta-card-text: #3b0060;
-  --ticker-bg: #ff2fa0; --ticker-text: #ffffff; --ticker2-bg: #7a2cff; --ticker2-text: #ffd000; --ticker-border: 4px solid #3b0060;
-  --btn-border: 3px solid #3b0060; --btn-shadow: 4px 4px 0 #3b0060;
-  --wave-bg: #3b0060; --wave-hi: #ffd000; --wave-lo: #ff2fa0;
-  --font-display: "Righteous", system-ui, sans-serif; --font-body: "Outfit", system-ui, sans-serif; --display-weight: 400; --display-tracking: 0;
-  --heading: #3b0060;
+  --red: #ff2a1f; --green: #19d97a; --magenta: #ff2bd6; --blue: #1f4dff; --orange: #ff8a00; --yellow: #ffe500; --violet: #8b2bff; --ink: #0b0612; --cream: #fff4e0;
+  --bg: #0b0612; --surface: rgba(11, 6, 18, .78); --surface-2: rgba(255, 255, 255, .06); --text: #fff4e0; --muted: #d6c6e8;
+  --accent: #ff8a00; --on-accent: #0b0612; --accent-2: #19d97a; --on-accent-2: #0b0612; --t3: #ff2bd6; --line: rgba(255, 244, 224, .3);
+  --card-bg: rgba(11, 6, 18, .8); --card-border: 3px solid #fff4e0; --card-shadow: 8px 8px 0 #ff2bd6; --radius: 0; --radius-lg2: 0; --num-radius: 50%;
+  --portrait-radius: 50%; --portrait-border: 0 solid transparent;
+  --hero-bg: transparent; --hero-text: #fff4e0; --chip-bg: transparent; --chip-text: #fff4e0; --chip-border: 2px solid #19d97a;
+  --band-bg: rgba(11, 6, 18, .55); --band-text: #fff4e0; --band-muted: #d6c6e8; --band-surface: rgba(11, 6, 18, .78); --band-accent: #ffe500; --on-band-accent: #0b0612;
+  --cta-bg: transparent; --cta-text: #fff4e0; --cta-card-bg: rgba(11, 6, 18, .82); --cta-card-text: #fff4e0;
+  --ticker-bg: #ff2a1f; --ticker-text: #19d97a; --ticker2-bg: #1f4dff; --ticker2-text: #ff2bd6; --ticker-border: 0 solid transparent;
+  --btn-radius: 999px; --btn-border: 3px solid #fff4e0; --btn-shadow: 5px 5px 0 #ff2bd6; --btn-weight: 700;
+  --wave-bg: rgba(11, 6, 18, .7); --wave-mode: area; --wave-colors: #ff2a1f, #ff8a00, #ffe500, #19d97a, #1f4dff, #ff2bd6;
+  --font-display: "Fascinate", "Federo", Georgia, serif; --font-body: "Outfit", system-ui, sans-serif; --display-weight: 400; --display-tracking: .01em;
+  --heading: #ff8a00; --heading-shadow: none; --link: #ffe500;
 }
-:root[data-style="psychedelic"] :is(.title span, .sec-title, .poster-title) { color: #ffffff; -webkit-text-stroke: 3px #3b0060; paint-order: stroke fill; text-shadow: 5px 5px 0 #3b0060; }
-:root[data-style="psychedelic"] .t2 { color: #ffd000; display: inline-block; transform: skewY(-5deg) rotate(-2deg); }
-:root[data-style="psychedelic"] .sec-title { color: #ff2fa0; display: inline-block; transform: skewY(-3deg); }
-:root[data-style="psychedelic"] .about-statement { color: #7a2cff; }
-:root[data-style="psychedelic"] .proj:nth-child(4n+2), :root[data-style="psychedelic"] .skill:nth-child(2) { background: #ff2fa0; color: #ffffff; }
-:root[data-style="psychedelic"] .proj:nth-child(4n+3), :root[data-style="psychedelic"] .skill:nth-child(3) { background: #7a2cff; color: #ffffff; }
-:root[data-style="psychedelic"] .proj:nth-child(4n+4), :root[data-style="psychedelic"] .skill:nth-child(4) { background: #ff5e00; color: #ffffff; }
-:root[data-style="psychedelic"] :is(.proj, .skill):nth-child(n+2) :is(.proj-title, .skill-h, .proj-kicker) { color: #ffffff; }
-:root[data-style="psychedelic"] .proj-idx, :root[data-style="psychedelic"] .proj:nth-child(even) .proj-idx { background: #ffffff; color: #3b0060; border: 3px solid #3b0060; }
-:root[data-style="psychedelic"] .bubble { border-radius: 48px 16px 48px 16px; }
-:root[data-style="psychedelic"] .kicker .tag { border: 3px solid #3b0060; }
-:root[data-style="psychedelic"] .sec-num { background: #ffd000; color: #3b0060; border: 4px solid #3b0060; }
-:root[data-style="psychedelic"] .ink .sec-title, :root[data-style="psychedelic"] .poster-title { color: #ffd000; }
-:root[data-style="psychedelic"] .pub:nth-child(n) { border: 2px solid rgba(255, 255, 255, .4); backdrop-filter: blur(2px); background: rgba(59, 0, 96, .75); }
-:root[data-style="psychedelic"] .poster-sub, :root[data-style="psychedelic"] .poster-kicker { background: #3b0060; color: #ffffff; display: inline-block; padding: 4px 12px; border-radius: 12px; }
-:root[data-style="psychedelic"] .poster-kicker { display: table; }
-:root[data-style="psychedelic"] .ticker:not(.rev) { rotate: -1deg; }
-:root[data-style="psychedelic"] .ticker.rev { rotate: 1deg; }
+:root[data-style="psychedelic"] body { background: #0b0612; }
+.psy-liquid { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; filter: blur(28px) saturate(1.4); opacity: .85; }
+:root[data-style="psychedelic"] body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(11, 6, 18, .75) 100%); }
+:root[data-style="psychedelic"] ::selection { background: #ffe500; color: #0b0612; }
+/* melting lettering: big display type goes through the warp filter */
+:root[data-style="psychedelic"] :is(.title, .sec-title, .poster-title, .about-statement, .ticker-run) { filter: url(#psyWarp); }
 
-/* waveform */
-:root[data-style="psychedelic"] { --wave-mode: bars; --wave-colors: #ff5e00, #ffd000, #ff2fa0, #7a2cff, #2bd9a6; --wave-bar: 9; --wave-gap: 3; }
+/* nav */
+:root[data-style="psychedelic"] .site-nav { background: rgba(11, 6, 18, .82); border-bottom: 2px solid #ff2bd6; }
+:root[data-style="psychedelic"] .nav-brand { font-family: "Federo", serif; letter-spacing: .06em; color: #ffe500; }
+:root[data-style="psychedelic"] .nav-brand .accent { color: #ff2bd6; }
+:root[data-style="psychedelic"] .nav-links a { font-family: "Federo", serif; letter-spacing: .04em; color: #fff4e0; }
+:root[data-style="psychedelic"] .nav-links a span { color: #19d97a; }
+:root[data-style="psychedelic"] .nav-links a.is-active { background: #19d97a; color: #ff2a1f; }
+:root[data-style="psychedelic"] .nav-links { background: rgba(11, 6, 18, .95); border-color: #ff2bd6; }
+:root[data-style="psychedelic"] .btn-primary { background: #19d97a; color: #ff2a1f; }
+:root[data-style="psychedelic"] .btn-primary:hover { background: #ffe500; color: #ff2a1f; filter: none; }
+:root[data-style="psychedelic"] .btn-secondary { background: #1f4dff; color: #ff2bd6; border-color: #fff4e0; }
+:root[data-style="psychedelic"] .btn-secondary:hover { background: #ff2bd6; color: #1f4dff; }
+
+/* hero: a concert billing */
+:root[data-style="psychedelic"] .stage { position: relative; }
+:root[data-style="psychedelic"] .title-block::before { content: "THE LISTENING LAB PRESENTS"; display: block; margin-bottom: 14px; font: 14px/1 "Federo", serif; letter-spacing: .38em; color: #19d97a; }
+:root[data-style="psychedelic"] .kicker .tag { font-family: "Federo", serif; letter-spacing: .08em; border-width: 2px; }
+:root[data-style="psychedelic"] .kicker .tag-accent-2 { background: #ff2bd6; color: #1f4dff; border-color: #ff2bd6; }
+:root[data-style="psychedelic"] .kicker .tag-accent { background: transparent; color: #fff4e0; }
+:root[data-style="psychedelic"] .title { font-size: clamp(54px, 7.6vw, 124px); line-height: .95; }
+:root[data-style="psychedelic"] .t1 { color: #ff2bd6; } :root[data-style="psychedelic"] .t2 { color: #ff8a00; text-shadow: 4px 4px 0 #1f4dff; } :root[data-style="psychedelic"] .t3 { color: #19d97a; text-shadow: 3px 3px 0 #ff2a1f; }
+:root[data-style="psychedelic"] .bubble { background: rgba(11, 6, 18, .82); border-radius: 0; }
+:root[data-style="psychedelic"] .bubble p { font-size: 19px; }
+:root[data-style="psychedelic"] .bubble p strong { color: #ffe500; }
+:root[data-style="psychedelic"] .bubble::after { content: none; }
+:root[data-style="psychedelic"] .bubble::before { content: "ONE NIGHT ONLY · ALL WELCOME · NO TICKETS NEEDED"; display: block; margin-bottom: 12px; font: 12px/1 "Federo", serif; letter-spacing: .22em; color: #ff2bd6; }
+/* portrait: in an op-art ring of vibrating colour, the photo kept true */
+:root[data-style="psychedelic"] .art { overflow: visible; }
+:root[data-style="psychedelic"] .art .portrait { position: relative; width: min(100%, 300px); }
+:root[data-style="psychedelic"] .art .portrait::before { content: ""; position: absolute; inset: -16%; z-index: 0; border-radius: 50%;
+  background: repeating-radial-gradient(circle, #ff2a1f 0 9px, #19d97a 9px 18px, #1f4dff 18px 27px, #ff2bd6 27px 36px, #ffe500 36px 45px); animation: psySpin 24s linear infinite; }
+:root[data-style="psychedelic"] .portrait .washed { position: relative; z-index: 1; border: 6px solid #fff4e0; box-shadow: 0 0 0 6px #0b0612; }
+@keyframes psySpin { to { transform: rotate(360deg) scale(1.02); } }
+:root[data-style="psychedelic"] .wavebar { border: 3px solid #fff4e0; border-radius: 999px; box-shadow: 5px 5px 0 #19d97a; }
+
+/* tickers: the vibrating pairs, red/green and blue/magenta */
+:root[data-style="psychedelic"] .ticker, :root[data-style="psychedelic"] .ticker.rev { margin-inline: 0; border-radius: 0; border-block: 3px solid #fff4e0; }
+:root[data-style="psychedelic"] .ticker-run span:not(.dot) { font-family: "Fascinate", serif; letter-spacing: .02em; }
+:root[data-style="psychedelic"] .ticker .dot, :root[data-style="psychedelic"] .ticker.rev .dot { width: 18px; height: 18px; border-radius: 50%; opacity: 1; background: repeating-radial-gradient(circle, #ffe500 0 3px, #0b0612 3px 6px); }
+
+/* section heads: Fillmore poster numbers */
+:root[data-style="psychedelic"] .sec-num { width: 74px; height: 74px; background: #ffe500; color: #ff2bd6; border: 3px solid #fff4e0; font: 16px/1 "Federo", serif; letter-spacing: .04em; }
+:root[data-style="psychedelic"] .sec-num::before { content: "BG-"; }
+:root[data-style="psychedelic"] .sec-title { font-size: clamp(48px, 7vw, 104px); color: #ff8a00; text-shadow: 4px 4px 0 #1f4dff; }
+:root[data-style="psychedelic"] #research .sec-title { color: #ff2a1f; text-shadow: 4px 4px 0 #19d97a; }
+:root[data-style="psychedelic"] #skills .sec-title { color: #ff2bd6; text-shadow: 4px 4px 0 #1f4dff; }
+:root[data-style="psychedelic"] #work .sec-title { color: #19d97a; text-shadow: 4px 4px 0 #ff2a1f; }
+:root[data-style="psychedelic"] .ink .sec-title { color: #ffe500; text-shadow: 4px 4px 0 #8b2bff; }
+:root[data-style="psychedelic"] .sec-note { color: #d6c6e8; }
+:root[data-style="psychedelic"] .caption-box { font-family: "Federo", serif; color: #19d97a; text-transform: none; letter-spacing: .12em; font-size: 16px; }
+:root[data-style="psychedelic"] .about-statement { color: #ff2bd6; text-shadow: 3px 3px 0 #19d97a; }
+:root[data-style="psychedelic"] .about-body { background: rgba(11, 6, 18, .7); padding: 18px 20px; border-left: 4px solid #ff8a00; }
+:root[data-style="psychedelic"] .about-body strong { color: #ffe500; }
+:root[data-style="psychedelic"] .now { box-shadow: 8px 8px 0 #19d97a; }
+:root[data-style="psychedelic"] .now .label { color: #ff8a00; font-family: "Federo", serif; letter-spacing: .14em; }
+:root[data-style="psychedelic"] .now li { font-family: "Federo", serif; letter-spacing: .02em; }
+:root[data-style="psychedelic"] .now li::before { background: #ff2a1f; color: #19d97a; }
+
+/* research: each project a poster with its own vibrating pair */
+:root[data-style="psychedelic"] .projects { gap: 34px; }
+:root[data-style="psychedelic"] .proj { --pa: #ff2a1f; --pb: #19d97a; box-shadow: 8px 8px 0 var(--pb); }
+:root[data-style="psychedelic"] .proj:nth-child(4n+2) { --pa: #ff2bd6; --pb: #1f4dff; }
+:root[data-style="psychedelic"] .proj:nth-child(4n+3) { --pa: #ffe500; --pb: #8b2bff; }
+:root[data-style="psychedelic"] .proj:nth-child(4n+4) { --pa: #19d97a; --pb: #ff2a1f; }
+:root[data-style="psychedelic"] .proj-idx, :root[data-style="psychedelic"] .proj:nth-child(even) .proj-idx { background: var(--pb); color: var(--pa); border: 3px solid #fff4e0; font-family: "Federo", serif; }
+:root[data-style="psychedelic"] .proj-title { color: var(--pa); text-shadow: 3px 3px 0 var(--pb); font-size: clamp(30px, 3.2vw, 46px); filter: url(#psyWarp); }
+:root[data-style="psychedelic"] .proj-kicker { color: #d6c6e8; font-family: "Federo", serif; letter-spacing: .12em; }
+:root[data-style="psychedelic"] .proj-tags .tag { background: transparent; border: 2px solid var(--pa); color: var(--pa); font-weight: 700; }
+:root[data-style="psychedelic"] .proj-facts > div { background: var(--pb); color: var(--pa); border: 0; }
+:root[data-style="psychedelic"] .proj-facts dt { font-family: "Fascinate", serif; font-weight: 400; }
+
+/* papers */
+:root[data-style="psychedelic"] .ink { margin-inline: 0; border-radius: 0; border-block: 3px solid #fff4e0; }
+:root[data-style="psychedelic"] .pub:nth-child(n) { border: 3px solid #fff4e0; box-shadow: 6px 6px 0 #ff2bd6; }
+:root[data-style="psychedelic"] .pub:nth-child(even) { box-shadow: 6px 6px 0 #19d97a; }
+:root[data-style="psychedelic"] .pub:nth-child(n) .pub-year { border: 0; background: repeating-radial-gradient(circle, #ff2a1f 0 6px, #19d97a 6px 12px); color: #fff4e0; font: 20px/1 "Federo", serif; text-shadow: 2px 2px 0 #0b0612, -1px -1px 0 #0b0612; }
+:root[data-style="psychedelic"] .pub-short { color: #ffe500; font-family: "Federo", serif; letter-spacing: .08em; }
+:root[data-style="psychedelic"] .pub-title { font-family: "Federo", serif; letter-spacing: .01em; color: #fff4e0; }
+:root[data-style="psychedelic"] .pub-role { background: transparent; color: #d6c6e8; }
+:root[data-style="psychedelic"] .ink .pub-role.is-first { background: #ff2bd6; color: #1f4dff; }
+:root[data-style="psychedelic"] .ink .seg-opt:has(input:checked), :root[data-style="psychedelic"] .ink .pub-bar .btn-primary { background: #ffe500; color: #8b2bff; }
+:root[data-style="psychedelic"] .pub-links a { background: transparent; border: 2px solid #19d97a; color: #19d97a; }
+:root[data-style="psychedelic"] .ink .pub-links a:hover { background: #19d97a; color: #ff2a1f; }
+
+/* skills and work */
+:root[data-style="psychedelic"] .skill { box-shadow: 8px 8px 0 var(--sb, #ff2bd6); }
+:root[data-style="psychedelic"] .skill:nth-child(2) { --sb: #19d97a; } :root[data-style="psychedelic"] .skill:nth-child(3) { --sb: #1f4dff; } :root[data-style="psychedelic"] .skill:nth-child(4) { --sb: #ff8a00; }
+:root[data-style="psychedelic"] .skill-h { color: #ffe500; font-family: "Federo", serif; letter-spacing: .04em; }
+:root[data-style="psychedelic"] .skill-h .accent { background: #ff2a1f; color: #19d97a; }
+:root[data-style="psychedelic"] .skill li { background: transparent; border: 2px solid rgba(255, 244, 224, .35); color: #fff4e0; font-weight: 500; }
+:root[data-style="psychedelic"] .skill li:hover { background: #ff2bd6; color: #1f4dff; border-color: #ff2bd6; }
+:root[data-style="psychedelic"] .job { box-shadow: 8px 8px 0 #1f4dff; }
+:root[data-style="psychedelic"] .job:nth-child(2) { box-shadow: 8px 8px 0 #19d97a; } :root[data-style="psychedelic"] .job:nth-child(3) { box-shadow: 8px 8px 0 #ff8a00; }
+:root[data-style="psychedelic"] .job-period { color: #ff2bd6; font-family: "Federo", serif; letter-spacing: .1em; }
+:root[data-style="psychedelic"] .job-org { color: #ff8a00; font-family: "Fascinate", serif; filter: url(#psyWarp); }
+:root[data-style="psychedelic"] .job-team { color: #d6c6e8; }
+:root[data-style="psychedelic"] .job-points li::before { background: #19d97a; }
+
+/* contact: the encore */
+:root[data-style="psychedelic"] .poster { margin-inline: 0; border-radius: 0; }
+:root[data-style="psychedelic"] .poster-kicker { color: #19d97a; font-family: "Federo", serif; letter-spacing: .3em; }
+:root[data-style="psychedelic"] .poster-kicker::after { content: " · THE ENCORE"; color: #ff2bd6; }
+:root[data-style="psychedelic"] .poster-title { color: #ffe500; text-shadow: 5px 5px 0 #ff2a1f, 10px 10px 0 #1f4dff; }
+:root[data-style="psychedelic"] .poster-sub { color: #fff4e0; }
+:root[data-style="psychedelic"] .link-cell { box-shadow: 6px 6px 0 #ff2bd6; }
+:root[data-style="psychedelic"] .link-cell:nth-child(2) { box-shadow: 6px 6px 0 #19d97a; } :root[data-style="psychedelic"] .link-cell:nth-child(3) { box-shadow: 6px 6px 0 #1f4dff; } :root[data-style="psychedelic"] .link-cell:nth-child(4) { box-shadow: 6px 6px 0 #ff8a00; }
+:root[data-style="psychedelic"] .link-cell .label { color: #ff8a00; font-family: "Federo", serif; letter-spacing: .12em; }
+:root[data-style="psychedelic"] .foot-row::after { content: "Peace, love & listening"; font-family: "Federo", serif; color: #ff2bd6; letter-spacing: .08em; }
+
+@media (max-width: 900px) { :root[data-style="psychedelic"] .art .portrait { width: 210px; } :root[data-style="psychedelic"] .title-block::before { letter-spacing: .2em; font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="psychedelic"] .art .portrait::before { animation: none; } }
+:root[data-style="psychedelic"] .sec-num { white-space: nowrap; font-size: 14px; width: 82px; height: 82px; }
+:root[data-style="psychedelic"] .link-cell strong { font-family: "Outfit", sans-serif; font-weight: 700; font-size: clamp(17px, 1.4vw, 21px); }
+/* contact: a spinning op-art disc fills the right half */
+:root[data-style="psychedelic"] .poster { position: relative; overflow: hidden; }
+:root[data-style="psychedelic"] .poster::after { content: ""; position: absolute; z-index: 0; right: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad))); top: clamp(60px, 8vw, 110px); width: min(36%, 460px); aspect-ratio: 1; border-radius: 50%; pointer-events: none;
+  background: repeating-conic-gradient(from 0deg, #ff2a1f 0 10deg, #19d97a 10deg 20deg, #1f4dff 20deg 30deg, #ff2bd6 30deg 40deg, #ffe500 40deg 50deg, #ff8a00 50deg 60deg);
+  -webkit-mask: repeating-radial-gradient(circle, #000 0 14px, transparent 14px 22px), radial-gradient(circle, #000 0 70%, transparent 70.5%); -webkit-mask-composite: source-in;
+  mask: repeating-radial-gradient(circle, #000 0 14px, transparent 14px 22px) intersect, radial-gradient(circle, #000 0 70%, transparent 70.5%);
+  box-shadow: 0 0 0 4px #fff4e0; animation: psySpin 30s linear infinite; }
+:root[data-style="psychedelic"] .poster > * { position: relative; z-index: 1; }
+@media (max-width: 900px) { :root[data-style="psychedelic"] .poster::after { width: 60%; top: 30px; opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { :root[data-style="psychedelic"] .poster::after { animation: none; } }
+:root[data-style="psychedelic"] .sec-num { display: inline-flex; align-items: center; justify-content: center; }
+@media (max-width: 900px) { :root[data-style="psychedelic"] .art { padding-block: 44px 50px; justify-items: center; } :root[data-style="psychedelic"] .art .portrait { width: 190px; } }

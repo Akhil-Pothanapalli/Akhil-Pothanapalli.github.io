@@ -85,5 +85,12 @@ Sources used to research each style, so you can study the originals yourself. St
 - [Pixel art](https://en.wikipedia.org/wiki/Pixel_art), Wikipedia: from light-bulb matrix signs to Xerox PARC's SuperPaint
 - [History of pixel art](https://pixnote.net/en/learn/history), Pixnote; [Pixel art, a closer look](https://blog.artsper.com/en/a-closer-look/art-movements-en/pixel-art/), Artsper
 
+**Psychedelic** (the 1966–71 Fillmore and Avalon concert posters and liquid light shows: melting Art Nouveau lettering after Wes Wilson, vibrating complementary pairs after Victor Moscoso, a drifting oil-projection backdrop after the Joshua Light Show, op-art rings, BG poster numbers)
+- [Key poster artists of the psychedelic era](https://gocollect.com/index.php/blog/key-poster-artists-of-the-psychedelic-era), GoCollect: Wilson, Moscoso, Griffin, Kelley and Mouse
+- [1960s concert poster artists](https://psychedelicscene.com/2024/05/08/1960s-concert-posters-artists/), Psychedelic Scene
+- [The Fillmore and Avalon posters](https://tfaoi.org/aa/8aa/8aa519.htm), Resource Library: some 500 posters, 1966–71, "unorthodox juxtapositions of electric colors"
+- [Wes Wilson remembered](https://liveforlivemusic.com/news/wes-wilson-dead/), Live for Live Music; [Rick Griffin](https://recordart.net/tag/rick-griffin/) and [Wes Wilson](https://recordart.net/tag/wes-wilson/), RecordArt
+- [Liquid light show](https://en.wikipedia.org/wiki/Liquid_light_show) and [The Joshua Light Show](https://en.wikipedia.org/wiki/The_Joshua_Light_Show), Wikipedia; [Joshua Light Show, *Liquid Loops* (1967)](https://www.moma.org/collection/works/200467), MoMA
+
 ## Run locally (optional)
 `gem install jekyll && jekyll serve`
