@@ -1,58 +1,255 @@
-/* Cyberpunk: hazard yellow on black, cyan and red glitch offsets, clipped corners. */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Chakra+Petch:wght@400;500;700&display=swap');
+/* Cyberpunk: Night City after dark. Hazard yellow, netrunner cyan and corpo red on black;
+   notched panels with HUD ticks, neon rain and a skyline behind the hero, a flickering
+   kanji sign, and glitches that fire on scroll or hover (fx/cyberpunk.js), not all the time. */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Chakra+Petch:wght@400;500;700&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@900&text=%E8%81%B4%E3%81%8F%E6%A9%9F%E6%A2%B0%E9%9F%B3%E5%A3%B0%E9%80%A3%E7%B5%A1%E7%B6%B2&display=swap');
+
 :root[data-style="cyberpunk"] {
+  --cp-y: #fcee0a; --cp-c: #00f0ff; --cp-r: #ff003c; --cp-p: #ff2a6d; --cp-bg: #07070b; --cp-panel: #101017;
+  --cp-mono: "Share Tech Mono", ui-monospace, monospace;
   --cut: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
-  --bg: #0b0b0d; --surface: #141417; --surface-2: #1e1e23; --text: #e8e8ec; --muted: #8c8c99;
-  --accent: #fcee0a; --on-accent: #0b0b0d; --accent-2: #00f0ff; --on-accent-2: #0b0b0d; --t3: #00f0ff; --line: rgba(252, 238, 10, .35);
-  --card-bg: #141417; --card-border: 0 solid transparent; --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0;
+  --cut-sm: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  --bg: #07070b; --surface: #101017; --surface-2: #1a1a23; --text: #e6e6ee; --muted: #8b8b9c;
+  --accent: #fcee0a; --on-accent: #07070b; --accent-2: #00f0ff; --on-accent-2: #07070b; --t3: #00f0ff; --line: rgba(252, 238, 10, .3);
+  --card-bg: rgba(16, 16, 23, .94); --card-border: 0 solid transparent; --radius: 0; --radius-lg2: 0; --num-radius: 0; --pill: 0;
   --portrait-radius: 0; --portrait-border: 2px solid #00f0ff;
-  --hero-bg: #0b0b0d linear-gradient(rgba(0, 240, 255, .06) 1px, transparent 1px) 0 0 / 100% 4px; --chip-bg: #1e1e23; --chip-text: #00f0ff; --chip-border: 1px solid rgba(0, 240, 255, .35);
-  --band-bg: #fcee0a; --band-text: #0b0b0d; --band-muted: #3a3a10; --band-surface: rgba(0, 0, 0, .08); --band-accent: #0b0b0d; --on-band-accent: #fcee0a;
-  --cta-bg: #ff003c; --cta-text: #0b0b0d; --cta-card-bg: #0b0b0d; --cta-card-text: #fcee0a;
-  --ticker-bg: #fcee0a; --ticker-text: #0b0b0d; --ticker2-bg: #00f0ff; --ticker2-text: #0b0b0d;
-  --btn-radius: 0; --btn-weight: 700; --wave-bg: #0b0b0d; --wave-hi: #ff003c; --wave-lo: #00f0ff; --wave-radius: 0;
+  --hero-bg:
+    repeating-linear-gradient(0deg, rgba(0, 240, 255, .045) 0 1px, transparent 1px 4px),
+    radial-gradient(120% 70% at 75% 110%, rgba(255, 42, 109, .28), transparent 60%),
+    radial-gradient(80% 60% at 10% 0%, rgba(0, 240, 255, .12), transparent 60%),
+    linear-gradient(180deg, rgba(7, 7, 11, .9), rgba(20, 6, 22, .86));
+  --chip-bg: rgba(0, 240, 255, .06); --chip-text: #00f0ff; --chip-border: 1px solid rgba(0, 240, 255, .35);
+  --band-bg: #fcee0a; --band-text: #07070b; --band-muted: #3d3a08; --band-surface: rgba(0, 0, 0, .08); --band-accent: #07070b; --on-band-accent: #fcee0a;
+  --cta-bg: #ff003c; --cta-text: #07070b; --cta-card-bg: #07070b; --cta-card-text: #fcee0a;
+  --ticker-bg: #fcee0a; --ticker-text: #07070b; --ticker2-bg: #00f0ff; --ticker2-text: #07070b;
+  --btn-radius: 0; --btn-weight: 700; --wave-bg: rgba(4, 4, 8, .85); --wave-hi: #ff003c; --wave-lo: #00f0ff; --wave-radius: 0;
   --font-display: "Orbitron", system-ui, sans-serif; --font-body: "Chakra Petch", system-ui, sans-serif; --display-weight: 900; --display-case: uppercase; --display-tracking: .01em;
-  --heading-shadow: 3px 0 #ff003c, -3px 0 #00f0ff; --heading: #fcee0a; --link: #00f0ff;
+  --heading-shadow: 2px 0 rgba(255, 0, 60, .85), -2px 0 rgba(0, 240, 255, .85); --heading: #fcee0a; --link: #00f0ff;
+  /* waveform: RGB-split oscilloscope */
+  --wave-mode: scope; --wave-colors: #ff003c, #00f0ff, #fcee0a;
+  background: #07070b;
 }
-:root[data-style="cyberpunk"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .btn, .ink, .poster) { clip-path: var(--cut); }
-:root[data-style="cyberpunk"] .btn { clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); font-family: "Orbitron", sans-serif; text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
-:root[data-style="cyberpunk"] :is(.proj, .skill, .job, .now, .bubble) { border-left: 4px solid #fcee0a; }
-:root[data-style="cyberpunk"] :is(.proj, .job):nth-child(even) { border-left-color: #00f0ff; }
-:root[data-style="cyberpunk"] .stage { border-left: 4px solid #ff003c; }
+/* the page background lives on <html> so the rain canvas (z-index -1) shows between panels */
+:root[data-style="cyberpunk"] body {
+  background:
+    radial-gradient(90% 50% at 50% 0%, rgba(0, 240, 255, .06), transparent 70%),
+    linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px) 0 0 / 100% 3px;
+  background-color: transparent;
+}
+:root[data-style="cyberpunk"] ::selection { background: #fcee0a; color: #07070b; }
+
+/* ── nav: a HUD strip ── */
+:root[data-style="cyberpunk"] .site-nav { background: rgba(7, 7, 11, .9); border-bottom: 1px solid rgba(252, 238, 10, .35); box-shadow: 0 1px 0 rgba(0, 240, 255, .12), 0 8px 24px rgba(0, 0, 0, .5); }
+:root[data-style="cyberpunk"] .site-nav::after { content: ""; position: absolute; left: var(--pad); bottom: -1px; width: 120px; height: 3px; background: #fcee0a; clip-path: polygon(0 0, 100% 0, calc(100% - 3px) 100%, 0 100%); pointer-events: none; }
+:root[data-style="cyberpunk"] .nav-brand { font-family: "Orbitron", sans-serif; font-weight: 800; letter-spacing: .02em; }
+:root[data-style="cyberpunk"] .nav-brand .accent { color: #ff003c; }
+:root[data-style="cyberpunk"] .nav-links a { font-family: "Chakra Petch", sans-serif; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; }
+:root[data-style="cyberpunk"] .nav-links a span { font-family: var(--cp-mono); color: #ff003c; }
+:root[data-style="cyberpunk"] .nav-links a:hover { background: rgba(0, 240, 255, .1); color: #00f0ff; opacity: 1; }
+:root[data-style="cyberpunk"] .nav-links a.is-active { clip-path: var(--cut-sm); }
+:root[data-style="cyberpunk"] .nav-links a.is-active span { color: #07070b; }
+:root[data-style="cyberpunk"] .cp-readout {
+  position: absolute; top: 50%; left: 330px; right: 740px; translate: 0 -50%; display: none; align-items: center; gap: 10px; overflow: hidden; white-space: nowrap;
+  font: 11px/1 var(--cp-mono); letter-spacing: .12em; color: rgba(0, 240, 255, .75); pointer-events: none;
+}
+:root[data-style="cyberpunk"] .cp-readout b { font-weight: 400; color: #fcee0a; }
+:root[data-style="cyberpunk"] .cp-readout i { font-style: normal; color: #ff003c; }
+:root[data-style="cyberpunk"] .cp-readout .cp-dot { width: 7px; height: 7px; flex: none; background: #ff003c; box-shadow: 0 0 8px #ff003c; animation: cpBlink 1.6s steps(1) infinite; }
+
+/* ── fixed layers made by fx/cyberpunk.js ── */
+:root[data-style="cyberpunk"] .cp-rain { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+:root[data-style="cyberpunk"] .cp-frame { position: fixed; inset: 10px; z-index: 40; pointer-events: none; display: none; }
+:root[data-style="cyberpunk"] .cp-frame i { position: absolute; width: 22px; height: 22px; border: 0 solid rgba(0, 240, 255, .55); }
+:root[data-style="cyberpunk"] .cp-frame i:nth-child(1) { left: 0; top: 0; border-width: 2px 0 0 2px; }
+:root[data-style="cyberpunk"] .cp-frame i:nth-child(2) { right: 0; top: 0; border-width: 2px 2px 0 0; }
+:root[data-style="cyberpunk"] .cp-frame i:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 2px 2px; }
+:root[data-style="cyberpunk"] .cp-frame i:nth-child(4) { right: 0; bottom: 0; border-width: 0 2px 2px 0; border-color: rgba(252, 238, 10, .6); }
+
+/* ── hero: neon city behind the stage ── */
+:root[data-style="cyberpunk"] .stage { position: relative; isolation: isolate; border-left: 4px solid #ff003c; box-shadow: inset 0 0 0 1px rgba(0, 240, 255, .14); }
+:root[data-style="cyberpunk"] .stage > :is(.title-block, .wavebar, .bubble, .art) { z-index: 2; }
+:root[data-style="cyberpunk"] .cp-city { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 58%; z-index: 0; pointer-events: none; opacity: .75;
+  -webkit-mask: linear-gradient(transparent, #000 35%); mask: linear-gradient(transparent, #000 35%); }
+/* hex data stream down the stage's left margin */
+:root[data-style="cyberpunk"] .cp-stream { position: absolute; left: 14px; top: 0; bottom: 0; width: 34px; z-index: 1; overflow: hidden; pointer-events: none; display: none;
+  -webkit-mask: linear-gradient(transparent, #000 15%, #000 85%, transparent); mask: linear-gradient(transparent, #000 15%, #000 85%, transparent); }
+:root[data-style="cyberpunk"] .cp-stream pre { margin: 0; font: 10px/14px var(--cp-mono); color: rgba(0, 240, 255, .45); letter-spacing: .1em; animation: cpStream 40s linear infinite; }
+:root[data-style="cyberpunk"] .cp-stream pre b { font-weight: 400; color: #fcee0a; }
+/* vertical neon kanji sign: 聴く機械, "listening machine" */
+:root[data-style="cyberpunk"] .cp-sign {
+  position: absolute; right: 14px; top: 50%; translate: 0 -50%; z-index: 1; display: none; flex-direction: column; align-items: center; gap: 8px; pointer-events: none;
+  padding: 12px 6px; border: 2px solid #ff2a6d; border-radius: 4px; background: rgba(40, 0, 18, .35);
+  box-shadow: 0 0 6px #ff2a6d, 0 0 22px rgba(255, 42, 109, .55), inset 0 0 10px rgba(255, 42, 109, .45);
+  animation: cpFlicker 7s linear infinite;
+}
+:root[data-style="cyberpunk"] .cp-sign-k { writing-mode: vertical-rl; font: 900 26px/1 "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif; letter-spacing: .12em; color: #ffe1ec;
+  text-shadow: 0 0 4px #ff2a6d, 0 0 12px #ff2a6d, 0 0 26px rgba(255, 42, 109, .8); }
+:root[data-style="cyberpunk"] .cp-sign-k b { font-weight: inherit; animation: cpFlickerChar 4.3s steps(1) infinite; }
+:root[data-style="cyberpunk"] .cp-sign-l { writing-mode: vertical-rl; font: 10px/1 var(--cp-mono); letter-spacing: .25em; color: #00f0ff; text-shadow: 0 0 6px #00f0ff; }
+
 :root[data-style="cyberpunk"] .title { font-size: clamp(36px, 5.6vw, 84px); }
-:root[data-style="cyberpunk"] .title span { text-shadow: 3px 0 #ff003c, -3px 0 #00f0ff; }
-:root[data-style="cyberpunk"] .t1 { color: #e8e8ec; } :root[data-style="cyberpunk"] .t2 { color: #fcee0a; animation: cpGlitch 3.5s steps(1) infinite; }
-:root[data-style="cyberpunk"] .kicker::before { content: "// NEURAL AUDIO LINK ESTABLISHED"; width: 100%; font: 500 12px/1 "Chakra Petch", sans-serif; color: #ff003c; letter-spacing: .2em; margin-bottom: 8px; }
-:root[data-style="cyberpunk"] .portrait .washed { filter: grayscale(.4) contrast(1.2); }
-:root[data-style="cyberpunk"] .sec-num { background: #ff003c; color: #0b0b0d; clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); font-size: 18px; }
+:root[data-style="cyberpunk"] .title span { text-shadow: 2px 0 rgba(255, 0, 60, .9), -2px 0 rgba(0, 240, 255, .9); }
+:root[data-style="cyberpunk"] .t1 { color: #e6e6ee; }
+:root[data-style="cyberpunk"] .t2 { color: #fcee0a; }
+:root[data-style="cyberpunk"] .t3 { color: #00f0ff; text-shadow: 2px 0 rgba(255, 0, 60, .9), 0 0 24px rgba(0, 240, 255, .35) !important; }
+:root[data-style="cyberpunk"] .kicker::before { content: "▮ NEURAL AUDIO LINK // ESTABLISHED"; width: 100%; font: 12px/1 var(--cp-mono); color: #ff003c; letter-spacing: .2em; margin-bottom: 8px; }
+:root[data-style="cyberpunk"] .kicker .tag { font-family: var(--cp-mono); text-transform: uppercase; letter-spacing: .08em; clip-path: var(--cut-sm); padding-right: 18px; }
+:root[data-style="cyberpunk"] .wavebar { border: 1px solid rgba(0, 240, 255, .4); position: relative; }
+:root[data-style="cyberpunk"] .wavebar::before { content: "AUD.IN // CH-01   48kHz"; position: absolute; left: 8px; top: 6px; z-index: 1; font: 10px/1 var(--cp-mono); letter-spacing: .14em; color: rgba(0, 240, 255, .7); pointer-events: none; }
+:root[data-style="cyberpunk"] .wavebar::after { content: "● REC"; position: absolute; right: 8px; top: 6px; z-index: 1; font: 10px/1 var(--cp-mono); letter-spacing: .14em; color: #ff003c; pointer-events: none; animation: cpBlink 1.6s steps(1) infinite; }
+/* the intro reads as an incoming holo-call */
+:root[data-style="cyberpunk"] .bubble { position: relative; border-left: 4px solid #fcee0a; background: linear-gradient(90deg, rgba(252, 238, 10, .06), transparent 40%), rgba(10, 10, 16, .92); padding-top: 44px; }
+:root[data-style="cyberpunk"] .bubble::before { content: "INCOMING CALL  //  AKHIL_P"; position: absolute; left: 24px; top: 16px; font: 11px/1 var(--cp-mono); letter-spacing: .18em; color: #fcee0a; }
+:root[data-style="cyberpunk"] .bubble p strong { color: #fcee0a; }
+
+/* ── buttons ── */
+:root[data-style="cyberpunk"] .btn { clip-path: var(--cut-sm); font-family: "Orbitron", sans-serif; text-transform: uppercase; letter-spacing: .06em; font-size: 12px; transition: background .15s, color .15s; }
+:root[data-style="cyberpunk"] .btn-primary { box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .25); }
+:root[data-style="cyberpunk"] .btn-primary:hover { background: #00f0ff; color: #07070b; filter: none; opacity: 1; }
+:root[data-style="cyberpunk"] .btn-secondary { border-color: rgba(0, 240, 255, .5); color: #00f0ff; }
+:root[data-style="cyberpunk"] .btn-secondary:hover { background: rgba(0, 240, 255, .14); color: #00f0ff; opacity: 1; }
+
+/* ── panels: notched corners, a 45° tick in the notch, thin inner rule ── */
+:root[data-style="cyberpunk"] :is(.stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster) { clip-path: var(--cut); }
+:root[data-style="cyberpunk"] :is(.proj, .skill, .job, .now) { position: relative; border-left: 4px solid #fcee0a; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06); }
+:root[data-style="cyberpunk"] :is(.proj, .job):nth-child(even) { border-left-color: #00f0ff; }
+:root[data-style="cyberpunk"] :is(.proj, .skill, .job, .now, .pub, .link-cell)::after {
+  content: ""; position: absolute; top: 0; right: 0; width: 34px; height: 34px; pointer-events: none;
+  background: linear-gradient(225deg, transparent 0 17px, rgba(252, 238, 10, .9) 17px 19px, transparent 19px);
+}
+:root[data-style="cyberpunk"] :is(.proj, .job):nth-child(even)::after { background: linear-gradient(225deg, transparent 0 17px, rgba(0, 240, 255, .9) 17px 19px, transparent 19px); }
+
+/* ── section heads: a file path above, a rule below that draws in on entry ── */
+:root[data-style="cyberpunk"] .sec-head { position: relative; row-gap: 10px; }
+:root[data-style="cyberpunk"] .sec-head::before { grid-column: 1 / -1; font: 12px/1 var(--cp-mono); letter-spacing: .2em; color: rgba(0, 240, 255, .7); }
+:root[data-style="cyberpunk"] #about .sec-head::before { content: "[ SYS://SUBJECT/BIO.DAT ]"; }
+:root[data-style="cyberpunk"] #research .sec-head::before { content: "[ SYS://SHARDS/RESEARCH ]"; }
+:root[data-style="cyberpunk"] #papers .sec-head::before { content: "[ ARCHIVE://PUBLICATIONS ]"; color: #07070b; }
+:root[data-style="cyberpunk"] #skills .sec-head::before { content: "[ CYBERWARE://INSTALLED ]"; }
+:root[data-style="cyberpunk"] #work .sec-head::before { content: "[ LOG://SERVICE_RECORD ]"; }
+:root[data-style="cyberpunk"] .sec-head::after {
+  content: ""; grid-column: 1 / -1; height: 2px; margin-top: 4px; transform-origin: left;
+  background: linear-gradient(90deg, #ff003c 0 64px, transparent 64px 72px, rgba(0, 240, 255, .45) 72px, rgba(0, 240, 255, 0));
+}
+:root[data-style="cyberpunk"] .ink .sec-head::after { background: linear-gradient(90deg, #ff003c 0 64px, transparent 64px 72px, rgba(0, 0, 0, .5) 72px, transparent); }
+:root[data-style="cyberpunk"] .sec-head.cp-in::after { animation: cpDraw .7s cubic-bezier(.2, .7, .2, 1) both; }
+:root[data-style="cyberpunk"] .sec-num { background: #ff003c; color: #07070b; clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); font-size: 18px; }
 :root[data-style="cyberpunk"] .sec-title { font-size: clamp(34px, 5.2vw, 72px); }
-:root[data-style="cyberpunk"] .ink .sec-title { color: #0b0b0d; --heading-shadow: 3px 0 #ff003c, -3px 0 #00f0ff; }
-:root[data-style="cyberpunk"] .ink .sec-num { background: #0b0b0d; color: #fcee0a; }
-:root[data-style="cyberpunk"] .pub:nth-child(n) { background: #0b0b0d; color: #e8e8ec; }
-:root[data-style="cyberpunk"] .ink .pub a { color: #e8e8ec; }
-:root[data-style="cyberpunk"] .pub-full { color: #8c8c99; }
-:root[data-style="cyberpunk"] .pub-short { color: #fcee0a; }
-:root[data-style="cyberpunk"] .pub-year { color: #fcee0a; border-color: #fcee0a; }
-:root[data-style="cyberpunk"] .pub-role.is-first, :root[data-style="cyberpunk"] .ink .pub-links a:hover { background: #fcee0a; color: #0b0b0d; }
+:root[data-style="cyberpunk"] .sec-note { font-family: "Chakra Petch", sans-serif; }
+
+/* ── glitch: slice copies made from data-cp-text, added for ~0.6s by fx/cyberpunk.js ── */
+:root[data-style="cyberpunk"] .cp-glitchable { position: relative; }
+:root[data-style="cyberpunk"] .cp-glitch::before, :root[data-style="cyberpunk"] .cp-glitch::after {
+  content: attr(data-cp-text); position: absolute; inset: 0; pointer-events: none; text-shadow: none; white-space: inherit;
+  padding: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; text-align: inherit; line-height: inherit;
+}
+:root[data-style="cyberpunk"] .cp-glitch::before { color: #00f0ff; animation: cpSliceA .6s steps(1) both; }
+:root[data-style="cyberpunk"] .cp-glitch::after { color: #ff003c; animation: cpSliceB .6s steps(1) both; }
+:root[data-style="cyberpunk"] .cp-glitch { animation: cpJolt .6s steps(1) both; }
+
+/* ── cards decrypt in (they are visible without JS; this only plays when one scrolls in) ── */
+:root[data-style="cyberpunk"] .cp-reveal.cp-in { animation: cpDecrypt .55s steps(6, end) both; }
+
+/* ── about ── */
+:root[data-style="cyberpunk"] .caption-box { font-family: var(--cp-mono); color: #ff003c; letter-spacing: .18em; }
+:root[data-style="cyberpunk"] .caption-box::before { content: "> "; color: #00f0ff; }
+:root[data-style="cyberpunk"] .about-statement { color: #e6e6ee; }
+:root[data-style="cyberpunk"] .about-body strong { color: #fcee0a; font-weight: 700; }
+/* "Working on" becomes the quest tracker */
+:root[data-style="cyberpunk"] .now { background: linear-gradient(180deg, rgba(252, 238, 10, .07), transparent 90px), rgba(16, 16, 23, .94); }
+:root[data-style="cyberpunk"] .now .label { font-family: var(--cp-mono); color: #fcee0a; letter-spacing: .2em; }
+:root[data-style="cyberpunk"] .now .label::before { content: "◆ ACTIVE GIGS — "; color: #ff003c; }
+:root[data-style="cyberpunk"] .now li { font-family: "Chakra Petch", sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: 18px; padding-bottom: 12px; border-bottom: 1px dashed rgba(0, 240, 255, .2); }
+:root[data-style="cyberpunk"] .now li:last-child { border-bottom: 0; padding-bottom: 0; }
+:root[data-style="cyberpunk"] .now li::before { clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); font-family: var(--cp-mono); }
+
+/* ── research: data shards ── */
+:root[data-style="cyberpunk"] .projects { counter-reset: shard; }
+:root[data-style="cyberpunk"] .proj { counter-increment: shard; grid-template-columns: auto minmax(0, 1fr); padding-bottom: 46px; }
+:root[data-style="cyberpunk"] .proj::before {
+  content: "SHARD_0" counter(shard) " // DECRYPTED"; position: absolute; left: 24px; right: 24px; bottom: 16px; padding-top: 10px; pointer-events: none;
+  font: 11px/1 var(--cp-mono); letter-spacing: .2em; color: rgba(139, 139, 156, .8); border-top: 1px solid rgba(255, 255, 255, .07);
+}
+:root[data-style="cyberpunk"] .proj:hover { box-shadow: inset 0 0 0 1px rgba(0, 240, 255, .35), inset 0 0 40px rgba(0, 240, 255, .06); }
 :root[data-style="cyberpunk"] .proj-idx, :root[data-style="cyberpunk"] .proj:nth-child(even) .proj-idx { clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); }
-:root[data-style="cyberpunk"] .proj-kicker, :root[data-style="cyberpunk"] .job-period { color: #ff003c; }
-:root[data-style="cyberpunk"] .about-statement { color: #e8e8ec; }
-:root[data-style="cyberpunk"] .poster-title { color: #0b0b0d; --heading-shadow: 4px 0 #fcee0a; }
-:root[data-style="cyberpunk"] .poster .poster-sub, :root[data-style="cyberpunk"] .poster .poster-kicker { color: #0b0b0d; }
-:root[data-style="cyberpunk"] .link-cell .label { color: #00f0ff; }
-:root[data-style="cyberpunk"] .ticker { margin-inline: 0; }
+:root[data-style="cyberpunk"] .proj-kicker { font-family: var(--cp-mono); color: #ff003c; letter-spacing: .12em; }
+:root[data-style="cyberpunk"] .proj-title { font-size: clamp(24px, 2.6vw, 38px); overflow-wrap: anywhere; text-shadow: 2px 0 rgba(255, 0, 60, .55); }
+:root[data-style="cyberpunk"] .proj-tags .tag { font-family: var(--cp-mono); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
+:root[data-style="cyberpunk"] .proj-facts > div { clip-path: var(--cut-sm); }
+:root[data-style="cyberpunk"] .proj-facts dt { text-shadow: 0 0 14px rgba(0, 240, 255, .45); }
+:root[data-style="cyberpunk"] .proj-facts dd { font-family: var(--cp-mono); text-transform: uppercase; letter-spacing: .08em; color: #8b8b9c; }
+
+/* ── papers: the hazard-yellow band, with warning stripes top and bottom ── */
+:root[data-style="cyberpunk"] .ink { padding-top: calc(clamp(64px, 9vw, 120px) + 10px); }
+:root[data-style="cyberpunk"] .ink::before, :root[data-style="cyberpunk"] .ink::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 14px; pointer-events: none; z-index: 0;
+  background: repeating-linear-gradient(-45deg, #07070b 0 12px, transparent 12px 24px);
+}
+:root[data-style="cyberpunk"] .ink::before { top: 22px; } :root[data-style="cyberpunk"] .ink::after { bottom: 22px; }
+:root[data-style="cyberpunk"] .ink .sec-title { color: #07070b; --heading-shadow: 3px 0 #ff003c, -2px 0 #00f0ff; }
+:root[data-style="cyberpunk"] .ink .sec-num { background: #07070b; color: #fcee0a; }
+:root[data-style="cyberpunk"] .ink .seg-opt { font-family: var(--cp-mono); text-transform: uppercase; letter-spacing: .08em; }
+:root[data-style="cyberpunk"] .pub:nth-child(n) { position: relative; background: #07070b; color: #e6e6ee; }
+:root[data-style="cyberpunk"] .pub:hover { box-shadow: inset 4px 0 0 #ff003c; }
+:root[data-style="cyberpunk"] .ink .pub a { color: #e6e6ee; }
+:root[data-style="cyberpunk"] .ink .pub-full { color: #8b8b9c; font-family: var(--cp-mono); letter-spacing: .04em; }
+:root[data-style="cyberpunk"] .pub-short { color: #fcee0a; font-family: var(--cp-mono); letter-spacing: .12em; }
+:root[data-style="cyberpunk"] .ink .pub-title { color: #e6e6ee; }
+:root[data-style="cyberpunk"] .ink .pub:nth-child(n) .pub-year { background: rgba(252, 238, 10, .06); color: #fcee0a; border: 1px solid rgba(252, 238, 10, .7); border-radius: 0; clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); text-shadow: 0 0 12px rgba(252, 238, 10, .4); }
+:root[data-style="cyberpunk"] .ink .pub-role { background: rgba(255, 255, 255, .08); color: #e6e6ee; font-family: var(--cp-mono); text-transform: uppercase; letter-spacing: .06em; }
+:root[data-style="cyberpunk"] .ink .pub-role.is-first, :root[data-style="cyberpunk"] .ink .pub-links a:hover { background: #fcee0a; color: #07070b; }
+:root[data-style="cyberpunk"] .ink .pub-links a { background: rgba(0, 240, 255, .08); color: #00f0ff; border: 1px solid rgba(0, 240, 255, .35); font-family: var(--cp-mono); letter-spacing: .06em; clip-path: var(--cut-sm); }
+
+/* ── skills: installed cyberware ── */
+:root[data-style="cyberpunk"] .skill-h { font-size: clamp(18px, 1.6vw, 22px); text-shadow: none; color: #fcee0a; flex-wrap: wrap; }
+:root[data-style="cyberpunk"] .skill-h .accent { width: auto; height: auto; padding: 4px 7px; background: #ff003c; color: #07070b; font: 12px/1 var(--cp-mono); text-shadow: none; clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); }
+:root[data-style="cyberpunk"] .skill-h .accent::before { content: "MOD_0"; }
+:root[data-style="cyberpunk"] .skill-h .accent { display: inline-flex; white-space: nowrap; flex-basis: auto; }
+:root[data-style="cyberpunk"] .skill li, :root[data-style="cyberpunk"] .skill:nth-child(3) li { font-family: var(--cp-mono); font-size: 13px; letter-spacing: 0; transition: background .12s, color .12s; }
+:root[data-style="cyberpunk"] .skill li:hover { background: #fcee0a; color: #07070b; border-color: #fcee0a; }
+
+/* ── work: service record ── */
+:root[data-style="cyberpunk"] .job-period { font-family: var(--cp-mono); color: #ff003c; letter-spacing: .14em; }
+:root[data-style="cyberpunk"] .job-period::before { content: "▮ "; color: #fcee0a; }
+:root[data-style="cyberpunk"] .job-org { text-shadow: 2px 0 rgba(255, 0, 60, .55); }
+:root[data-style="cyberpunk"] .job:nth-child(odd) .job-org { color: #fcee0a; }
+:root[data-style="cyberpunk"] .job:nth-child(even) .job-org { color: #00f0ff; }
+:root[data-style="cyberpunk"] .job-role { color: #e6e6ee; }
+:root[data-style="cyberpunk"] .job-team { font-family: var(--cp-mono); font-size: 13px; }
+:root[data-style="cyberpunk"] .job-points li::before { clip-path: polygon(0 0, 100% 0, 100% 60%, 60% 100%, 0 100%); }
+
+/* ── tickers ── */
+:root[data-style="cyberpunk"] .ticker { margin-inline: 0; box-shadow: 0 0 0 1px #07070b, 0 0 30px rgba(252, 238, 10, .18); }
+:root[data-style="cyberpunk"] .ticker.rev { box-shadow: 0 0 0 1px #07070b, 0 0 30px rgba(0, 240, 255, .2); }
 :root[data-style="cyberpunk"] .ticker-run span:not(.dot) { font-size: clamp(18px, 2.2vw, 30px); }
-@keyframes cpGlitch { 0%, 92%, 100% { translate: 0 0; } 93% { translate: -4px 1px; } 95% { translate: 3px -2px; } 97% { translate: -2px 0; } }
-@media (prefers-reduced-motion: reduce) { :root[data-style="cyberpunk"] .t2 { animation: none; } }
+:root[data-style="cyberpunk"] .ticker .dot, :root[data-style="cyberpunk"] .ticker.rev .dot { opacity: 1; width: 22px; height: 10px; background: repeating-linear-gradient(-45deg, currentColor 0 3px, transparent 3px 6px); }
 
-/* waveform: RGB-split oscilloscope */
-:root[data-style="cyberpunk"] { --wave-mode: scope; --wave-colors: #ff003c, #00f0ff, #fcee0a; --wave-lo: #00f0ff; }
-:root[data-style="cyberpunk"] .wavebar { border: 1px solid rgba(0, 240, 255, .4); }
+/* ── contact: corpo-red terminal ── */
+:root[data-style="cyberpunk"] .poster {
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .09) 0 1px, transparent 1px 4px),
+    radial-gradient(70% 90% at 100% 0%, rgba(0, 0, 0, .3), transparent 60%), #ff003c;
+}
+:root[data-style="cyberpunk"] .poster::before {
+  display: block; content: "連絡"; position: absolute; right: 2%; bottom: -6%; top: auto; translate: none; width: auto; aspect-ratio: auto; border-radius: 0; background: none;
+  font: 900 clamp(120px, 22vw, 340px)/1 "Zen Kaku Gothic New", "Hiragino Sans", sans-serif; color: rgba(0, 0, 0, .14); pointer-events: none; z-index: 0;
+}
+:root[data-style="cyberpunk"] .poster-kicker { font-family: var(--cp-mono); letter-spacing: .2em; }
+:root[data-style="cyberpunk"] .poster-kicker::before { content: "▮ CHANNEL OPEN // "; }
+:root[data-style="cyberpunk"] .poster-title { color: #07070b; --heading-shadow: 4px 0 #fcee0a, -2px 0 rgba(0, 240, 255, .7); }
+:root[data-style="cyberpunk"] .poster .poster-sub, :root[data-style="cyberpunk"] .poster .poster-kicker { color: #07070b; }
+:root[data-style="cyberpunk"] .link-cell { position: relative; transition: transform .15s, box-shadow .15s; }
+:root[data-style="cyberpunk"] .link-cell:hover { box-shadow: inset 0 0 0 1px #fcee0a, inset 0 -4px 0 #00f0ff; }
+:root[data-style="cyberpunk"] .link-cell .label { color: #00f0ff; font-family: var(--cp-mono); letter-spacing: .14em; }
 
-/* the portrait glitches: two colour-split copies tear across it, with scanlines and a HUD frame */
+/* ── footer ── */
+:root[data-style="cyberpunk"] .site-foot { font-family: var(--cp-mono); letter-spacing: .06em; }
+:root[data-style="cyberpunk"] .site-foot::before { content: "// END OF TRANSMISSION ▮"; display: block; margin-bottom: 14px; font: 11px/1 var(--cp-mono); letter-spacing: .2em; color: #ff003c; }
+
+/* ── the portrait glitches: two colour-split copies tear across it, with scanlines and a HUD frame ── */
 :root[data-style="cyberpunk"] .art .portrait { position: relative; padding: 14px; }
 :root[data-style="cyberpunk"] .portrait .washed { position: relative; overflow: hidden; border: 0; box-shadow: 0 0 0 1px rgba(0, 240, 255, .5), 0 0 40px rgba(255, 0, 60, .25); clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 26px 100%, 0 calc(100% - 26px)); }
-:root[data-style="cyberpunk"] .portrait .washed img { filter: grayscale(.35) contrast(1.25) saturate(1.3); animation: cpShake 4s steps(1) infinite; }
+:root[data-style="cyberpunk"] .portrait .washed img { filter: grayscale(.3) contrast(1.15) saturate(1.2); animation: cpShake 4s steps(1) infinite; }
 :root[data-style="cyberpunk"] .portrait .washed::before, :root[data-style="cyberpunk"] .portrait .washed::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: url("../../img/portrait.jpg") center / cover; mix-blend-mode: screen; opacity: .85;
@@ -65,11 +262,15 @@
   background:
     linear-gradient(#fcee0a, #fcee0a) 0 0 / 34px 3px no-repeat, linear-gradient(#fcee0a, #fcee0a) 0 0 / 3px 34px no-repeat,
     linear-gradient(#fcee0a, #fcee0a) 100% 100% / 34px 3px no-repeat, linear-gradient(#fcee0a, #fcee0a) 100% 100% / 3px 34px no-repeat,
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, .28) 0 1px, transparent 1px 3px) 14px 14px / calc(100% - 28px) calc(100% - 28px) no-repeat;
+    linear-gradient(#00f0ff, #00f0ff) 100% 0 / 14px 2px no-repeat, linear-gradient(#00f0ff, #00f0ff) 0 100% / 14px 2px no-repeat,
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .24) 0 1px, transparent 1px 3px) 14px 14px / calc(100% - 28px) calc(100% - 28px) no-repeat;
 }
-:root[data-style="cyberpunk"] .art .portrait::after { content: "ID://AKHIL_P  ·  CLASS: NETRUNNER  ·  STATUS: LISTENING"; position: absolute; left: 14px; right: 14px; bottom: -12px; z-index: 3; padding: 4px 8px; background: #fcee0a; color: #0b0b0d; font: 700 10px/1.2 "Chakra Petch", monospace; letter-spacing: .12em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+:root[data-style="cyberpunk"] .art .portrait::after { content: "ID://AKHIL_P  ·  CLASS: NETRUNNER  ·  STATUS: LISTENING"; position: absolute; left: 14px; right: 14px; bottom: -12px; z-index: 3; padding: 5px 8px; background: #fcee0a; color: #07070b; font: 11px/1.2 var(--cp-mono); letter-spacing: .12em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; clip-path: var(--cut-sm); }
+/* a scan bar that sweeps the photo now and then (made by JS so it can be removed) */
+:root[data-style="cyberpunk"] .cp-scanbar { position: absolute; left: 14px; right: 14px; top: 14px; height: 2px; z-index: 2; pointer-events: none; background: #00f0ff; box-shadow: 0 0 12px #00f0ff, 0 0 2px #fff; opacity: 0; animation: cpScan 6s ease-in-out infinite; }
 :root[data-style="cyberpunk"] .art .portrait:hover .washed::before, :root[data-style="cyberpunk"] .art .portrait:hover .washed::after { animation-duration: .5s; }
 
+/* ── keyframes ── */
 @keyframes cpTearA {
   0%, 100% { clip-path: inset(0 0 100% 0); transform: none; }
   8% { clip-path: inset(12% 0 70% 0); transform: translateX(-10px); }
@@ -92,8 +293,65 @@
   80% { clip-path: inset(0 0 0 0); transform: translateX(4px); }
   81% { clip-path: inset(0 0 100% 0); }
 }
-@keyframes cpShake { 0%, 100% { transform: none; } 79% { transform: none; } 80% { transform: translate(-3px, 1px) skewX(4deg); } 81% { transform: translate(2px, -1px); } 82% { transform: none; } }
+@keyframes cpShake { 0%, 79%, 82%, 100% { transform: none; } 80% { transform: translate(-3px, 1px) skewX(4deg); } 81% { transform: translate(2px, -1px); } }
+@keyframes cpScan { 0%, 55% { top: 14px; opacity: 0; } 58% { opacity: .9; } 75% { top: calc(100% - 16px); opacity: .9; } 78%, 100% { top: calc(100% - 16px); opacity: 0; } }
+@keyframes cpSliceA {
+  0% { clip-path: inset(10% 0 72% 0); transform: translate(-6px, 0); }
+  20% { clip-path: inset(58% 0 22% 0); transform: translate(5px, 0); }
+  40% { clip-path: inset(32% 0 50% 0); transform: translate(-3px, 0); }
+  60% { clip-path: inset(80% 0 4% 0); transform: translate(7px, 0); }
+  80% { clip-path: inset(2% 0 88% 0); transform: translate(-4px, 0); }
+  100% { clip-path: inset(0 0 100% 0); transform: none; }
+}
+@keyframes cpSliceB {
+  0% { clip-path: inset(64% 0 18% 0); transform: translate(6px, 0); }
+  20% { clip-path: inset(6% 0 80% 0); transform: translate(-7px, 0); }
+  40% { clip-path: inset(44% 0 40% 0); transform: translate(4px, 0); }
+  60% { clip-path: inset(20% 0 66% 0); transform: translate(-5px, 0); }
+  80% { clip-path: inset(70% 0 12% 0); transform: translate(3px, 0); }
+  100% { clip-path: inset(0 0 100% 0); transform: none; }
+}
+@keyframes cpJolt { 0%, 100% { translate: 0 0; } 15% { translate: -2px 0; } 35% { translate: 2px 0; } 55% { translate: -1px 0; } 75% { translate: 0 0; } }
+@keyframes cpDecrypt { 0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); opacity: .4; } 99% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; } 100% { clip-path: var(--cut); opacity: 1; } }
+@keyframes cpDraw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes cpStream { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@keyframes cpBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .2; } }
+@keyframes cpFlicker { 0%, 18%, 20%, 22%, 61%, 63%, 100% { opacity: 1; } 19%, 21% { opacity: .35; } 62% { opacity: .6; } }
+@keyframes cpFlickerChar { 0%, 72%, 76%, 100% { opacity: 1; } 73%, 75% { opacity: .25; } }
+
+/* ── wider screens get the HUD furniture ── */
+@media (min-width: 1200px) {
+  :root[data-style="cyberpunk"] .cp-sign, :root[data-style="cyberpunk"] .cp-stream { display: flex; }
+}
+@media (min-width: 1000px) { :root[data-style="cyberpunk"] .cp-frame { display: block; } }
+@media (min-width: 1400px) { :root[data-style="cyberpunk"] .cp-readout { display: flex; } }
+
+/* ── phones and tablets ── */
+@media (max-width: 900px) {
+  :root[data-style="cyberpunk"] .cp-city { height: 40%; opacity: .5; }
+  :root[data-style="cyberpunk"] .projects { grid-template-columns: minmax(0, 1fr); }
+  :root[data-style="cyberpunk"] .art .portrait::after { content: "ID://AKHIL_P"; }
+  :root[data-style="cyberpunk"] .ink::before { top: 12px; } :root[data-style="cyberpunk"] .ink::after { bottom: 12px; }
+}
+@media (max-width: 560px) {
+  :root[data-style="cyberpunk"] .kicker::before { content: "▮ NEURAL LINK // OK"; }
+  :root[data-style="cyberpunk"] .bubble::before { left: 16px; content: "INCOMING // AKHIL_P"; }
+  :root[data-style="cyberpunk"] .proj { padding: 24px 20px 46px; }
+  :root[data-style="cyberpunk"] .proj::before { left: 20px; right: 20px; }
+  :root[data-style="cyberpunk"] .proj-facts > div { padding-inline: 12px; }
+  :root[data-style="cyberpunk"] .sec-head::before { font-size: 11px; letter-spacing: .12em; }
+  :root[data-style="cyberpunk"] .poster::before { bottom: 2%; font-size: 110px; }
+  :root[data-style="cyberpunk"] .wavebar::before { content: "AUD.IN // CH-01"; }
+  :root[data-style="cyberpunk"] .ink .seg-opt { font-size: 12px; letter-spacing: .04em; padding: 10px 11px; }
+  :root[data-style="cyberpunk"] .link-cell strong { font-size: 17px; overflow-wrap: break-word; word-break: normal; }
+  :root[data-style="cyberpunk"] .link-cell[href^="mailto"] strong { font-size: 14px; }
+}
+
+/* ── reduced motion: no flicker, no glitches, no streams ── */
 @media (prefers-reduced-motion: reduce) {
+  :root[data-style="cyberpunk"] :is(.cp-sign, .cp-sign-k b, .cp-stream pre, .cp-readout .cp-dot, .wavebar::after, .cp-glitch, .cp-reveal, .sec-head::after) { animation: none !important; }
+  :root[data-style="cyberpunk"] .cp-glitch::before, :root[data-style="cyberpunk"] .cp-glitch::after { display: none; }
+  :root[data-style="cyberpunk"] .cp-scanbar { display: none; }
   :root[data-style="cyberpunk"] .portrait .washed img, :root[data-style="cyberpunk"] .portrait .washed::before, :root[data-style="cyberpunk"] .portrait .washed::after { animation: none; }
   :root[data-style="cyberpunk"] .portrait .washed::before { clip-path: inset(20% 0 74% 0); transform: translateX(-6px); }
   :root[data-style="cyberpunk"] .portrait .washed::after { clip-path: inset(62% 0 30% 0); transform: translateX(6px); }
