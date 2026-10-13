@@ -56,8 +56,120 @@
       lines.forEach(function (l, i) { later(function () { pre.textContent += l + "\n"; }, 140 * i); });
       later(done, 140 * lines.length + 700);
     }
+    /* extras: a working shell in the hero, sections dressed as command output, a tmux status bar */
+    var extra = [], decorated = [], statusIO = null, clockT = 0, onKey = null;
+    function q(sel) { return document.querySelector(sel); }
+    function qa(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+    function txt(n) { return n ? n.textContent.replace(/\s+/g, " ").trim() : ""; }
+    function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+    function hash(t) { var h = 2166136261; for (var i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return ("0000000" + (h >>> 0).toString(16)).slice(-7); }
+    function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    function shell() {
+      var stage = q(".stage"); if (!stage) return;
+      var box = el("div", "term-shell"), log = el("div", "term-log"), line = el("label", "term-line");
+      log.setAttribute("aria-live", "polite");
+      line.innerHTML = '<span class="term-ps1">akhil@lab:~$</span>';
+      var input = el("input"); input.type = "text"; input.autocomplete = "off"; input.spellcheck = false; input.setAttribute("autocapitalize", "off");
+      input.setAttribute("aria-label", "Terminal: type a command, for example help");
+      line.appendChild(input); box.appendChild(log); box.appendChild(line); stage.appendChild(box); extra.push(box);
+      var hist = [], hi = 0, cwd = "~";
+      var sections = { about: "about", research: "research", papers: "papers", skills: "skills", work: "work", contact: "contact" };
+      var mail = (q(".nav-cta") || {}).href || "";
+      function out(html, cls) { var d = el("div", "term-out" + (cls ? " " + cls : ""), html); log.appendChild(d); log.scrollTop = log.scrollHeight; }
+      function go(id) { var s2 = document.getElementById(id); if (s2) { s2.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); cwd = "~/" + id; input.parentNode.querySelector(".term-ps1").textContent = "akhil@lab:" + cwd + "$"; } }
+      var cmds = {
+        help: function () { out('available commands:<br><b>about</b> <b>research</b> <b>papers</b> <b>skills</b> <b>work</b> <b>contact</b> &nbsp;jump to a section<br><b>ls</b> <b>cd &lt;dir&gt;</b> <b>cat about.md</b> <b>whoami</b> <b>date</b> <b>echo</b> <b>history</b> <b>clear</b><br>tab completes · ↑ ↓ history'); },
+        ls: function () { out(Object.keys(sections).map(function (k) { return '<span class="dir">' + k + '/</span>'; }).join("  ") + '  about.md  resume.pdf'); },
+        whoami: function () { out(esc(txt(q(".bubble p")))); },
+        date: function () { out(new Date().toString()); },
+        clear: function () { log.innerHTML = ""; },
+        history: function () { out(hist.map(function (h, i) { return (i + 1) + "  " + esc(h); }).join("<br>") || "(empty)"); },
+        pwd: function () { out(cwd.replace("~", "/home/akhil")); },
+        "cat": function (a) {
+          if (a === "about.md") { out(esc(txt(q(".about-statement")))); go("about"); }
+          else if (a === "resume.pdf") out("binary file. try: <b>work</b>");
+          else out("cat: " + esc(a || "") + ": no such file");
+        },
+        cd: function (a) { a = (a || "").replace(/[~\/.]/g, ""); if (!a) { cwd = "~"; line.querySelector(".term-ps1").textContent = "akhil@lab:~$"; window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); } else if (sections[a]) go(a); else out("cd: no such directory: " + esc(a)); },
+        echo: function (a, raw) { out(esc(raw)); },
+        sudo: function (a, raw) {
+          if (/^hire( akhil)?$/.test(raw)) { out('<span class="ok">[sudo] access granted.</span> opening a message to akhil…'); if (mail) setTimeout(function () { window.location.href = mail; }, 600); }
+          else out("akhil is not in the sudoers file. this incident will be reported.");
+        },
+        exit: function () { out("there is no escape. try <b>contact</b>"); },
+        rm: function () { out('<span class="err">nice try.</span>'); }
+      };
+      Object.keys(sections).forEach(function (k) { cmds[k] = function () { out("→ " + k); go(k); }; });
+      out('type <b>help</b> to explore · try <b>sudo hire akhil</b>', "dim");
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          var raw = input.value.trim(); input.value = ""; if (!raw) return;
+          hist.push(raw); hi = hist.length;
+          out('<span class="term-ps1">akhil@lab:' + esc(cwd) + '$</span> ' + esc(raw), "echo");
+          var parts = raw.split(/\s+/), c = parts[0].toLowerCase(), rest = raw.slice(parts[0].length).trim();
+          if (cmds[c]) cmds[c](parts[1] && parts[1].toLowerCase(), c === "sudo" ? rest.toLowerCase() : rest);
+          else out("zsh: command not found: " + esc(c) + " · try <b>help</b>", "err");
+        } else if (e.key === "ArrowUp") { e.preventDefault(); if (hi > 0) input.value = hist[--hi]; }
+        else if (e.key === "ArrowDown") { e.preventDefault(); hi = Math.min(hist.length, hi + 1); input.value = hist[hi] || ""; }
+        else if (e.key === "Tab" && input.value) {
+          e.preventDefault();
+          var v = input.value, words = Object.keys(cmds).concat(["about.md", "resume.pdf"]);
+          var parts2 = v.split(" "), last = parts2.pop(), hits = words.filter(function (w) { return w.indexOf(last.toLowerCase()) === 0; });
+          if (hits.length === 1) { parts2.push(hits[0]); input.value = parts2.join(" ") + " "; }
+          else if (hits.length > 1) out(hits.join("  "), "dim");
+        }
+      });
+      box.addEventListener("click", function () { input.focus({ preventScroll: true }); });
+    }
+    function dress() {
+      var heads = { about: "cat about.md", research: "ls -la ~/research/", papers: "git log --oneline papers/", skills: "htop --tree skills", work: "history | grep job", contact: "ping akhil" };
+      Object.keys(heads).forEach(function (id) {
+        var sec = document.getElementById(id); if (!sec) return;
+        var at = sec.querySelector(".sec-head") || sec.querySelector(".poster-kicker");
+        if (!at) return;
+        var c = el("div", "term-cmd", '<span class="term-ps1">akhil@lab:~$</span> ' + heads[id]); c.setAttribute("aria-hidden", "true");
+        at.parentNode.insertBefore(c, at); extra.push(c);
+      });
+      var projects = q(".projects");
+      if (projects) {
+        var rows = qa(".proj").map(function (p, i) {
+          var t = txt(p.querySelector(".proj-title"));
+          return '<span>drwxr-xr-x</span><span>akhil</span><span>' + (4096 * (i + 1)) + '</span><span>2026</span><span class="dir">' + slug(t) + '/</span>';
+        });
+        var ls = el("div", "term-ls", '<span>total ' + rows.length + '</span>' + rows.map(function (r) { return '<div>' + r + '</div>'; }).join(""));
+        ls.setAttribute("aria-hidden", "true"); projects.before(ls); extra.push(ls);
+      }
+      qa(".pub").forEach(function (p) {
+        var h = el("span", "term-hash", hash(txt(p.querySelector(".pub-title")))); h.setAttribute("aria-hidden", "true");
+        var v = p.querySelector(".pub-venue"); if (v) { v.insertBefore(h, v.firstChild); decorated.push(h); }
+      });
+      var max = Math.max.apply(0, qa(".skill").map(function (k) { return k.querySelectorAll("li").length; }));
+      qa(".skill").forEach(function (k, i) {
+        var n = k.querySelectorAll("li").length, pct = Math.round(40 + 58 * n / max), cells = Math.round(pct / 10);
+        var bar = el("div", "term-htop", '<span class="pid">' + (1100 + i * 37) + '</span><span class="bar">[' + "|".repeat(cells) + '<i>' + "·".repeat(10 - cells) + '</i>]</span><span class="pct">' + pct + '.0%</span>');
+        bar.setAttribute("aria-hidden", "true"); var h2 = k.querySelector(".skill-h"); if (h2) { h2.after(bar); decorated.push(bar); }
+      });
+    }
+    function tmux() {
+      var ids = ["about", "research", "papers", "skills", "work", "contact"];
+      var bar = el("div", "term-tmux", '<span class="tm-session">[akhil]</span><span class="tm-wins">' + ids.map(function (id, i) { return '<a href="#' + id + '" data-win="' + id + '">' + i + ':' + id + '</a>'; }).join("") + '</span><span class="tm-clock"></span>');
+      bar.setAttribute("aria-label", "Sections"); document.body.appendChild(bar); extra.push(bar);
+      var clock = bar.querySelector(".tm-clock");
+      var tick = function () { var d = new Date(); clock.textContent = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + " " + d.toDateString().slice(4, 10); };
+      tick(); clockT = setInterval(tick, 15000);
+      statusIO = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) bar.querySelectorAll("a").forEach(function (a) { a.classList.toggle("is-on", a.getAttribute("data-win") === e.target.id); }); });
+      }, { rootMargin: "-45% 0px -50% 0px" });
+      ids.forEach(function (id) { var s2 = document.getElementById(id); if (s2) statusIO.observe(s2); });
+    }
+    function extrasOn() { shell(); dress(); tmux(); }
+    function extrasOff() {
+      clearInterval(clockT); if (statusIO) statusIO.disconnect(); statusIO = null;
+      extra.concat(decorated).forEach(function (n) { n.remove(); }); extra = []; decorated = [];
+    }
     return {
       on: function () {
+        extrasOn();
         document.querySelectorAll(".ticker").forEach(function (t, k) {
           var words = tickerWords(t), box = el("div", "typer");
           box.setAttribute("aria-hidden", "true");
@@ -76,6 +188,7 @@
         titles.forEach(function (h) { io.observe(h); });
       },
       off: function () {
+        extrasOff();
         timers.forEach(clearTimeout); timers = [];
         if (io) io.disconnect(); io = null;
         nodes.forEach(function (n) { n.remove(); }); nodes = [];
