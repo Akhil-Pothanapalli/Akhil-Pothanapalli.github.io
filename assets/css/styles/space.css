@@ -49,13 +49,6 @@
 :root[data-style="space"] .bubble p { font-weight: 300; }
 :root[data-style="space"] .art { overflow: visible; }
 :root[data-style="space"] .art .portrait { position: relative; width: min(100%, 320px); }
-:root[data-style="space"] .portrait .washed { position: relative; z-index: 1; box-shadow: inset -30px -30px 60px rgba(0, 0, 0, .55), 0 0 0 2px rgba(76, 201, 240, .5), 0 0 80px rgba(76, 201, 240, .25); }
-:root[data-style="space"] .portrait .washed::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 70% 70%, transparent 40%, rgba(4, 6, 13, .55) 75%); pointer-events: none; }
-:root[data-style="space"] .art .portrait::before { content: ""; position: absolute; z-index: 2; left: -22%; right: -22%; top: 42%; height: 26%; border-radius: 50%; border: 2px solid rgba(255, 138, 76, .7); border-top-color: transparent; transform: rotate(-14deg); pointer-events: none; }
-:root[data-style="space"] .art .portrait::after { content: ""; position: absolute; z-index: 0; left: -22%; right: -22%; top: 42%; height: 26%; border-radius: 50%; border: 2px solid rgba(255, 138, 76, .35); border-bottom-color: transparent; transform: rotate(-14deg); pointer-events: none; }
-.space-orbit { position: absolute; inset: -16%; z-index: 3; border-radius: 50%; border: 1px dashed rgba(140, 170, 255, .28); animation: spaceOrbit 18s linear infinite; pointer-events: none; }
-.space-orbit::before { content: ""; position: absolute; left: 50%; top: -7px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffffff, #b9c4dc 45%, #59617a); box-shadow: 0 0 12px rgba(255, 255, 255, .5); }
-@keyframes spaceOrbit { to { transform: rotate(360deg); } }
 :root[data-style="space"] .wavebar { position: relative; border: 1px solid rgba(76, 201, 240, .35); border-radius: 4px; }
 :root[data-style="space"] .wavebar::after { content: "DEEP SPACE NETWORK · INCOMING SIGNAL · 8.4 GHz"; position: absolute; left: 12px; top: 8px; font: 10px/1 "Space Mono", monospace; letter-spacing: .14em; color: rgba(76, 201, 240, .75); }
 
@@ -124,7 +117,7 @@
 :root[data-style="space"] .foot-row::after { content: "END OF TRANSMISSION ■"; color: #8a93ad; }
 
 @media (max-width: 900px) { :root[data-style="space"] .art .portrait { width: 220px; } }
-@media (prefers-reduced-motion: reduce) { .space-orbit { animation: none; } }
+
 :root[data-style="space"] .sec-num { white-space: nowrap; }
 :root[data-style="space"] .proj-tags .tag { background: transparent; color: #cfe9ff; border: 1px solid rgba(76, 201, 240, .45); font-family: "Space Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
 :root[data-style="space"] .sec-num { justify-self: start; }
@@ -133,3 +126,28 @@
   :root[data-style="space"] .art .portrait { width: 190px; }
   :root[data-style="space"] .wavebar::after { content: "DSN · INCOMING SIGNAL"; }
 }
+
+/* the portrait is the Sun at the centre of a small solar system (planets, belt and orbits drawn by style-fx.js) */
+:root[data-style="space"] .stage { overflow: hidden; }
+:root[data-style="space"] .art { overflow: visible; padding-block: 40px; }
+:root[data-style="space"] .art .portrait { position: relative; width: min(100%, 220px); z-index: 0; }
+:root[data-style="space"] .portrait .washed { position: relative; z-index: 2; box-shadow: 0 0 0 3px #ffd36b, 0 0 30px 8px rgba(255, 190, 80, .75), 0 0 90px 30px rgba(255, 140, 40, .35), 0 0 160px 60px rgba(255, 110, 30, .15); animation: sunPulse 5s ease-in-out infinite; }
+:root[data-style="space"] .portrait .washed::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(255, 170, 60, .35) 85%, rgba(255, 210, 120, .6)); }
+@keyframes sunPulse { 50% { box-shadow: 0 0 0 3px #ffd36b, 0 0 36px 10px rgba(255, 190, 80, .85), 0 0 110px 36px rgba(255, 140, 40, .4), 0 0 180px 70px rgba(255, 110, 30, .18); } }
+.space-system { position: absolute; left: 50%; top: 50%; width: 330%; aspect-ratio: 1; translate: -50% -50%; pointer-events: none; }
+.space-system canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.space-back { z-index: 1; } .space-front { z-index: 3; }
+:root[data-style="space"] .title-block, :root[data-style="space"] .bubble, :root[data-style="space"] .wavebar { z-index: 4; }
+
+/* mission clock */
+.space-hud { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid rgba(76, 201, 240, .35); border-radius: 6px; background: rgba(4, 6, 13, .78); backdrop-filter: blur(6px); font: 11px/1 "Space Mono", monospace; letter-spacing: .1em; color: #8a93ad; }
+.space-hud b { color: #4cc9f0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.space-hud .hud-sep { color: #3a4362; }
+.space-hud .hud-dot { width: 7px; height: 7px; border-radius: 50%; background: #3dff8a; box-shadow: 0 0 8px #3dff8a; animation: hudBlink 1.4s steps(1) infinite; }
+@keyframes hudBlink { 50% { opacity: .2; } }
+@media (max-width: 900px) {
+  :root[data-style="space"] .art .portrait { width: 130px; }
+  :root[data-style="space"] .art { padding-block: 70px 50px; }
+  .space-hud { font-size: 9px; } .space-hud .hud-sep, .space-hud .hud-sep ~ * { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { :root[data-style="space"] .portrait .washed, .space-hud .hud-dot { animation: none; } }
