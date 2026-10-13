@@ -69,5 +69,12 @@ Sources used to research each style, so you can study the originals yourself. St
 - [Flat design, Wikipedia](https://en.wikipedia.org/wiki/Flat_design) and [From Marx to Microsoft: the origins of flat design](https://www.process.st/flat-design/), Process Street
 - Period showcases: [Top 20 flat design websites, November 2013](https://flattrendz.com/top-20-flat-design-websites-november-2013/), Flattrendz; [Flat web design in 2013](https://creativebeacon.com/flat-web-design-2013/), Creative Beacon
 
+**Swiss / International Typographic Style** (1950s–60s: 12-column grid, flush-left ragged-right Helvetica, black, off-white and one red; the hero and contact are concert posters after Josef Müller-Brockmann's Tonhalle series, with sound drawn as turning concentric arcs)
+- [Beethoven poster for the Tonhalle, Zürich (1955)](https://collection.cooperhewitt.org/objects/2318803418), Cooper Hewitt; and in the [Museum für Gestaltung Zürich collection](https://www.emuseum.ch/en/objects/9437/beethoven--tonhalle--grosser-saal/related/67)
+- [Musica Viva poster (1959)](https://collections.vam.ac.uk/item/O110243), V&A: "simple geometric grids … and sans-serif typefaces"
+- [Happy birthday Ludwig van Beethoven](https://www.emuseum.ch/themes/164669/happy-birthday-ludwig-van-beethoven), Zürich University of the Arts archive, on his concert posters turning music into rhythmic geometry
+- [The International Style 1950–1970](https://www.nb.admin.ch/snl/en/home/publications-research/dossiers/swiss-poster/international-style.html), Swiss National Library
+- [What is Swiss design](https://design.tutsplus.com/articles/what-is-swiss-design-and-why-you-should-know-its-history--cms-38463), Envato Tuts+; [International Typographic Style: key characteristics](https://blogs.ulster.ac.uk/caragreene/2020/12/08/international-typographic-style-the-swiss-style/), Ulster University
+
 ## Run locally (optional)
 `gem install jekyll && jekyll serve`

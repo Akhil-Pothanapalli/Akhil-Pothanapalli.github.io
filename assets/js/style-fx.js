@@ -225,6 +225,51 @@
     };
   })();
 
+  /* ── Swiss: concentric arcs, sound as Müller-Brockmann geometry, on the hero and contact posters ── */
+  fx.swiss = (function () {
+    var layers = [], raf = 0;
+    function seeded(n) { var x = Math.sin(n * 97.13) * 43758.5453; return x - Math.floor(x); }
+    function rings(count) {
+      var out = [];
+      for (var i = 0; i < count; i++) {
+        out.push({ r: 0.1 + i * 0.065, w: [2, 9, 3, 14, 2, 5][i % 6], a: seeded(i) * Math.PI * 2, len: 0.6 + seeded(i + 40) * 1.5, v: (seeded(i + 80) - 0.5) * 0.0026, red: i % 5 === 3 });
+      }
+      return out;
+    }
+    function add(host, cx, cy, reach, ink, red) {
+      if (!host) return;
+      var c = el("canvas", "swiss-arcs"); c.setAttribute("aria-hidden", "true");
+      host.insertBefore(c, host.firstChild);
+      layers.push({ c: c, ctx: c.getContext("2d"), cx: cx, cy: cy, reach: reach, ink: ink, red: red, rings: rings(16) });
+    }
+    function paint() {
+      layers.forEach(function (L) {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2), w = L.c.clientWidth, h = L.c.clientHeight;
+        if (!w || !h) return;
+        if (L.c.width !== Math.round(w * dpr) || L.c.height !== Math.round(h * dpr)) { L.c.width = Math.round(w * dpr); L.c.height = Math.round(h * dpr); }
+        var g = L.ctx, scale = w * (w < 700 ? L.reach * 0.55 : L.reach);
+        g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h); g.lineCap = "butt";
+        L.rings.forEach(function (R) {
+          if (!reduce) R.a += R.v;
+          g.strokeStyle = R.red ? L.red : L.ink; g.lineWidth = R.w;
+          g.beginPath(); g.arc(w * L.cx, h * L.cy, R.r * scale, R.a, R.a + R.len); g.stroke();
+        });
+      });
+      if (!reduce) raf = requestAnimationFrame(paint);
+    }
+    return {
+      on: function () {
+        add(document.querySelector(".stage"), 1, 1, 0.5, "rgba(242, 240, 234, .85)", "#b3261e");
+        add(document.querySelector(".poster"), 1, 0, 0.34, "#111111", "#f2f0ea");
+        paint();
+      },
+      off: function () {
+        cancelAnimationFrame(raf);
+        layers.forEach(function (L) { L.c.remove(); }); layers = [];
+      }
+    };
+  })();
+
   /* ── Glass: floating glass orbs, and a highlight that follows the pointer across each pane ── */
   fx.glass = (function () {
     var orbs = null, sel = ".stage, .proj, .skill, .job, .now, .bubble, .link-cell, .pub, .ink, .poster";
