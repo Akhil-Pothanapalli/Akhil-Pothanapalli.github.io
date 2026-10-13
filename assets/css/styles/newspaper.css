@@ -52,3 +52,23 @@
 :root[data-style="newspaper"] { --wave-mode: line; --wave-hi: #141414; --wave-lo: #b9b2a2; }
 :root[data-style="newspaper"] .wavebar { background: #fbf8f0; border: 1px solid #141414; }
 :root[data-style="newspaper"] .wavebar::after { content: "SEISMOGRAPH · VOICE ACTIVITY, HYDERABAD STATION"; position: absolute; left: 10px; bottom: 4px; font: 600 9px/1 "Source Serif 4", serif; letter-spacing: .14em; color: #555048; }
+
+/* front page: centred on the content column, headline and story left, photo filling the right column behind a column rule */
+:root[data-style="newspaper"] .stage {
+  max-width: var(--max); margin-inline: auto; padding-inline: 0;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: 0; align-items: start;
+  grid-template-areas: "title art" "wave art" "bubble art";
+}
+:root[data-style="newspaper"] :is(.title-block, .wavebar, .bubble) { margin-right: 36px; }
+:root[data-style="newspaper"] .art { align-self: stretch; display: block; border-left: 1px solid #141414; padding-left: 36px; }
+:root[data-style="newspaper"] .art .portrait { width: 100%; max-width: none; }
+:root[data-style="newspaper"] .portrait::after { font-size: 13px; margin-top: 8px; border-bottom: 1px solid #141414; padding-bottom: 10px; }
+:root[data-style="newspaper"] .bubble p::first-letter { all: unset; }
+:root[data-style="newspaper"] .bubble p { font-size: 19px; line-height: 1.55; }
+@media (max-width: 900px) {
+  :root[data-style="newspaper"] .stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "art" "wave" "bubble"; }
+  :root[data-style="newspaper"] :is(.title-block, .wavebar, .bubble) { margin-right: 0; }
+  :root[data-style="newspaper"] .art { border-left: 0; padding-left: 0; }
+  :root[data-style="newspaper"] .art .portrait { max-width: 420px; }
+}
+:root[data-style="newspaper"] .hero { padding-inline: var(--pad); }
