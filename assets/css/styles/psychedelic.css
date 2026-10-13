@@ -150,3 +150,40 @@
 @media (prefers-reduced-motion: reduce) { :root[data-style="psychedelic"] .poster::after { animation: none; } }
 :root[data-style="psychedelic"] .sec-num { display: inline-flex; align-items: center; justify-content: center; }
 @media (max-width: 900px) { :root[data-style="psychedelic"] .art { padding-block: 44px 50px; justify-items: center; } :root[data-style="psychedelic"] .art .portrait { width: 190px; } }
+
+/* ── optical illusions ── */
+/* rotating snakes (Akiyoshi Kitaoka): a static black→blue→white→yellow luminance sequence reads as rotation in peripheral vision */
+:root[data-style="psychedelic"] .block > .psy-snake { position: absolute; z-index: 0; margin: 0; max-width: none; } .psy-snake { position: absolute; z-index: 0; width: 230px; aspect-ratio: 1; pointer-events: none; border-radius: 50%; }
+.psy-snake span { position: absolute; inset: calc(var(--i) * 10.5%); border-radius: 50%;
+  background: repeating-conic-gradient(from calc(var(--i) * 9deg), #000000 0 7.5deg, #1f4dff 7.5deg 15deg, #ffffff 15deg 22.5deg, #ffe500 22.5deg 30deg);
+  -webkit-mask: radial-gradient(circle closest-side, transparent 0 78%, #000 79%); mask: radial-gradient(circle closest-side, transparent 0 78%, #000 79%); }
+.psy-snake span:nth-child(even) { background: repeating-conic-gradient(from calc(var(--i) * 9deg), #ffe500 0 7.5deg, #ffffff 7.5deg 15deg, #1f4dff 15deg 22.5deg, #000000 22.5deg 30deg); }
+.psy-snake span:last-child { -webkit-mask: none; mask: none; }
+:root[data-style="psychedelic"] :is(#about, #research, #work) { position: relative; }
+.psy-snake--a { right: max(16px, calc((100% - var(--max)) / 2 + var(--pad))); bottom: -150px; width: 200px; }
+.psy-snake--b { left: max(4px, calc((100% - var(--max)) / 2 - 130px)); top: 46%; width: 160px; }
+.psy-snake--c { left: max(4px, calc((100% - var(--max)) / 2 - 120px)); bottom: 40px; width: 200px; }
+:root[data-style="psychedelic"] :is(#about, #research, #work) > :not(.psy-snake) { position: relative; z-index: 1; }
+
+/* scintillating grid: dark dots seem to flash at the white intersections */
+:root[data-style="psychedelic"] .ink { background:
+  radial-gradient(circle, #ffffff 0 3.2px, transparent 3.8px) -2px -2px / 44px 44px,
+  linear-gradient(90deg, #6b6b6b 0 4px, transparent 4px) 0 0 / 44px 44px,
+  linear-gradient(#6b6b6b 0 4px, transparent 4px) 0 0 / 44px 44px, #000000; }
+:root[data-style="psychedelic"] .ink .sec-head { background: rgba(11, 6, 18, .88); padding: 14px 18px; border: 3px solid #fff4e0; }
+:root[data-style="psychedelic"] .ink .pub-bar { background: rgba(11, 6, 18, .88); padding: 10px 12px; border: 3px solid #fff4e0; }
+:root[data-style="psychedelic"] .ink .pub:nth-child(n) { background: rgba(11, 6, 18, .94); }
+
+/* café wall: rows of black and white tiles offset by a quarter, with grey mortar, look tilted although they are parallel */
+:root[data-style="psychedelic"] .ticker, :root[data-style="psychedelic"] .ticker.rev { position: relative; border-block: 0; margin-block: 30px; }
+:root[data-style="psychedelic"] .ticker::before, :root[data-style="psychedelic"] .ticker::after { content: ""; position: absolute; left: 0; right: 0; height: 30px; pointer-events: none;
+  background:
+    linear-gradient(#7a7a7a 0 2px, transparent 2px) 0 0 / 100% 15px,
+    repeating-linear-gradient(90deg, #000000 0 26px, #ffffff 26px 52px) 0 2px / 100% 13px no-repeat,
+    repeating-linear-gradient(90deg, #000000 0 26px, #ffffff 26px 52px) 13px 17px / 100% 13px no-repeat, #7a7a7a; }
+:root[data-style="psychedelic"] .ticker::before { bottom: 100%; }
+:root[data-style="psychedelic"] .ticker::after { top: 100%; transform: scaleX(-1); }
+
+.psy-snake--b { display: none; }
+@media (max-width: 1700px) { .psy-snake--c { display: none; } }
+@media (max-width: 900px) { .psy-snake--a { width: 130px; bottom: -110px; } }

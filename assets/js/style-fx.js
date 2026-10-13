@@ -843,6 +843,13 @@
           else if (!reduce) raf = setTimeout(frame, 500);
         }
         frame();
+        /* rotating-snakes illusions in the margins: concentric rings of black→blue→white→yellow, alternating direction */
+        [["about", "psy-snake--a"], ["research", "psy-snake--b"], ["work", "psy-snake--c"]].forEach(function (p) {
+          var sec = document.getElementById(p[0]); if (!sec) return;
+          var d = el("div", "psy-snake " + p[1]); d.setAttribute("aria-hidden", "true");
+          for (var r = 0; r < 5; r++) { var ring = el("span"); ring.style.setProperty("--i", r); d.appendChild(ring); }
+          sec.appendChild(d); nodes.push(d);
+        });
       },
       off: function () { cancelAnimationFrame(raf); clearTimeout(raf); nodes.forEach(function (n) { n.remove(); }); nodes = []; }
     };
