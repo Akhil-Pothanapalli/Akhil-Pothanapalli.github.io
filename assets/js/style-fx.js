@@ -101,6 +101,43 @@
       }
       timers.push(setTimeout(flip, delay));
     }
+    /* the waveform becomes the Music + Videos "now playing" tile */
+    var np = [], ticker = null;
+    function clock(t) { return Math.floor(t / 60) + ":" + ("0" + Math.floor(t % 60)).slice(-2); }
+    function player() {
+      var bar = document.querySelector(".wavebar");
+      if (!bar) return;
+      var ico = {
+        prev: '<svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg>',
+        pause: '<svg viewBox="0 0 16 16"><path d="M3 2h3.5v12H3zM9.5 2H13v12H9.5z"/></svg>',
+        play: '<svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>',
+        next: '<svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg>'
+      };
+      var info = el("div", "np-info",
+        '<span class="np-kicker">now playing</span><span class="np-title">machines that listen</span>' +
+        '<span class="np-artist">akhil pothanapalli · speech &amp; audio ai</span>' +
+        '<span class="np-progress"><span class="np-now">1:12</span><span class="np-bar"><span class="np-fill"></span></span><span class="np-len">3:47</span></span>');
+      var ctrl = el("div", "np-ctrl",
+        '<button type="button" class="np-btn" aria-label="Previous">' + ico.prev + '</button>' +
+        '<button type="button" class="np-btn np-play" aria-label="Pause">' + ico.pause + '</button>' +
+        '<button type="button" class="np-btn" aria-label="Next">' + ico.next + '</button>');
+      bar.appendChild(info); bar.appendChild(ctrl); np = [info, ctrl];
+      var len = 227, t = 72, playing = true, fill = info.querySelector(".np-fill"), now = info.querySelector(".np-now"), play = ctrl.querySelector(".np-play");
+      function paint() { fill.style.width = (t / len * 100).toFixed(2) + "%"; now.textContent = clock(t); }
+      paint();
+      play.addEventListener("click", function () {
+        playing = !playing;
+        bar.classList.toggle("is-paused", !playing);
+        play.innerHTML = playing ? ico.pause : ico.play;
+        play.setAttribute("aria-label", playing ? "Pause" : "Play");
+      });
+      var skip = ctrl.querySelectorAll(".np-btn");
+      skip[0].addEventListener("click", function () { t = 0; paint(); });
+      skip[2].addEventListener("click", function () { t = 0; paint(); });
+      if (!reduce) ticker = setInterval(function () { if (playing) { t = (t + 1) % len; paint(); } }, 1000);
+      window.dispatchEvent(new Event("resize"));
+    }
+
     return {
       on: function () {
         var stage = document.querySelector(".stage");
@@ -114,6 +151,7 @@
           (scholar ? '<a class="mt" href="' + esc(scholar.getAttribute("href")) + '" target="_blank" rel="noopener">' + capSvg + '<span class="mt-label">scholar</span></a>' : "") +
           '<a class="mt mt-wide mt-live" href="#research"><div class="mt-flip"><div class="mt-face"><b>now working on</b><small>' + esc(now.slice(0, 2).join(" · ")) + '</small></div><div class="mt-face mt-back"></div></div><span class="mt-label">research</span></a>';
         stage.appendChild(box);
+        player();
         if (reduce) return;
         var tiles = box.querySelectorAll(".mt-live");
         live(tiles[0], venues.map(function (v) { return "<b>" + esc(v) + "</b>"; }), 3800, 2600);
@@ -122,6 +160,10 @@
       off: function () {
         timers.forEach(clearTimeout); timers = [];
         if (box) box.remove(); box = null;
+        if (ticker) clearInterval(ticker); ticker = null;
+        np.forEach(function (n) { n.remove(); }); np = [];
+        var bar = document.querySelector(".wavebar"); if (bar) bar.classList.remove("is-paused");
+        window.dispatchEvent(new Event("resize"));
       }
     };
   })();
